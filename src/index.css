@@ -4,33 +4,36 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 98%;
+    --foreground: 0 0% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 12%;
 
-    --primary: 217 91.2% 59.8%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 160 84% 39%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 12%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 243 75.4% 58.6%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 12%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --success: 142 72% 29%;
+    --success-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 217 91.2% 59.8%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 92%;
+    --input: 0 0% 92%;
+    --ring: 160 84% 39%;
 
     --radius: 1rem;
   }
@@ -70,43 +73,62 @@
   * {
     @apply border-border;
   }
+
+  html {
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-extrabold text-foreground;
+  }
+
   body {
     @apply bg-background text-foreground;
-    background-image: radial-gradient(
-      circle at center,
-      hsl(var(--background)) 0%,
-      hsl(var(--background) / 0.8) 100%
-    ),
-    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234299e1' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-image: 
+      radial-gradient(
+        circle at center,
+        hsl(var(--background)) 0%,
+        hsl(var(--background) / 0.98) 100%
+      );
   }
 }
 
 @layer components {
   .card-hover {
-    @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-1;
+    @apply transition-all duration-300 hover:shadow-md hover:-translate-y-1;
   }
 
   .module-card {
-    @apply p-6 rounded-2xl bg-white shadow-md card-hover border-2 border-transparent hover:border-primary/20;
+    @apply p-6 rounded-2xl bg-white shadow-sm card-hover border border-border hover:border-gray-300;
   }
 
   .question-card {
-    @apply p-8 rounded-2xl bg-white shadow-md border-2 border-transparent;
+    @apply p-8 rounded-2xl bg-white shadow-sm border border-border;
   }
 
   .answer-option {
-    @apply relative p-4 rounded-xl transition-all duration-200 hover:bg-primary/5 cursor-pointer;
+    @apply relative p-4 rounded-xl transition-all duration-200 
+           hover:bg-secondary active:bg-secondary/80 active:scale-[0.99]
+           cursor-pointer border border-border;
   }
 
   .answer-option.selected {
-    @apply bg-primary/10 border-primary;
+    @apply bg-secondary border-primary/50;
   }
 
   .answer-option.correct {
-    @apply bg-green-50 border-green-500;
+    @apply bg-green-50 border-green-600 text-green-600;
   }
 
   .answer-option.incorrect {
-    @apply bg-red-50 border-red-500;
+    @apply bg-red-50 border-red-500 text-red-500;
+  }
+
+  .stats-card {
+    @apply bg-white p-4 rounded-xl shadow-sm border border-border flex items-center justify-between;
+  }
+
+  .feature-icon {
+    @apply w-10 h-10 rounded-xl bg-secondary text-primary flex items-center justify-center;
   }
 }

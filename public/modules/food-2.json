@@ -1,0 +1,65 @@
+{
+    "id": "food-2",
+    "title": "Food 2",
+    "description": "Expand your food vocabulary with more Afrikaans words for everyday meals.",
+    "type": "flashcards",
+    "questions": [
+      {
+        "type": "flashcards",
+        "variant": "image",
+        "imagePath": "/images/food-2/carrot.webp",
+        "correctAnswer": "Wortel",
+        "options": ["Wortel", "Aartappel", "Piesang", "Kaas"]
+      },
+      {
+        "type": "flashcards",
+        "variant": "image",
+        "imagePath": "/images/food-2/potato.webp",
+        "correctAnswer": "Aartappel",
+        "options": ["Aartappel", "Wortel", "Vrugte", "Brood"]
+      },
+      {
+        "type": "flashcards",
+        "variant": "image",
+        "imagePath": "/images/food-2/rice.webp",
+        "correctAnswer": "Rys",
+        "options": ["Rys", "Brood", "Suiker", "Vleis"]
+      },
+      {
+        "type": "flashcards",
+        "variant": "image",
+        "imagePath": "/images/food-2/sugar.webp",
+        "correctAnswer": "Suiker",
+        "options": ["Suiker", "Sout", "Melk", "Sap"]
+      },
+      {
+        "type": "flashcards",
+        "variant": "image",
+        "imagePath": "/images/food-2/salt.webp",
+        "correctAnswer": "Sout",
+        "options": ["Sout", "Suiker", "Eier", "Vrugte"]
+      },
+      {
+        "type": "flashcards",
+        "variant": "image",
+        "imagePath": "/images/food-2/egg.webp",
+        "correctAnswer": "Eier",
+        "options": ["Eier", "Vleis", "Kaas", "Piesang"]
+      },
+      {
+        "type": "flashcards",
+        "variant": "image",
+        "imagePath": "/images/food-2/soup.webp",
+        "correctAnswer": "Sop",
+        "options": ["Sop", "Vleis", "Rys", "Brood"]
+      },
+      {
+        "type": "flashcards",
+        "variant": "image",
+        "imagePath": "/images/food-2/juice.webp",
+        "correctAnswer": "Sap",
+        "options": ["Sap", "Melk", "Water", "Sout"]
+      }
+    ]
+  }
+  

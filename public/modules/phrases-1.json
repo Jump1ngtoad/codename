@@ -1,7 +1,7 @@
 {
-  "id": "simple-phrases",
-  "title": "Simple Phrases",
-  "description": "Practice basic Afrikaans phrases and sentences",
+  "id": "phrases-1",
+  "title": "Phrases 1",
+  "description": "Practice essential Afrikaans phrases for daily communication.",
   "type": "sentence-completion",
   "questions": [
     {

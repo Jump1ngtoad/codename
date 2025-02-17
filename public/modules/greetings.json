@@ -1,7 +1,7 @@
 {
-  "id": "basic-greetings",
-  "title": "Basic Greetings",
-  "description": "Learn common Afrikaans greetings and introductions",
+  "id": "greetings",
+  "title": "Greetings",
+  "description": "Learn common Afrikaans greetings and introductions using flashcards.",
   "type": "flashcards",
   "questions": [
     {

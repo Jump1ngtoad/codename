@@ -24,16 +24,51 @@ A modern web application for learning Afrikaans through interactive flashcards a
 ```
 /public
   /modules/
-    manifest.json        # List of all available modules
+    manifest.json        # Auto-generated list of all modules
     basic-greetings.json # Example flashcard module
     simple-phrases.json  # Example sentence completion module
+  /images/
+    /food-1/            # Images for food module
+    /animals-1/         # Images for animals module
 /src
   /components/          # Reusable UI components
   /pages/              # Page components
   /types/              # TypeScript interfaces
   /hooks/              # Custom React hooks
   /utils/              # Utility functions
+/scripts
+  generate-manifest.js  # Script to generate module manifest
+  validate-modules.js   # Script to validate module files
 ```
+
+## Module Management
+
+### Module Validation
+
+The project includes automatic validation of module files to ensure consistency and correctness. To validate modules:
+
+```bash
+npm run validate-modules
+```
+
+The validator checks for:
+- Required fields (id, title, description, type, questions)
+- Unique module IDs
+- Valid module types (flashcards, sentence-completion)
+- Question format and completeness
+- Image paths for image-based flashcards
+- Correct answer presence in options
+- JSON syntax
+
+### Manifest Generation
+
+The manifest file (`public/modules/manifest.json`) is automatically generated from individual module files:
+
+```bash
+npm run generate-manifest
+```
+
+Both validation and manifest generation are run automatically during the build process.
 
 ## Module Format
 
@@ -47,7 +82,8 @@ A modern web application for learning Afrikaans through interactive flashcards a
       "description": "Module Description",
       "type": "flashcards | sentence-completion"
     }
-  ]
+  ],
+  "generatedAt": "2024-03-10T12:00:00.000Z"
 }
 ```
 
@@ -61,11 +97,33 @@ A modern web application for learning Afrikaans through interactive flashcards a
   "questions": [
     {
       "type": "flashcards",
+      "variant": "text",
       "prompt": "English Word",
       "correctAnswer": "Afrikaans Word",
       "options": ["Option 1", "Option 2", "Option 3", "Option 4"]
     }
   ]
+}
+```
+
+### Image-based Flashcard
+```json
+{
+  "type": "flashcards",
+  "variant": "image",
+  "imagePath": "/images/module-name/image.webp",
+  "correctAnswer": "Afrikaans Word",
+  "options": ["Option 1", "Option 2", "Option 3", "Option 4"]
+}
+```
+
+### Sentence Completion
+```json
+{
+  "type": "sentence-completion",
+  "prompt": "English Sentence",
+  "correctAnswer": "Afrikaans Sentence",
+  "hint": "Optional hint for the user"
 }
 ```
 
@@ -85,9 +143,21 @@ A modern web application for learning Afrikaans through interactive flashcards a
 ## Adding New Modules
 
 1. Create a new JSON file in the `/public/modules/` directory
-2. Add the module information to `manifest.json`
-3. Follow the module format shown above
-4. The new module will automatically appear in the app
+2. Follow the module format shown above
+3. For image-based flashcards:
+   - Add images to `/public/images/[module-id]/`
+   - Use WebP format for better performance
+   - Keep image sizes reasonable (500-800px wide)
+4. Validate your module:
+   ```bash
+   npm run validate-modules
+   ```
+5. Generate the updated manifest:
+   ```bash
+   npm run generate-manifest
+   ```
+
+The new module will automatically appear in the app after rebuilding.
 
 ## Deployment
 

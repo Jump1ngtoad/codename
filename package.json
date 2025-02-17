@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npm run validate-modules && npm run generate-manifest && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "validate-modules": "node scripts/validate-modules.js",
+    "generate-manifest": "node scripts/generate-manifest.js"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",

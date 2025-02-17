@@ -15,7 +15,6 @@ export const ModulePage = () => {
   const [userAnswer, setUserAnswer] = useState('')
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
   const [completedQuestions, setCompletedQuestions] = useState<number[]>([])
-  const [showFeedback, setShowFeedback] = useState(false)
 
   useEffect(() => {
     const fetchModule = async () => {
@@ -38,32 +37,40 @@ export const ModulePage = () => {
     const question = module.questions[currentQuestionIndex]
     const isAnswerCorrect = userAnswer.toLowerCase() === question.correctAnswer.toLowerCase()
     setIsCorrect(isAnswerCorrect)
-    setShowFeedback(true)
 
     if (isAnswerCorrect) {
-      setCompletedQuestions((prev) => [...prev, currentQuestionIndex])
+      const newCompletedQuestions = [...completedQuestions, currentQuestionIndex]
+      setCompletedQuestions(newCompletedQuestions)
+      
+      // Check if this was the last question
+      if (newCompletedQuestions.length === module.questions.length) {
+        // Save progress and return to home after delay
+        setTimeout(() => {
+          const completedModules = JSON.parse(localStorage.getItem('completedModules') || '[]')
+          if (!completedModules.includes(moduleId)) {
+            localStorage.setItem('completedModules', JSON.stringify([...completedModules, moduleId]))
+          }
+          navigate('/')
+        }, 500)
+      } else {
+        // Move to next question after delay
+        setTimeout(() => {
+          nextQuestion()
+        }, 500)
+      }
     }
   }
 
   const nextQuestion = () => {
+    if (!module) return
+
     setUserAnswer('')
     setIsCorrect(null)
-    setShowFeedback(false)
     
-    // If all questions are completed, mark module as done
-    if (completedQuestions.length === module?.questions.length) {
-      const completedModules = JSON.parse(localStorage.getItem('completedModules') || '[]')
-      if (!completedModules.includes(moduleId)) {
-        localStorage.setItem('completedModules', JSON.stringify([...completedModules, moduleId]))
-      }
-      navigate('/')
-      return
-    }
-
     // Find next unanswered question
     let nextIndex = currentQuestionIndex
     do {
-      nextIndex = (nextIndex + 1) % module!.questions.length
+      nextIndex = (nextIndex + 1) % module.questions.length
     } while (completedQuestions.includes(nextIndex))
     
     setCurrentQuestionIndex(nextIndex)
@@ -77,22 +84,27 @@ export const ModulePage = () => {
         value={userAnswer}
         onValueChange={setUserAnswer}
         className="space-y-3"
-        disabled={showFeedback}
+        disabled={false}
       >
         {(currentQuestion as FlashcardQuestion | ImageFlashcardQuestion).options.map((option: string) => (
           <div 
-            key={option} 
-            className={`answer-option ${
-              showFeedback && option === currentQuestion.correctAnswer ? 'correct' :
-              showFeedback && option === userAnswer ? 'incorrect' :
+            key={option}
+            onClick={() => setUserAnswer(option)}
+            className={`answer-option group cursor-pointer select-none ${
+              isCorrect && option === currentQuestion.correctAnswer ? 'correct' :
+              isCorrect === false && option === userAnswer ? 'incorrect' :
               userAnswer === option ? 'selected' : ''
             }`}
           >
             <div className="flex items-center space-x-3">
-              <RadioGroupItem value={option} id={option} />
+              <RadioGroupItem 
+                value={option} 
+                id={option}
+                className="group-hover:border-primary"
+              />
               <label
                 htmlFor={option}
-                className="text-lg font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                className="flex-1 text-lg font-medium leading-none cursor-pointer"
               >
                 {option}
               </label>
@@ -146,21 +158,22 @@ export const ModulePage = () => {
             size="sm"
             onClick={() => navigate('/')}
             className="text-primary"
+            aria-label="Return to modules list"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
+            <ArrowLeft className="w-4 h-4 mr-2" aria-hidden="true" />
             Back to Modules
           </Button>
-          <div className="flex items-center text-primary">
-            <Trophy className="w-5 h-5 mr-2" />
+          <div className="flex items-center text-primary" role="status" aria-label="Question progress">
+            <Trophy className="w-5 h-5 mr-2" aria-hidden="true" />
             <span className="font-medium">{completedQuestions.length}/{module.questions.length}</span>
           </div>
         </div>
 
         <div>
-          <h1 className="text-2xl font-bold mb-2 text-primary">
+          <h1 className="text-2xl font-medium mb-2 text-black">
             {module.title}
           </h1>
-          <Progress value={progress} className="h-2" />
+          <Progress value={progress} className="h-2" aria-label="Module progress" />
         </div>
 
         <div className="question-card">
@@ -174,22 +187,22 @@ export const ModulePage = () => {
               onChange={(e) => setUserAnswer(e.target.value)}
               placeholder="Type your answer..."
               className="w-full px-4 py-3 text-lg border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50"
-              disabled={showFeedback}
+              aria-label="Answer input"
             />
           )}
 
-          {(currentQuestion as SentenceQuestion).hint && !showFeedback && (
-            <div className="mt-4 p-4 bg-primary/5 rounded-xl">
+          {(currentQuestion as SentenceQuestion).hint && !isCorrect && (
+            <div className="mt-4 p-4 bg-primary/5 rounded-xl" role="alert">
               <p className="text-sm text-primary/80">
                 💡 Hint: {(currentQuestion as SentenceQuestion).hint}
               </p>
             </div>
           )}
 
-          {showFeedback && !isCorrect && (
-            <div className="mt-4 p-4 bg-red-50 rounded-xl">
+          {isCorrect === false && (
+            <div className="mt-4 p-4 bg-red-50 rounded-xl" role="alert" aria-live="polite">
               <p className="text-sm text-red-600">
-                Correct answer: {currentQuestion.correctAnswer}
+                Try again! The correct answer is: {currentQuestion.correctAnswer}
               </p>
             </div>
           )}
@@ -198,10 +211,11 @@ export const ModulePage = () => {
             className="w-full mt-6"
             size="lg"
             variant={isCorrect ? "secondary" : "default"}
-            onClick={isCorrect ? nextQuestion : handleAnswer}
+            onClick={handleAnswer}
             disabled={!userAnswer}
+            aria-label="Check your answer"
           >
-            {isCorrect ? 'Next Question' : 'Check Answer'}
+            Check Answer
           </Button>
         </div>
       </div>
