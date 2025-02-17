@@ -82,14 +82,26 @@ export const ModulePage = () => {
     return (
       <RadioGroup
         value={userAnswer}
-        onValueChange={setUserAnswer}
+        onValueChange={(value) => {
+          setUserAnswer(value)
+          // On mobile, automatically submit the answer when an option is selected
+          if (window.innerWidth < 768) {
+            handleAnswer()
+          }
+        }}
         className="space-y-3"
         disabled={false}
       >
         {(currentQuestion as FlashcardQuestion | ImageFlashcardQuestion).options.map((option: string) => (
           <div 
             key={option}
-            onClick={() => setUserAnswer(option)}
+            onClick={() => {
+              setUserAnswer(option)
+              // On mobile, automatically submit the answer when an option is clicked
+              if (window.innerWidth < 768) {
+                handleAnswer()
+              }
+            }}
             className={`answer-option group cursor-pointer select-none ${
               isCorrect && option === currentQuestion.correctAnswer ? 'correct' :
               isCorrect === false && option === userAnswer ? 'incorrect' :
@@ -182,13 +194,31 @@ export const ModulePage = () => {
           {module.type === 'flashcards' ? (
             renderOptions()
           ) : (
-            <input
-              value={userAnswer}
-              onChange={(e) => setUserAnswer(e.target.value)}
-              placeholder="Type your answer..."
-              className="w-full px-4 py-3 text-lg border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50"
-              aria-label="Answer input"
-            />
+            <>
+              <input
+                value={userAnswer}
+                onChange={(e) => setUserAnswer(e.target.value)}
+                onKeyDown={(e) => {
+                  // Submit on Enter key
+                  if (e.key === 'Enter' && userAnswer) {
+                    handleAnswer()
+                  }
+                }}
+                placeholder="Type your answer..."
+                className="w-full px-4 py-3 text-lg border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50"
+                aria-label="Answer input"
+              />
+              <Button
+                className="w-full mt-6"
+                size="lg"
+                variant={isCorrect ? "secondary" : "default"}
+                onClick={handleAnswer}
+                disabled={!userAnswer}
+                aria-label="Check your answer"
+              >
+                Check Answer
+              </Button>
+            </>
           )}
 
           {(currentQuestion as SentenceQuestion).hint && !isCorrect && (
@@ -207,16 +237,19 @@ export const ModulePage = () => {
             </div>
           )}
 
-          <Button
-            className="w-full mt-6"
-            size="lg"
-            variant={isCorrect ? "secondary" : "default"}
-            onClick={handleAnswer}
-            disabled={!userAnswer}
-            aria-label="Check your answer"
-          >
-            Check Answer
-          </Button>
+          {/* Only show the Check Answer button for flashcards on desktop */}
+          {module.type === 'flashcards' && (
+            <Button
+              className="w-full mt-6 hidden md:block"
+              size="lg"
+              variant={isCorrect ? "secondary" : "default"}
+              onClick={handleAnswer}
+              disabled={!userAnswer}
+              aria-label="Check your answer"
+            >
+              Check Answer
+            </Button>
+          )}
         </div>
       </div>
     </div>

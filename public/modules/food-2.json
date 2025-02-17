@@ -9,56 +9,56 @@
         "variant": "image",
         "imagePath": "/images/food-2/carrot.webp",
         "correctAnswer": "Wortel",
-        "options": ["Wortel", "Aartappel", "Piesang", "Kaas"]
+        "options": ["Kaas", "Wortel", "Aartappel", "Piesang"]
       },
       {
         "type": "flashcards",
         "variant": "image",
         "imagePath": "/images/food-2/potato.webp",
         "correctAnswer": "Aartappel",
-        "options": ["Aartappel", "Wortel", "Vrugte", "Brood"]
+        "options": ["Vrugte", "Brood", "Aartappel", "Wortel"]
       },
       {
         "type": "flashcards",
         "variant": "image",
         "imagePath": "/images/food-2/rice.webp",
         "correctAnswer": "Rys",
-        "options": ["Rys", "Brood", "Suiker", "Vleis"]
+        "options": ["Vleis", "Rys", "Brood", "Suiker"]
       },
       {
         "type": "flashcards",
         "variant": "image",
         "imagePath": "/images/food-2/sugar.webp",
         "correctAnswer": "Suiker",
-        "options": ["Suiker", "Sout", "Melk", "Sap"]
+        "options": ["Sap", "Sout", "Suiker", "Melk"]
       },
       {
         "type": "flashcards",
         "variant": "image",
         "imagePath": "/images/food-2/salt.webp",
         "correctAnswer": "Sout",
-        "options": ["Sout", "Suiker", "Eier", "Vrugte"]
+        "options": ["Vrugte", "Eier", "Suiker", "Sout"]
       },
       {
         "type": "flashcards",
         "variant": "image",
         "imagePath": "/images/food-2/egg.webp",
         "correctAnswer": "Eier",
-        "options": ["Eier", "Vleis", "Kaas", "Piesang"]
+        "options": ["Kaas", "Eier", "Vleis", "Piesang"]
       },
       {
         "type": "flashcards",
         "variant": "image",
         "imagePath": "/images/food-2/soup.webp",
         "correctAnswer": "Sop",
-        "options": ["Sop", "Vleis", "Rys", "Brood"]
+        "options": ["Rys", "Brood", "Sop", "Vleis"]
       },
       {
         "type": "flashcards",
         "variant": "image",
         "imagePath": "/images/food-2/juice.webp",
         "correctAnswer": "Sap",
-        "options": ["Sap", "Melk", "Water", "Sout"]
+        "options": ["Water", "Melk", "Sap", "Sout"]
       }
     ]
   }
