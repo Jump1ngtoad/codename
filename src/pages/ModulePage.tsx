@@ -164,27 +164,27 @@ export const ModulePage = () => {
   return (
     <div className="container mx-auto py-8 px-4 min-h-screen">
       <div className="max-w-2xl mx-auto space-y-6">
-        <div className="flex items-center justify-between">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => navigate('/')}
-            className="text-primary"
-            aria-label="Return to modules list"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" aria-hidden="true" />
-            Back to Modules
-          </Button>
-          <div className="flex items-center text-primary" role="status" aria-label="Question progress">
-            <Trophy className="w-5 h-5 mr-2" aria-hidden="true" />
-            <span className="font-medium">{completedQuestions.length}/{module.questions.length}</span>
-          </div>
-        </div>
-
         <div>
-          <h1 className="text-2xl font-medium mb-2 text-black">
-            {module.title}
-          </h1>
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => navigate('/')}
+                className="text-primary"
+                aria-label="Return to modules list"
+              >
+                <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+              </Button>
+              <h1 className="text-2xl font-medium text-black">
+                {module.title}
+              </h1>
+            </div>
+            <div className="flex items-center text-primary" role="status" aria-label="Question progress">
+              <Trophy className="w-5 h-5 mr-2" aria-hidden="true" />
+              <span className="font-medium">{completedQuestions.length}/{module.questions.length}</span>
+            </div>
+          </div>
           <Progress value={progress} className="h-2" aria-label="Module progress" />
         </div>
 
