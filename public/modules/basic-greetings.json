@@ -1,0 +1,32 @@
+{
+  "id": "basic-greetings",
+  "title": "Basic Greetings",
+  "description": "Learn common Afrikaans greetings and introductions",
+  "type": "flashcards",
+  "questions": [
+    {
+      "type": "flashcards",
+      "prompt": "Hello",
+      "correctAnswer": "Hallo",
+      "options": ["Hallo", "Totsiens", "Dankie", "Asseblief"]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "Goodbye",
+      "correctAnswer": "Totsiens",
+      "options": ["Hallo", "Totsiens", "Dankie", "Lekker"]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "Thank you",
+      "correctAnswer": "Dankie",
+      "options": ["Hallo", "Totsiens", "Dankie", "Asseblief"]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "Please",
+      "correctAnswer": "Asseblief",
+      "options": ["Hallo", "Totsiens", "Dankie", "Asseblief"]
+    }
+  ]
+} 

@@ -1,0 +1,28 @@
+{
+  "modules": [
+    {
+      "id": "basic-greetings",
+      "title": "Basic Greetings",
+      "description": "Learn common Afrikaans greetings and introductions",
+      "type": "flashcards"
+    },
+    {
+      "id": "simple-phrases",
+      "title": "Simple Phrases",
+      "description": "Practice basic Afrikaans phrases and sentences",
+      "type": "sentence-completion"
+    },
+    {
+      "id": "food-1",
+      "title": "Food 1",
+      "description": "Learn common Afrikaans words for food and drinks",
+      "type": "flashcards"
+    },
+    {
+      "id": "common-verbs",
+      "title": "Common Verbs",
+      "description": "Learn essential Afrikaans action words",
+      "type": "sentence-completion"
+    }
+  ]
+} 

@@ -1,0 +1,51 @@
+{
+    "id": "food-1",
+    "title": "Food 1",
+    "description": "Learn common Afrikaans words for food and drinks",
+    "type": "flashcards",
+    "questions": [
+      {
+        "type": "flashcards",
+        "variant": "image",
+        "imagePath": "/images/food-1/apple.webp",
+        "correctAnswer": "Appel",
+        "options": ["Appel", "Peer", "Lemoen", "Piesang"]
+      },
+      {
+        "type": "flashcards",
+        "variant": "image",
+        "imagePath": "/images/food-1/banana.webp",
+        "correctAnswer": "Piesang",
+        "options": ["Appel", "Peer", "Lemoen", "Piesang"]
+      },
+      {
+        "type": "flashcards",
+        "variant": "image",
+        "imagePath": "/images/food-1/orange.webp",
+        "correctAnswer": "Lemoen",
+        "options": ["Appel", "Peer", "Lemoen", "Piesang"]
+      },
+      {
+        "type": "flashcards",
+        "variant": "image",
+        "imagePath": "/images/food-1/bread.webp",
+        "correctAnswer": "Brood",
+        "options": ["Brood", "Melk", "Kaas", "Eier"]
+      },
+      {
+        "type": "flashcards",
+        "variant": "image",
+        "imagePath": "/images/food-1/milk.webp",
+        "correctAnswer": "Melk",
+        "options": ["Brood", "Melk", "Kaas", "Eier"]
+      },
+      {
+        "type": "flashcards",
+        "variant": "image",
+        "imagePath": "/images/food-1/cheese.webp",
+        "correctAnswer": "Kaas",
+        "options": ["Brood", "Melk", "Kaas", "Eier"]
+      }
+    ]
+  }
+  

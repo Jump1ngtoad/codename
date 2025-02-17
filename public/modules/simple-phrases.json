@@ -1,0 +1,32 @@
+{
+  "id": "simple-phrases",
+  "title": "Simple Phrases",
+  "description": "Practice basic Afrikaans phrases and sentences",
+  "type": "sentence-completion",
+  "questions": [
+    {
+      "type": "sentence-completion",
+      "prompt": "How are you?",
+      "correctAnswer": "Hoe gaan dit?",
+      "hint": "Remember: 'Hoe' means 'How'"
+    },
+    {
+      "type": "sentence-completion",
+      "prompt": "I am fine, thank you",
+      "correctAnswer": "Ek is goed, dankie",
+      "hint": "Remember: 'Ek' means 'I'"
+    },
+    {
+      "type": "sentence-completion",
+      "prompt": "What is your name?",
+      "correctAnswer": "Wat is jou naam?",
+      "hint": "Remember: 'Wat' means 'What'"
+    },
+    {
+      "type": "sentence-completion",
+      "prompt": "My name is...",
+      "correctAnswer": "My naam is...",
+      "hint": "Very similar to English!"
+    }
+  ]
+} 
