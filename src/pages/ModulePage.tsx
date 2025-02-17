@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { CheckCircle2, XCircle, ArrowLeft, Trophy } from 'lucide-react'
+import { ArrowLeft, Trophy } from 'lucide-react'
 import { Module, FlashcardQuestion, ImageFlashcardQuestion, SentenceQuestion } from '../types'
 import { Button } from '../components/ui/button'
 import { Progress } from '../components/ui/progress'

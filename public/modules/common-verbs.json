@@ -1,0 +1,39 @@
+{
+    "id": "common-verbs",
+    "title": "Common Verbs",
+    "description": "Learn essential Afrikaans action words",
+    "type": "flashcards",
+    "questions": [
+      {
+        "type": "flashcards",
+        "prompt": "To eat",
+        "correctAnswer": "Eet",
+        "options": ["Eet", "Drink", "Loop", "Werk"]
+      },
+      {
+        "type": "flashcards",
+        "prompt": "To drink",
+        "correctAnswer": "Drink",
+        "options": ["Skryf", "Lees", "Drink", "Eet"]
+      },
+      {
+        "type": "flashcards",
+        "prompt": "To run",
+        "correctAnswer": "Hardloop",
+        "options": ["Loop", "Hardloop", "Spring", "Ry"]
+      },
+      {
+        "type": "flashcards",
+        "prompt": "To sleep",
+        "correctAnswer": "Slaap",
+        "options": ["Slaap", "Staan", "Swem", "Lag"]
+      },
+      {
+        "type": "flashcards",
+        "prompt": "To read",
+        "correctAnswer": "Lees",
+        "options": ["Skryf", "Lees", "Sing", "Kook"]
+      }
+    ]
+  }
+  
