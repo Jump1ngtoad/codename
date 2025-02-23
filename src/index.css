@@ -115,7 +115,8 @@
   .answer-option {
     @apply relative p-4 rounded-[0.75rem] transition-all duration-200 
            bg-white hover:bg-white/80
-           cursor-pointer border border-border shadow-sm;
+           cursor-pointer border border-border shadow-sm
+           flex items-center min-h-[3.5rem];
   }
 
   .answer-option.selected {
@@ -154,7 +155,7 @@
   }
 
   .answer-option .option-text {
-    @apply pl-8 block w-full text-left;
+    @apply pl-12 block w-full text-left;
   }
 
   .stats-card {

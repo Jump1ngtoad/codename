@@ -49,26 +49,29 @@ export const ModulePage = () => {
     }
   }
 
-  const handleAnswer = () => {
+  const handleOptionSelect = (option: string) => {
     if (!module) return
-
-    const question = module.questions[currentQuestionIndex]
-    const isAnswerCorrect = userAnswer.toLowerCase() === question.correctAnswer.toLowerCase()
+    
+    const currentQuestion = module.questions[currentQuestionIndex]
+    console.log('Selected option:', option)
+    console.log('Current userAnswer:', userAnswer)
+    console.log('Current question:', currentQuestion.correctAnswer)
+    
+    setUserAnswer(option)
+    const isAnswerCorrect = option.toLowerCase() === currentQuestion.correctAnswer.toLowerCase()
+    console.log('Is answer correct?', isAnswerCorrect)
     setIsCorrect(isAnswerCorrect)
 
     if (isAnswerCorrect) {
       const newCompletedQuestions = [...completedQuestions, currentQuestionIndex]
       setCompletedQuestions(newCompletedQuestions)
       
-      // Check if this was the last question
       if (newCompletedQuestions.length === module.questions.length) {
-        // Save progress and return to home after delay
         setTimeout(() => {
           saveProgress(moduleId!)
           navigate('/')
         }, 500)
       } else {
-        // Move to next question after delay
         setTimeout(() => {
           nextQuestion()
         }, 500)
@@ -92,31 +95,16 @@ export const ModulePage = () => {
   }
 
   const renderOptions = () => {
-    if (currentQuestion.type !== 'flashcards') return null;
+    if (!module) return null
+    const currentQuestion = module.questions[currentQuestionIndex]
+    if (currentQuestion.type !== 'flashcards') return null
     
     return (
-      <RadioGroup
-        value={userAnswer}
-        onValueChange={(value) => {
-          setUserAnswer(value)
-          // On mobile, automatically submit the answer when an option is selected
-          if (window.innerWidth < 768) {
-            handleAnswer()
-          }
-        }}
-        className="space-y-3"
-        disabled={false}
-      >
+      <div className="space-y-3">
         {(currentQuestion as FlashcardQuestion | ImageFlashcardQuestion).options.map((option: string) => (
           <div 
             key={option}
-            onClick={() => {
-              setUserAnswer(option)
-              // On mobile, automatically submit the answer when an option is clicked
-              if (window.innerWidth < 768) {
-                handleAnswer()
-              }
-            }}
+            onClick={() => handleOptionSelect(option)}
             className={`answer-option group cursor-pointer select-none ${
               isCorrect && option === currentQuestion.correctAnswer ? 'correct' :
               isCorrect === false && option === userAnswer ? 'incorrect' :
@@ -138,17 +126,20 @@ export const ModulePage = () => {
             </div>
             <label
               htmlFor={option}
-              className="option-text text-lg font-medium leading-none cursor-pointer"
+              className="option-text text-lg font-medium leading-none cursor-pointer w-full block"
             >
               {option}
             </label>
           </div>
         ))}
-      </RadioGroup>
+      </div>
     );
   };
 
   const renderQuestion = () => {
+    if (!module) return null
+    const currentQuestion = module.questions[currentQuestionIndex]
+
     if (currentQuestion.type === 'flashcards') {
       if ((currentQuestion as ImageFlashcardQuestion).variant === 'image') {
         const imageQuestion = currentQuestion as ImageFlashcardQuestion;
@@ -247,7 +238,7 @@ export const ModulePage = () => {
                 onKeyDown={(e) => {
                   // Submit on Enter key
                   if (e.key === 'Enter' && userAnswer) {
-                    handleAnswer()
+                    handleOptionSelect(userAnswer)
                   }
                 }}
                 placeholder="Type your answer..."
@@ -258,7 +249,7 @@ export const ModulePage = () => {
                 className="w-full mt-6"
                 size="lg"
                 variant={isCorrect ? "secondary" : "default"}
-                onClick={handleAnswer}
+                onClick={() => handleOptionSelect(userAnswer)}
                 disabled={!userAnswer}
                 aria-label="Check your answer"
               >
@@ -289,7 +280,7 @@ export const ModulePage = () => {
               className="w-full mt-6 hidden md:block"
               size="lg"
               variant={isCorrect ? "secondary" : "default"}
-              onClick={handleAnswer}
+              onClick={() => handleOptionSelect(userAnswer)}
               disabled={!userAnswer}
               aria-label="Check your answer"
             >
