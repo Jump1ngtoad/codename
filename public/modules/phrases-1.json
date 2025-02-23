@@ -7,26 +7,37 @@
     {
       "type": "sentence-completion",
       "prompt": "How are you?",
-      "correctAnswer": "Hoe gaan dit?",
+      "correctAnswer": "Hoe gaan dit",
+      "words": ["dit", "Hoe", "gaan", "jou"],
       "hint": "Remember: 'Hoe' means 'How'"
     },
     {
       "type": "sentence-completion",
       "prompt": "I am fine, thank you",
-      "correctAnswer": "Ek is goed, dankie",
+      "correctAnswer": "Ek is goed dankie",
+      "words": ["dankie", "Ek", "goed", "is", "baie"],
       "hint": "Remember: 'Ek' means 'I'"
     },
     {
       "type": "sentence-completion",
       "prompt": "What is your name?",
-      "correctAnswer": "Wat is jou naam?",
+      "correctAnswer": "Wat is jou naam",
+      "words": ["naam", "Wat", "jou", "is", "my"],
       "hint": "Remember: 'Wat' means 'What'"
     },
     {
       "type": "sentence-completion",
       "prompt": "My name is...",
-      "correctAnswer": "My naam is...",
+      "correctAnswer": "My naam is",
+      "words": ["My", "is", "naam", "jou"],
       "hint": "Very similar to English!"
+    },
+    {
+      "type": "sentence-completion",
+      "prompt": "Have a good day",
+      "correctAnswer": "Lekker dag vir jou",
+      "words": ["Lekker", "dag", "vir", "jou", "goed"],
+      "hint": "Remember: 'Lekker' means 'nice/good'"
     }
   ]
 } 

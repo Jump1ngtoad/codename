@@ -4,6 +4,7 @@ import { ArrowLeft, Trophy, PointerIcon, X } from 'lucide-react'
 import { Module, FlashcardQuestion, ImageFlashcardQuestion, SentenceQuestion } from '../types'
 import { Button } from '../components/ui/button'
 import { Progress } from '../components/ui/progress'
+import { SentenceCompletionQuestion } from '../components/SentenceCompletionQuestion'
 
 export const ModulePage = () => {
   const { moduleId } = useParams<{ moduleId: string }>()
@@ -159,11 +160,7 @@ export const ModulePage = () => {
         );
       }
     } else {
-      return (
-        <p className="text-2xl font-medium mb-8 text-center">
-          {currentQuestion.prompt}
-        </p>
-      );
+      return <div />
     }
   };
 
@@ -225,27 +222,13 @@ export const ModulePage = () => {
         </div>
 
         <div className="question-card">
-          {renderQuestion()}
-
           {module.type === 'flashcards' ? (
-            renderOptions()
-          ) : (
             <>
-              <input
-                value={userAnswer}
-                onChange={(e) => setUserAnswer(e.target.value)}
-                onKeyDown={(e) => {
-                  // Submit on Enter key
-                  if (e.key === 'Enter' && userAnswer) {
-                    handleOptionSelect(userAnswer)
-                  }
-                }}
-                placeholder="Type your answer..."
-                className="w-full px-4 py-3 text-lg border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50"
-                aria-label="Answer input"
-              />
+              {renderQuestion()}
+              {renderOptions()}
+              {/* Only show the Check Answer button for flashcards on desktop */}
               <Button
-                className="w-full mt-6"
+                className="w-full mt-6 hidden md:block"
                 size="lg"
                 variant={isCorrect ? "secondary" : "default"}
                 onClick={() => handleOptionSelect(userAnswer)}
@@ -255,6 +238,21 @@ export const ModulePage = () => {
                 Check Answer
               </Button>
             </>
+          ) : (
+            <SentenceCompletionQuestion
+              question={module.questions[currentQuestionIndex] as SentenceQuestion}
+              onCorrect={() => {
+                const newCompletedQuestions = [...completedQuestions, currentQuestionIndex]
+                setCompletedQuestions(newCompletedQuestions)
+                
+                if (newCompletedQuestions.length === module.questions.length) {
+                  saveProgress(moduleId!)
+                  navigate('/')
+                } else {
+                  nextQuestion()
+                }
+              }}
+            />
           )}
 
           {(currentQuestion as SentenceQuestion).hint && !isCorrect && (
@@ -271,20 +269,6 @@ export const ModulePage = () => {
                 Try again! The correct answer is: {currentQuestion.correctAnswer}
               </p>
             </div>
-          )}
-
-          {/* Only show the Check Answer button for flashcards on desktop */}
-          {module.type === 'flashcards' && (
-            <Button
-              className="w-full mt-6 hidden md:block"
-              size="lg"
-              variant={isCorrect ? "secondary" : "default"}
-              onClick={() => handleOptionSelect(userAnswer)}
-              disabled={!userAnswer}
-              aria-label="Check your answer"
-            >
-              Check Answer
-            </Button>
           )}
         </div>
       </div>
