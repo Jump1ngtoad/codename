@@ -209,7 +209,7 @@ export const ModulePage = () => {
               >
                 <ArrowLeft className="w-4 h-4" aria-hidden="true" />
               </Button>
-              <h1 className="text-2xl font-medium text-black">
+              <h1 className="text-2xl font-semibold text-black">
                 {module.title}
               </h1>
             </div>

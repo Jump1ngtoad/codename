@@ -1,7 +1,41 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FileType, FileImage, Type, Trophy } from 'lucide-react'
+import { 
+  FileType, 
+  FileImage, 
+  Type, 
+  Bird, 
+  Apple, 
+  Coffee, 
+  MessageSquare, 
+  Hash, 
+  Play,
+  ArrowLeft
+} from 'lucide-react'
 import { ModuleManifest } from '../types'
+
+// Icon mapping for different module categories
+const MODULE_ICONS = {
+  'animals-1': Bird,
+  'food-1': Apple,
+  'food-2': Coffee,
+  'greetings': MessageSquare,
+  'numbers-1': Hash,
+  'phrases-1': Type,
+  'verbs-1': Play,
+  'verbs-2': Play,
+  default: FileType
+} as const
+
+// Helper function to determine module icon and style
+const getModuleIcon = (moduleId: string) => {
+  const IconComponent = MODULE_ICONS[moduleId as keyof typeof MODULE_ICONS] || MODULE_ICONS.default
+  return (
+    <div className="w-[38px] h-[38px] bg-secondary rounded-xl flex items-center justify-center shrink-0">
+      <IconComponent className="w-[18px] h-[18px]" strokeWidth={1.5} absoluteStrokeWidth />
+    </div>
+  )
+}
 
 export const HomePage = () => {
   const [modules, setModules] = useState<ModuleManifest['modules']>([])
@@ -36,43 +70,6 @@ export const HomePage = () => {
     fetchModules()
   }, [])
 
-  // Helper function to determine module icon and style
-  const getModuleIcon = (module: ModuleManifest['modules'][0]) => {
-    // Base classes for consistent icon containers - 24px icon + 8px padding on each side = 40px total
-    const baseIconClasses = "w-[40px] h-[40px] rounded-xl p-2 flex items-center justify-center"
-    // Common icon properties - 24px size with 1.5px stroke
-    const iconProps = {
-      className: "w-6 h-6", // w-6 = 24px
-      strokeWidth: 1.5,
-      absoluteStrokeWidth: true
-    }
-    
-    // Check if it's an image-based flashcard module
-    const isImageModule = module.id.startsWith('food-') || module.id.startsWith('animals-')
-    
-    if (module.type === 'sentence-completion') {
-      return (
-        <div className={`${baseIconClasses} bg-rose-500 text-white`}>
-          <Type {...iconProps} />
-        </div>
-      )
-    }
-    
-    if (isImageModule) {
-      return (
-        <div className={`${baseIconClasses} bg-blue-500 text-white`}>
-          <FileImage {...iconProps} />
-        </div>
-      )
-    }
-    
-    return (
-      <div className={`${baseIconClasses} bg-emerald-500 text-white`}>
-        <FileType {...iconProps} />
-      </div>
-    )
-  }
-
   return (
     <div className="min-h-screen">
       <div className="container mx-auto py-12 px-4">
@@ -98,41 +95,39 @@ export const HomePage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {modules.map((module) => {
-              const isCompleted = completedModules.includes(module.id);
+              const isCompleted = completedModules.includes(module.id)
               return (
                 <Link 
                   key={module.id} 
                   to={`/module/${module.id}`}
-                  className="block group"
+                  className="block"
                 >
-                  <div className={`module-card relative ${isCompleted ? 'bg-secondary' : ''}`}>
-                    {isCompleted && (
-                      <div className="absolute -top-2 -right-2 bg-amber-400 text-white rounded-full p-1.5" aria-label="Module completed">
-                        <Trophy className="w-4 h-4" aria-hidden="true" />
-                      </div>
-                    )}
-                    <div className="flex items-start justify-between mb-4 gap-6">
-                      <div className="space-y-1.5">
-                        <h3 className="text-xl font-bold">
-                          {module.title}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
+                  <div className="bg-white rounded-[24px] p-8 shadow-sm border border-border hover:border-gray-300 transition-colors">
+                    <div className="space-y-4 min-w-0">
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-3">
+                          {getModuleIcon(module.id)}
+                          <h3 className="text-2xl font-semibold">
+                            {module.title}
+                          </h3>
+                        </div>
+                        <p className="text-muted-foreground">
                           {module.description}
                         </p>
                       </div>
-                      {getModuleIcon(module)}
-                    </div>
-                    <div className="flex items-center text-sm font-medium">
-                      <span className="text-muted-foreground uppercase tracking-wide text-xs" role="status">
-                        {isCompleted ? 'Completed' : module.type === 'flashcards' ? 'Flashcards' : 'Sentence Completion'}
-                      </span>
-                      <span className="ml-auto text-primary group-hover:translate-x-1 transition-transform">
-                        {isCompleted ? 'Practice Again' : 'Start Learning'} →
-                      </span>
+                      <div className="flex items-center justify-between">
+                        <span className="text-primary font-medium text-foreground tracking-wide">
+                          {module.type === 'flashcards' ? 'Flashcards' : 'Sentence Completion'}
+                        </span>
+                        <div className="text-primary font-medium flex items-center gap-2 group">
+                          Start Learning
+                          <span className="transition-transform group-hover:translate-x-1">→</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </Link>
-              );
+              )
             })}
           </div>
 
