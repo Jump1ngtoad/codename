@@ -14,9 +14,11 @@
     --popover-foreground: 0 0% 12%;
 
     --primary: 160 84% 39%;
+    --primary-dark: 160 84% 29%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 0 0% 96%;
+    --secondary-dark: 0 0% 86%;
     --secondary-foreground: 0 0% 12%;
 
     --muted: 0 0% 96%;
@@ -29,6 +31,7 @@
     --success-foreground: 0 0% 98%;
 
     --destructive: 0 84% 60%;
+    --destructive-dark: 0 84% 50%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 0 0% 92%;
@@ -49,9 +52,11 @@
     --popover-foreground: 210 40% 98%;
 
     --primary: 210 40% 98%;
+    --primary-dark: 210 40% 88%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
+    --secondary-dark: 217.2 32.6% 12.5%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -61,6 +66,7 @@
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
+    --destructive-dark: 0 62.8% 25.6%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 217.2 32.6% 17.5%;
@@ -107,21 +113,48 @@
   }
 
   .answer-option {
-    @apply relative p-4 rounded-xl transition-all duration-200 
-           hover:bg-secondary active:bg-secondary/80 active:scale-[0.99]
-           cursor-pointer border border-border;
+    @apply relative p-4 rounded-[0.75rem] transition-all duration-200 
+           bg-white hover:bg-white/80
+           cursor-pointer border border-border shadow-sm;
   }
 
   .answer-option.selected {
-    @apply bg-secondary border-primary/50;
+    @apply bg-emerald-50 border-emerald-500 text-emerald-700;
   }
 
   .answer-option.correct {
-    @apply bg-green-50 border-green-600 text-green-600;
+    @apply bg-emerald-50 border-emerald-500 text-emerald-700;
   }
 
   .answer-option.incorrect {
-    @apply bg-red-50 border-red-500 text-red-500;
+    @apply bg-red-50 border-red-500 text-red-600;
+  }
+
+  .answer-option .radio-indicator {
+    @apply absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center;
+  }
+
+  .answer-option .pointer-icon {
+    @apply rotate-90 opacity-0 -translate-x-4 transition-all duration-300 ease-in-out;
+    will-change: transform, opacity;
+  }
+
+  .answer-option .pointer-icon.is-selected {
+    @apply opacity-100 translate-x-0;
+  }
+
+  /* Specific animation for the X icon */
+  .answer-option.incorrect .pointer-icon {
+    @apply rotate-0 scale-0 opacity-0;
+    transition-duration: 200ms;
+  }
+
+  .answer-option.incorrect .pointer-icon.is-selected {
+    @apply scale-100 opacity-100;
+  }
+
+  .answer-option .option-text {
+    @apply pl-12 block w-full text-left;
   }
 
   .stats-card {

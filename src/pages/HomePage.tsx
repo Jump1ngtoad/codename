@@ -68,15 +68,12 @@ export const HomePage = () => {
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="text-center space-y-6">
             <div className="inline-flex items-center space-x-2 text-primary font-bold mb-4">
-              <div className="w-8 h-8 rounded-lg p-1.5 bg-primary text-white flex items-center justify-center">
-                <Sparkles className="w-5 h-5" strokeWidth={1.5} absoluteStrokeWidth />
-              </div>
-              <span className="text-sm uppercase tracking-wide">Interactive Learning</span>
             </div>
-            <h1 className="text-5xl font-black">
-              Learn Afrikaans
-              <span className="block text-primary mt-2">the lekker way!</span>
-            </h1>
+            <img 
+              src="/images/logo.svg" 
+              alt="Lekker Learning"
+              className="h-16 mx-auto"
+            />
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Master Afrikaans through playful flashcards and interactive exercises!
             </p>

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, Trophy } from 'lucide-react'
+import { ArrowLeft, Trophy, PointerIcon, X } from 'lucide-react'
 import { Module, FlashcardQuestion, ImageFlashcardQuestion, SentenceQuestion } from '../types'
 import { Button } from '../components/ui/button'
 import { Progress } from '../components/ui/progress'
-import { RadioGroup, RadioGroupItem } from '../components/ui/radio-group'
+import { RadioGroup } from '../components/ui/radio-group'
 
 export const ModulePage = () => {
   const { moduleId } = useParams<{ moduleId: string }>()
@@ -108,19 +108,25 @@ export const ModulePage = () => {
               userAnswer === option ? 'selected' : ''
             }`}
           >
-            <div className="flex items-center space-x-3">
-              <RadioGroupItem 
-                value={option} 
-                id={option}
-                className="group-hover:border-primary"
-              />
-              <label
-                htmlFor={option}
-                className="flex-1 text-lg font-medium leading-none cursor-pointer"
-              >
-                {option}
-              </label>
+            <div className="radio-indicator">
+              {isCorrect === false && userAnswer === option ? (
+                <X 
+                  className={`w-5 h-5 text-red-500 pointer-icon is-selected`}
+                />
+              ) : (
+                <PointerIcon 
+                  className={`w-5 h-5 text-emerald-600 pointer-icon ${
+                    userAnswer === option ? 'is-selected' : ''
+                  }`} 
+                />
+              )}
             </div>
+            <label
+              htmlFor={option}
+              className="option-text text-lg font-medium leading-none cursor-pointer"
+            >
+              {option}
+            </label>
           </div>
         ))}
       </RadioGroup>
