@@ -4,7 +4,6 @@ import { ArrowLeft, Trophy, PointerIcon, X } from 'lucide-react'
 import { Module, FlashcardQuestion, ImageFlashcardQuestion, SentenceQuestion } from '../types'
 import { Button } from '../components/ui/button'
 import { Progress } from '../components/ui/progress'
-import { RadioGroup } from '../components/ui/radio-group'
 
 export const ModulePage = () => {
   const { moduleId } = useParams<{ moduleId: string }>()
