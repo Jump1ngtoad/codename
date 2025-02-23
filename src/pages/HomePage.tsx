@@ -2,15 +2,13 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { 
   FileType, 
-  FileImage, 
   Type, 
   Bird, 
   Apple, 
   Coffee, 
   MessageSquare, 
   Hash, 
-  Play,
-  ArrowLeft
+  Play
 } from 'lucide-react'
 import { ModuleManifest } from '../types'
 
@@ -94,41 +92,38 @@ export const HomePage = () => {
           )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {modules.map((module) => {
-              const isCompleted = completedModules.includes(module.id)
-              return (
-                <Link 
-                  key={module.id} 
-                  to={`/module/${module.id}`}
-                  className="block"
-                >
-                  <div className="bg-white rounded-[24px] p-6 shadow-sm border border-border hover:border-gray-300 transition-colors">
-                    <div className="space-y-4 min-w-0">
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-3">
-                          {getModuleIcon(module.id)}
-                          <h3 className="text-xl font-semibold">
-                            {module.title}
-                          </h3>
-                        </div>
-                        <p className="text-md text-muted-foreground">
-                          {module.description}
-                        </p>
+            {modules.map((module) => (
+              <Link 
+                key={module.id} 
+                to={`/module/${module.id}`}
+                className="block"
+              >
+                <div className="bg-white rounded-[24px] p-6 shadow-sm border border-border hover:border-gray-300 transition-colors">
+                  <div className="space-y-4 min-w-0">
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-3">
+                        {getModuleIcon(module.id)}
+                        <h3 className="text-xl font-semibold">
+                          {module.title}
+                        </h3>
                       </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-primary font-medium text-foreground tracking-wide">
-                          {module.type === 'flashcards' ? 'Flashcards' : 'Sentence Completion'}
-                        </span>
-                        <div className="text-primary font-medium flex items-center gap-2 group">
-                          Start Learning
-                          <span className="transition-transform group-hover:translate-x-1">→</span>
-                        </div>
+                      <p className="text-md text-muted-foreground">
+                        {module.description}
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-primary font-medium text-foreground tracking-wide">
+                        {module.type === 'flashcards' ? 'Flashcards' : 'Sentence Completion'}
+                      </span>
+                      <div className="text-primary font-medium flex items-center gap-2 group">
+                        Start Learning
+                        <span className="transition-transform group-hover:translate-x-1">→</span>
                       </div>
                     </div>
                   </div>
-                </Link>
-              )
-            })}
+                </div>
+              </Link>
+            ))}
           </div>
 
           <div className="text-center">
