@@ -32,7 +32,7 @@ const getModuleIcon = (moduleId: string) => {
   const IconComponent = MODULE_ICONS[moduleId as keyof typeof MODULE_ICONS] || MODULE_ICONS.default
   return (
     <div className="w-[38px] h-[38px] bg-secondary rounded-xl flex items-center justify-center shrink-0">
-      <IconComponent className="w-[18px] h-[18px]" strokeWidth={1.5} absoluteStrokeWidth />
+      <IconComponent className="w-[18px] h-[18px]" strokeWidth={2} absoluteStrokeWidth />
     </div>
   )
 }
@@ -102,16 +102,16 @@ export const HomePage = () => {
                   to={`/module/${module.id}`}
                   className="block"
                 >
-                  <div className="bg-white rounded-[24px] p-8 shadow-sm border border-border hover:border-gray-300 transition-colors">
+                  <div className="bg-white rounded-[24px] p-6 shadow-sm border border-border hover:border-gray-300 transition-colors">
                     <div className="space-y-4 min-w-0">
                       <div className="space-y-4">
                         <div className="flex items-center gap-3">
                           {getModuleIcon(module.id)}
-                          <h3 className="text-2xl font-semibold">
+                          <h3 className="text-xl font-semibold">
                             {module.title}
                           </h3>
                         </div>
-                        <p className="text-muted-foreground">
+                        <p className="text-md text-muted-foreground">
                           {module.description}
                         </p>
                       </div>
