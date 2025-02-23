@@ -90,6 +90,12 @@ export const HomePage = () => {
             </p>
           </div>
 
+          {error && (
+            <div className="bg-red-50 p-4 rounded-xl text-red-600 mb-4">
+              {error}
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {modules.map((module) => {
               const isCompleted = completedModules.includes(module.id);
