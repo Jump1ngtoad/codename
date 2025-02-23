@@ -154,7 +154,7 @@
   }
 
   .answer-option .option-text {
-    @apply pl-12 block w-full text-left;
+    @apply pl-8 block w-full text-left;
   }
 
   .stats-card {

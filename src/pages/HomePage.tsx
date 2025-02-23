@@ -1,24 +1,35 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { FileType, FileImage, Type, Trophy } from 'lucide-react'
 import { ModuleManifest } from '../types'
-import { FileType, FileImage, Type, Sparkles, Trophy } from 'lucide-react'
 
 export const HomePage = () => {
   const [modules, setModules] = useState<ModuleManifest['modules']>([])
   const [completedModules, setCompletedModules] = useState<string[]>([])
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchModules = async () => {
       try {
         const response = await fetch('/modules/manifest.json')
+        if (!response.ok) {
+          throw new Error(`Failed to load modules (${response.status})`)
+        }
         const data: ModuleManifest = await response.json()
         setModules(data.modules)
         
         // Load completed modules from localStorage
-        const completed = JSON.parse(localStorage.getItem('completedModules') || '[]')
-        setCompletedModules(completed)
+        try {
+          const completed = JSON.parse(localStorage.getItem('completedModules') || '[]')
+          setCompletedModules(completed)
+        } catch (storageError) {
+          console.error('Error loading progress:', storageError)
+          // Continue with empty completed modules
+          setCompletedModules([])
+        }
       } catch (error) {
         console.error('Error loading modules:', error)
+        setError('Failed to load modules. Please try again later.')
       }
     }
 

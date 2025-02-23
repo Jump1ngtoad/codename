@@ -15,21 +15,39 @@ export const ModulePage = () => {
   const [userAnswer, setUserAnswer] = useState('')
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
   const [completedQuestions, setCompletedQuestions] = useState<number[]>([])
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchModule = async () => {
       try {
         const response = await fetch(`/modules/${moduleId}.json`)
+        if (!response.ok) {
+          throw new Error(`Failed to load module (${response.status})`)
+        }
         const data: Module = await response.json()
         setModule(data)
+        setError(null)
       } catch (error) {
         console.error('Error loading module:', error)
-        navigate('/')
+        setError('Failed to load module. Please try again later.')
+        // Don't navigate away immediately, show error state instead
       }
     }
 
     fetchModule()
   }, [moduleId, navigate])
+
+  const saveProgress = (moduleId: string) => {
+    try {
+      const completedModules = JSON.parse(localStorage.getItem('completedModules') || '[]')
+      if (!completedModules.includes(moduleId)) {
+        localStorage.setItem('completedModules', JSON.stringify([...completedModules, moduleId]))
+      }
+    } catch (error) {
+      console.error('Error saving progress:', error)
+      // Continue without saving progress
+    }
+  }
 
   const handleAnswer = () => {
     if (!module) return
@@ -46,10 +64,7 @@ export const ModulePage = () => {
       if (newCompletedQuestions.length === module.questions.length) {
         // Save progress and return to home after delay
         setTimeout(() => {
-          const completedModules = JSON.parse(localStorage.getItem('completedModules') || '[]')
-          if (!completedModules.includes(moduleId)) {
-            localStorage.setItem('completedModules', JSON.stringify([...completedModules, moduleId]))
-          }
+          saveProgress(moduleId!)
           navigate('/')
         }, 500)
       } else {
@@ -162,7 +177,32 @@ export const ModulePage = () => {
     }
   };
 
-  if (!module) return null;
+  // Show error state if module failed to load
+  if (error) {
+    return (
+      <div className="container mx-auto py-8 px-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-red-50 p-4 rounded-xl text-red-600">
+            <p>{error}</p>
+            <Button
+              onClick={() => navigate('/')}
+              variant="ghost"
+              className="mt-4"
+            >
+              Return to Home
+            </Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Show loading state or return null if no module
+  if (!module) return (
+    <div className="container mx-auto py-8 px-4 text-center text-muted-foreground">
+      Loading...
+    </div>
+  )
 
   const currentQuestion = module.questions[currentQuestionIndex];
   const progress = (completedQuestions.length / module.questions.length) * 100;
