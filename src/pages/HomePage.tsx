@@ -8,9 +8,11 @@ import {
   Coffee, 
   MessageSquare, 
   Hash, 
-  Play
+  Play,
+  ArrowRight
 } from 'lucide-react'
 import { ModuleManifest } from '../types'
+import { cn } from '../lib/utils'
 
 // Icon mapping for different module categories
 const MODULE_ICONS = {
@@ -26,11 +28,27 @@ const MODULE_ICONS = {
 } as const
 
 // Helper function to determine module icon and style
-const getModuleIcon = (moduleId: string) => {
+const getModuleIcon = (moduleId: string, isCompleted: boolean) => {
   const IconComponent = MODULE_ICONS[moduleId as keyof typeof MODULE_ICONS] || MODULE_ICONS.default
   return (
-    <div className="w-[38px] h-[38px] bg-secondary rounded-xl flex items-center justify-center shrink-0">
-      <IconComponent className="w-[18px] h-[18px]" strokeWidth={2} absoluteStrokeWidth />
+    <div className={cn(
+      "w-[38px] h-[38px] rounded-xl flex items-center justify-center shrink-0 relative overflow-hidden",
+      isCompleted ? cn(
+        "bg-amber-400 drop-shadow-[0_3px_0_rgba(217,119,6,1)]",
+        // First diagonal line (16-20 to 1-5)
+        "before:absolute before:w-[4px] before:h-[200%] before:bg-white/25 before:rotate-[20deg] before:top-[-50%] before:left-[30%]",
+        // Second diagonal line (22-24 to 7-9)
+        "after:absolute after:w-[2px] after:h-[200%] after:bg-white/25 after:rotate-[20deg] after:top-[-50%] after:left-[50%]"
+      ) : "bg-secondary"
+    )}>
+      <IconComponent 
+        className={cn(
+          "w-[18px] h-[18px] relative z-10",
+          isCompleted ? "text-amber-600" : "text-foreground"
+        )} 
+        strokeWidth={2} 
+        absoluteStrokeWidth 
+      />
     </div>
   )
 }
@@ -92,38 +110,49 @@ export const HomePage = () => {
           )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {modules.map((module) => (
-              <Link 
-                key={module.id} 
-                to={`/module/${module.id}`}
-                className="block"
-              >
-                <div className="bg-white rounded-[24px] p-6 shadow-sm border border-border hover:border-gray-300 transition-colors">
-                  <div className="space-y-4 min-w-0">
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-3">
-                        {getModuleIcon(module.id)}
-                        <h3 className="text-xl font-semibold">
-                          {module.title}
-                        </h3>
+            {modules.map((module) => {
+              const isCompleted = completedModules.includes(module.id)
+              return (
+                <Link 
+                  key={module.id} 
+                  to={`/module/${module.id}`}
+                  className="block"
+                >
+                  <div className={cn(
+                    "bg-white rounded-[24px] p-6 shadow-sm border transition-colors group",
+                    isCompleted 
+                      ? "border-amber-300 hover:border-amber-400 bg-amber-50" 
+                      : "border-border hover:border-gray-300"
+                  )}>
+                    <div className="space-y-4 min-w-0">
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-3">
+                          {getModuleIcon(module.id, isCompleted)}
+                          <h3 className="text-xl font-semibold">
+                            {module.title}
+                          </h3>
+                        </div>
+                        <p className="text-md text-muted-foreground">
+                          {module.description}
+                        </p>
                       </div>
-                      <p className="text-md text-muted-foreground">
-                        {module.description}
-                      </p>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-black font-semibold text-foreground tracking-wide">
-                        {module.type === 'flashcards' ? 'Flashcards' : 'Sentence Completion'}
-                      </span>
-                      <div className="text-primary font-medium flex items-center gap-2 group">
-                        Start Learning
-                        <span className="transition-transform group-hover:translate-x-1">→</span>
+                      <div className="flex items-center justify-between">
+                        <span className="text-black font-semibold text-foreground tracking-wide">
+                          {module.type === 'flashcards' ? 'Flashcards' : 'Sentence Completion'}
+                        </span>
+                        <div className={cn(
+                          "text-primary font-medium flex items-center gap-2",
+                          isCompleted && "text-amber-600"
+                        )}>
+                          {isCompleted ? 'Review' : 'Start Learning'}
+                          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              )
+            })}
           </div>
 
           <div className="text-center">

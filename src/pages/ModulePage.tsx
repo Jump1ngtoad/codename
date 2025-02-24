@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, Trophy, PointerIcon, X } from 'lucide-react'
+import { Trophy, PointerIcon, X } from 'lucide-react'
 import { Module, FlashcardQuestion, ImageFlashcardQuestion, SentenceQuestion } from '../types'
 import { Button } from '../components/ui/button'
 import { Progress } from '../components/ui/progress'
 import { SentenceCompletionQuestion } from '../components/SentenceCompletionQuestion'
+import { cn } from '../lib/utils'
 
 export const ModulePage = () => {
   const { moduleId } = useParams<{ moduleId: string }>()
@@ -16,6 +17,7 @@ export const ModulePage = () => {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
   const [completedQuestions, setCompletedQuestions] = useState<number[]>([])
   const [error, setError] = useState<string | null>(null)
+  const [isModuleCompleted, setIsModuleCompleted] = useState(false)
 
   useEffect(() => {
     const fetchModule = async () => {
@@ -26,16 +28,20 @@ export const ModulePage = () => {
         }
         const data: Module = await response.json()
         setModule(data)
+        
+        // Check if module is completed
+        const completedModules = JSON.parse(localStorage.getItem('completedModules') || '[]')
+        setIsModuleCompleted(completedModules.includes(moduleId))
+        
         setError(null)
       } catch (error) {
         console.error('Error loading module:', error)
         setError('Failed to load module. Please try again later.')
-        // Don't navigate away immediately, show error state instead
       }
     }
 
     fetchModule()
-  }, [moduleId, navigate])
+  }, [moduleId])
 
   const saveProgress = (moduleId: string) => {
     try {
@@ -167,27 +173,33 @@ export const ModulePage = () => {
   // Show error state if module failed to load
   if (error) {
     return (
-      <div className="container mx-auto py-8 px-4">
-        <div className="max-w-2xl mx-auto">
-          <div className="bg-red-50 p-4 rounded-xl text-red-600">
-            <p>{error}</p>
-            <Button
-              onClick={() => navigate('/')}
-              variant="ghost"
-              className="mt-4"
-            >
-              Return to Home
-            </Button>
+      <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div className="bg-white rounded-2xl w-full max-w-2xl">
+          <div className="p-6">
+            <div className="bg-red-50 p-4 rounded-xl text-red-600">
+              <p>{error}</p>
+              <Button
+                onClick={() => navigate('/')}
+                variant="ghost"
+                className="mt-4"
+              >
+                Return to Home
+              </Button>
+            </div>
           </div>
         </div>
       </div>
     )
   }
 
-  // Show loading state or return null if no module
+  // Show loading state
   if (!module) return (
-    <div className="container mx-auto py-8 px-4 text-center text-muted-foreground">
-      Loading...
+    <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
+      <div className="bg-white rounded-2xl w-full max-w-2xl">
+        <div className="p-6 text-center text-muted-foreground">
+          Loading...
+        </div>
+      </div>
     </div>
   )
 
@@ -195,81 +207,100 @@ export const ModulePage = () => {
   const progress = (completedQuestions.length / module.questions.length) * 100;
 
   return (
-    <div className="container mx-auto py-8 px-4 min-h-screen">
-      <div className="max-w-2xl mx-auto space-y-6">
-        <div>
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-3">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => navigate('/')}
-                className="text-primary"
-                aria-label="Return to modules list"
-              >
-                <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-              </Button>
-              <h1 className="text-2xl font-semibold text-black">
-                {module.title}
-              </h1>
-            </div>
-            <div className="flex items-center text-primary" role="status" aria-label="Question progress">
-              <Trophy className="w-5 h-5 mr-2" aria-hidden="true" />
+    <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
+      <div className="bg-white rounded-2xl w-full max-w-2xl">
+        <div className="p-6 space-y-6">
+          {/* Header integrated into the card */}
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-semibold text-black">
+              {module.title}
+            </h1>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate('/')}
+              className={cn(
+                isModuleCompleted 
+                  ? "text-amber-600 hover:text-amber-700 hover:bg-amber-50"
+                  : "text-primary hover:text-primary/80 hover:bg-primary/5"
+              )}
+              aria-label="Close module"
+            >
+              <X className="w-4 h-4" aria-hidden="true" />
+            </Button>
+          </div>
+
+          {/* Progress section */}
+          <div className="flex items-center gap-3">
+            <div className={cn(
+              "flex items-center text-sm shrink-0",
+              isModuleCompleted ? "text-amber-600" : "text-primary"
+            )} role="status" aria-label="Question progress">
+              <Trophy className="w-4 h-4 mr-1.5" aria-hidden="true" />
               <span className="font-medium">{completedQuestions.length}/{module.questions.length}</span>
             </div>
-          </div>
-          <Progress value={progress} className="h-2" aria-label="Module progress" />
-        </div>
-
-        <div className="question-card">
-          {module.type === 'flashcards' ? (
-            <>
-              {renderQuestion()}
-              {renderOptions()}
-              {/* Only show the Check Answer button for flashcards on desktop */}
-              <Button
-                className="w-full mt-6 hidden md:block"
-                size="lg"
-                variant={isCorrect ? "secondary" : "default"}
-                onClick={() => handleOptionSelect(userAnswer)}
-                disabled={!userAnswer}
-                aria-label="Check your answer"
-              >
-                Check Answer
-              </Button>
-            </>
-          ) : (
-            <SentenceCompletionQuestion
-              question={module.questions[currentQuestionIndex] as SentenceQuestion}
-              onCorrect={() => {
-                const newCompletedQuestions = [...completedQuestions, currentQuestionIndex]
-                setCompletedQuestions(newCompletedQuestions)
-                
-                if (newCompletedQuestions.length === module.questions.length) {
-                  saveProgress(moduleId!)
-                  navigate('/')
-                } else {
-                  nextQuestion()
-                }
-              }}
+            <Progress 
+              value={progress} 
+              className={cn(
+                "h-2 flex-1",
+                isModuleCompleted 
+                  ? "bg-amber-100 [&>[role=progressbar]]:bg-amber-400"
+                  : "bg-primary/20 [&>[role=progressbar]]:bg-primary"
+              )}
+              aria-label="Module progress" 
             />
-          )}
+          </div>
 
-          {(currentQuestion as SentenceQuestion).hint && !isCorrect && (
-            <div className="mt-4 p-4 bg-primary/5 rounded-xl" role="alert">
-              <p className="text-sm text-primary/80">
-                💡 Hint: {(currentQuestion as SentenceQuestion).hint}
-              </p>
-            </div>
-          )}
+          {/* Question content */}
+          <div className="space-y-6">
+            {module.type === 'flashcards' ? (
+              <>
+                {renderQuestion()}
+                {renderOptions()}
+                <Button
+                  className="w-full mt-6 hidden md:block"
+                  size="lg"
+                  variant={isCorrect ? "secondary" : "default"}
+                  onClick={() => handleOptionSelect(userAnswer)}
+                  disabled={!userAnswer}
+                  aria-label="Check your answer"
+                >
+                  Check Answer
+                </Button>
+              </>
+            ) : (
+              <SentenceCompletionQuestion
+                question={module.questions[currentQuestionIndex] as SentenceQuestion}
+                onCorrect={() => {
+                  const newCompletedQuestions = [...completedQuestions, currentQuestionIndex]
+                  setCompletedQuestions(newCompletedQuestions)
+                  
+                  if (newCompletedQuestions.length === module.questions.length) {
+                    saveProgress(moduleId!)
+                    navigate('/')
+                  } else {
+                    nextQuestion()
+                  }
+                }}
+              />
+            )}
 
-          {isCorrect === false && (
-            <div className="mt-4 p-4 bg-red-50 rounded-xl" role="alert" aria-live="polite">
-              <p className="text-sm text-red-600">
-                Try again! The correct answer is: {currentQuestion.correctAnswer}
-              </p>
-            </div>
-          )}
+            {(currentQuestion as SentenceQuestion).hint && !isCorrect && (
+              <div className="mt-4 p-4 bg-primary/5 rounded-xl" role="alert">
+                <p className="text-sm text-primary/80">
+                  💡 Hint: {(currentQuestion as SentenceQuestion).hint}
+                </p>
+              </div>
+            )}
+
+            {isCorrect === false && (
+              <div className="mt-4 p-4 bg-red-50 rounded-xl" role="alert" aria-live="polite">
+                <p className="text-sm text-red-600">
+                  Try again! The correct answer is: {currentQuestion.correctAnswer}
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
