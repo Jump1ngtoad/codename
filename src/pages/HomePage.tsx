@@ -32,9 +32,9 @@ const getModuleIcon = (moduleId: string, isCompleted: boolean) => {
   const IconComponent = MODULE_ICONS[moduleId as keyof typeof MODULE_ICONS] || MODULE_ICONS.default
   return (
     <div className={cn(
-      "w-[38px] h-[38px] rounded-xl flex items-center justify-center shrink-0 relative overflow-hidden",
+      "w-[38px] h-[38px] rounded-xl flex items-center justify-center shrink-0 relative pb-[3px]",
       isCompleted ? cn(
-        "bg-amber-400 drop-shadow-[0_3px_0_rgba(217,119,6,1)]",
+        "bg-amber-400 shadow-[0_3px_0_rgba(217,119,6,1)]",
         // First diagonal line (16-20 to 1-5)
         "before:absolute before:w-[4px] before:h-[200%] before:bg-white/25 before:rotate-[20deg] before:top-[-50%] before:left-[30%]",
         // Second diagonal line (22-24 to 7-9)
@@ -96,7 +96,7 @@ export const HomePage = () => {
             <img 
               src="/images/logo.svg" 
               alt="Lekker Learning"
-              className="h-16 mx-auto"
+              className="h-16 mx-auto animate-fade-up"
             />
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Master Afrikaans through playful flashcards and interactive exercises!
@@ -121,7 +121,7 @@ export const HomePage = () => {
                   <div className={cn(
                     "bg-white rounded-[24px] p-6 shadow-sm border transition-colors group",
                     isCompleted 
-                      ? "border-amber-300 hover:border-amber-400 bg-amber-50" 
+                      ? "border-border hover:border-amber-300" 
                       : "border-border hover:border-gray-300"
                   )}>
                     <div className="space-y-4 min-w-0">

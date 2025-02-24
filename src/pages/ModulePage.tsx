@@ -207,9 +207,9 @@ export const ModulePage = () => {
   const progress = (completedQuestions.length / module.questions.length) * 100;
 
   return (
-    <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl w-full max-w-2xl">
-        <div className="p-6 space-y-6">
+    <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-2 sm:p-4 backdrop-blur-sm">
+      <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[calc(100vh-16px)] sm:max-h-[calc(100vh-32px)] overflow-y-auto">
+        <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
           {/* Header integrated into the card */}
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-semibold text-black">
@@ -252,7 +252,7 @@ export const ModulePage = () => {
           </div>
 
           {/* Question content */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {module.type === 'flashcards' ? (
               <>
                 {renderQuestion()}
