@@ -112,7 +112,7 @@ export const HomePage = () => {
                       </p>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-primary font-medium text-foreground tracking-wide">
+                      <span className="text-black font-semibold text-foreground tracking-wide">
                         {module.type === 'flashcards' ? 'Flashcards' : 'Sentence Completion'}
                       </span>
                       <div className="text-primary font-medium flex items-center gap-2 group">
