@@ -6,7 +6,7 @@ import { Button } from '../components/ui/button'
 import { Progress } from '../components/ui/progress'
 import { SentenceCompletionQuestion } from '../components/SentenceCompletionQuestion'
 import { LoadingOverlay, ErrorMessage } from '../components/shared'
-import { useApp } from '../contexts/AppContext'
+import { useApp } from '../contexts/hooks'
 
 // Cache for module data
 const moduleCache = new Map<string, { data: Module; timestamp: number }>()
@@ -15,7 +15,7 @@ const MODULE_CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
 export const ModulePage = () => {
   const { moduleId } = useParams<{ moduleId: string }>()
   const navigate = useNavigate()
-  const { markModuleAsCompleted, completedModules } = useApp()
+  const { markModuleAsCompleted } = useApp()
 
   const [module, setModule] = useState<Module | null>(null)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)

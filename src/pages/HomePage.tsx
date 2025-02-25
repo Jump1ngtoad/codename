@@ -10,7 +10,7 @@ import {
   Play,
   ArrowRight
 } from 'lucide-react'
-import { useApp } from '../contexts/AppContext'
+import { useApp } from '../contexts/hooks'
 import { LoadingOverlay, ErrorMessage } from '../components/shared'
 import { cn } from '../lib/utils'
 

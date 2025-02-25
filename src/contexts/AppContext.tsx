@@ -1,15 +1,6 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import { useEffect, useState, ReactNode } from 'react'
 import { ModuleManifest } from '../types'
-
-interface AppContextType {
-  modules: ModuleManifest['modules']
-  completedModules: string[]
-  isLoading: boolean
-  error: string | null
-  markModuleAsCompleted: (moduleId: string) => void
-}
-
-const AppContext = createContext<AppContextType | undefined>(undefined)
+import { AppContext } from './context'
 
 const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
 const MODULES_CACHE_KEY = 'modulesCache'
@@ -138,12 +129,4 @@ export function AppProvider({ children }: { children: ReactNode }) {
       {children}
     </AppContext.Provider>
   )
-}
-
-export function useApp() {
-  const context = useContext(AppContext)
-  if (context === undefined) {
-    throw new Error('useApp must be used within an AppProvider')
-  }
-  return context
 } 
