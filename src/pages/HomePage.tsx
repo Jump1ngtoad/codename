@@ -139,7 +139,7 @@ export const HomePage = () => {
             <img 
               src="/images/logo.svg" 
               alt="Lekker Learning"
-              className="h-20 mx-auto animate-fade-up"
+              className="h-18 mx-auto animate-fade-up"
             />
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Master Afrikaans through playful flashcards and interactive exercises!
