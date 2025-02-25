@@ -4,58 +4,50 @@
       "id": "animals-1",
       "title": "Animals 1",
       "description": "Expand your Afrikaans vocabulary with common animal names.",
-      "type": "flashcards",
-      "difficulty": "easy"
+      "type": "flashcards"
     },
     {
       "id": "food-1",
       "title": "Food 1",
       "description": "Recognize and learn Afrikaans words for common foods and drinks.",
-      "type": "flashcards",
-      "difficulty": "easy"
+      "type": "flashcards"
     },
     {
       "id": "food-2",
       "title": "Food 2",
       "description": "Expand your food vocabulary with more Afrikaans words for everyday meals.",
-      "type": "flashcards",
-      "difficulty": "hard"
+      "type": "flashcards"
     },
     {
       "id": "greetings",
       "title": "Greetings",
       "description": "Learn common Afrikaans greetings and introductions using flashcards.",
-      "type": "flashcards",
-      "difficulty": "easy"
+      "type": "flashcards"
     },
     {
       "id": "numbers-1",
       "title": "Numbers 1-10",
       "description": "Learn to count from 1 to 10 in Afrikaans with number flashcards.",
-      "type": "flashcards",
-      "difficulty": "easy"
+      "type": "flashcards"
     },
     {
       "id": "phrases-1",
       "title": "Phrases 1",
       "description": "Practice essential Afrikaans phrases for daily communication.",
-      "type": "sentence-completion",
-      "difficulty": "hard"
+      "type": "sentence-completion"
     },
     {
       "id": "verbs-1",
       "title": "Verbs 1",
       "description": "Learn essential Afrikaans verbs for everyday conversations.",
-      "type": "flashcards",
-      "difficulty": "hard"
+      "type": "flashcards"
     },
     {
       "id": "verbs-2",
       "title": "Verbs 2",
       "description": "Build on your verb knowledge with more commonly used Afrikaans verbs.",
-      "type": "flashcards",
-      "difficulty": "hard"
+      "type": "flashcards"
     }
   ],
-  "generatedAt": "2025-02-25T02:32:54.793Z"
+  "generatedAt": "2025-02-25T03:36:01.433Z"
 }
