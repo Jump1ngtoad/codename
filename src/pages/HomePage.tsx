@@ -16,32 +16,32 @@ import {
   Book,
   BookImage,
   BookA,
-  Brain
+  BookHeart,
+  Brain,
+  Puzzle,
+  BookOpen,
+  Layers
 } from 'lucide-react'
 import { useApp } from '../contexts/hooks'
 import { ErrorMessage, ModuleSkeletonGrid } from '../components/shared'
 import { cn } from '../lib/utils'
 import { useState, useMemo } from 'react'
+import { Button } from '../components/ui/button'
 
-// Icon mapping for different module categories
-const MODULE_ICONS = {
-  'animals-1': Bird,
-  'food-1': Apple,
-  'food-2': Coffee,
-  'greetings': MessageSquare,
-  'numbers-1': Hash,
-  'phrases-1': Type,
-  'verbs-1': Play,
-  'verbs-2': Play,
-  default: FileType
+// Icon mapping for different module types
+const MODULE_ICONS: Record<string, any> = {
+  'flashcards': BookImage,
+  'sentence-completion': BookA,
+  'puzzle': BookHeart,
+  default: Book
 } as const
 
 // Helper function to determine module icon and style
-const getModuleIcon = (moduleId: string, isCompleted: boolean) => {
-  const IconComponent = MODULE_ICONS[moduleId as keyof typeof MODULE_ICONS] || MODULE_ICONS.default
+const getModuleIcon = (moduleType: string, isCompleted: boolean) => {
+  const IconComponent = MODULE_ICONS[moduleType as keyof typeof MODULE_ICONS] || MODULE_ICONS.default
   return (
     <div className={cn(
-      "w-[38px] h-[38px] rounded-xl flex items-center justify-center shrink-0 relative pb-[3px]",
+      "w-[38px] h-[38px] rounded-xl flex items-center justify-center shrink-0 relative",
       isCompleted ? cn(
         "bg-amber-400 shadow-[0_3px_0_rgba(217,119,6,1)]",
         // First diagonal line (16-20 to 1-5)
@@ -68,59 +68,48 @@ export const HomePage = () => {
   // Toolbar state
   const [showCompleted, setShowCompleted] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
-  const [moduleType, setModuleType] = useState<'all' | 'cards' | 'words'>('all')
+  const [moduleType, setModuleType] = useState<
+    'all' | 'cards' | 'words' | 'puzzle'
+  >('all')
   const [difficultyFilter, setDifficultyFilter] = useState<'all' | 'easy' | 'hard'>('all')
 
-  // Filter modules
+  // Filter modules based on selected type, difficulty, and search query
   const filteredModules = useMemo(() => {
-    console.log('Starting filtering with:', {
-      totalModules: modules.length,
-      difficultyFilter,
-      moduleType,
-      showCompleted
-    });
+    let filtered = modules
 
-    return modules
-      .filter(module => {
-        // Debug logs for difficulty filtering
-        console.log('Module filtering:', {
-          id: module.id,
-          type: module.type,
-          difficulty: module.difficulty,
-          filterDifficulty: difficultyFilter,
-          matches: difficultyFilter === 'all' || module.difficulty === difficultyFilter
-        });
+    // Filter by module type
+    if (moduleType !== 'all') {
+      if (moduleType === 'cards') {
+        filtered = filtered.filter(m => m.type === 'flashcards')
+      } else if (moduleType === 'words') {
+        filtered = filtered.filter(m => m.type === 'sentence-completion')
+      } else if (moduleType === 'puzzle') {
+        filtered = filtered.filter(m => m.type === 'puzzle')
+      }
+    }
 
-        // Filter by completion status
-        if (!showCompleted && completedModules.includes(module.id)) {
-          return false;
-        }
-        
-        // Filter by type
-        if (moduleType !== 'all') {
-          const type = moduleType === 'cards' ? 'flashcards' : 'sentence-completion';
-          if (module.type !== type) {
-            return false;
-          }
-        }
+    // Filter by difficulty
+    if (difficultyFilter !== 'all') {
+      filtered = filtered.filter(m => m.difficulty === difficultyFilter)
+    }
 
-        // Filter by difficulty
-        if (difficultyFilter !== 'all' && module.difficulty !== difficultyFilter) {
-          return false;
-        }
-        
-        // Filter by search query
-        if (searchQuery) {
-          const query = searchQuery.toLowerCase();
-          return (
-            module.title.toLowerCase().includes(query) ||
-            module.description.toLowerCase().includes(query)
-          );
-        }
-        
-        return true;
-      });
-  }, [modules, completedModules, showCompleted, moduleType, searchQuery, difficultyFilter]);
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase()
+      filtered = filtered.filter(
+        m =>
+          m.title.toLowerCase().includes(query) ||
+          m.description.toLowerCase().includes(query)
+      )
+    }
+
+    // Filter by completion status
+    if (!showCompleted) {
+      filtered = filtered.filter(m => !completedModules.includes(m.id))
+    }
+
+    return filtered
+  }, [modules, moduleType, difficultyFilter, searchQuery, showCompleted, completedModules])
 
   console.log('HomePage Debug:', {
     modulesLength: modules?.length,
@@ -189,7 +178,8 @@ export const HomePage = () => {
                   switch (current) {
                     case 'all': return 'cards'
                     case 'cards': return 'words'
-                    case 'words': return 'all'
+                    case 'words': return 'puzzle'
+                    case 'puzzle': return 'all'
                   }
                 })}
                 className={cn(
@@ -203,11 +193,14 @@ export const HomePage = () => {
                   <BookImage className="w-4 h-4" />
                 ) : moduleType === 'words' ? (
                   <BookA className="w-4 h-4" />
+                ) : moduleType === 'puzzle' ? (
+                  <BookHeart className="w-4 h-4" />
                 ) : (
                   <Book className="w-4 h-4" />
                 )}
                 <span>{moduleType === 'all' ? 'All' : 
-                  moduleType === 'cards' ? 'Cards' : 'Words'}</span>
+                  moduleType === 'cards' ? 'Cards' : 
+                  moduleType === 'words' ? 'Words' : 'Puzzle'}</span>
               </button>
 
               <button 
@@ -236,19 +229,23 @@ export const HomePage = () => {
                   difficultyFilter === 'easy' ? 'Easy' : 'Hard'}</span>
               </button>
 
-              {(searchQuery || moduleType !== 'all' || difficultyFilter !== 'all' || !showCompleted) && (
-                <button
-                  onClick={() => {
-                    setSearchQuery('')
-                    setModuleType('all')
-                    setDifficultyFilter('all')
-                    setShowCompleted(true)
-                  }}
-                  className="text-sm text-red-500 hover:text-red-600 transition-colors"
-                >
-                  <span>Clear All</span>
-                </button>
-              )}
+              <button
+                onClick={() => {
+                  setSearchQuery('')
+                  setModuleType('all')
+                  setDifficultyFilter('all')
+                  setShowCompleted(true)
+                }}
+                disabled={!searchQuery && moduleType === 'all' && difficultyFilter === 'all' && showCompleted}
+                className={cn(
+                  "text-sm transition-colors",
+                  searchQuery || moduleType !== 'all' || difficultyFilter !== 'all' || !showCompleted
+                    ? "text-red-500 hover:text-red-600"
+                    : "text-gray-300 cursor-not-allowed"
+                )}
+              >
+                <span>Clear All</span>
+              </button>
             </div>
           </div>
 
@@ -278,7 +275,7 @@ export const HomePage = () => {
                       <div className="space-y-4 min-w-0">
                         <div className="space-y-4">
                           <div className="flex items-center gap-3">
-                            {getModuleIcon(module.id, isCompleted)}
+                            {getModuleIcon(module.type, isCompleted)}
                             <h3 className="text-xl font-semibold text-zinc-900">
                               {module.title}
                             </h3>
@@ -297,7 +294,8 @@ export const HomePage = () => {
                               <Brain className="w-4 h-4 text-zinc-400" />
                             )}
                             <span className="text-black font-semibold text-foreground tracking-wide">
-                              {module.type === 'flashcards' ? 'Cards' : 'Words'}
+                              {module.type === 'flashcards' ? 'Cards' : 
+                               module.type === 'sentence-completion' ? 'Words' : 'Puzzle'}
                             </span>
                           </div>
                           <div className={cn(

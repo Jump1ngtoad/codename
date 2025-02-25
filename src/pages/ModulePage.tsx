@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { PointerIcon, X } from 'lucide-react'
-import { Module, FlashcardQuestion, ImageFlashcardQuestion, SentenceQuestion } from '../types'
+import { Module, FlashcardQuestion, ImageFlashcardQuestion, SentenceQuestion, PuzzleQuestion as PuzzleQuestionType } from '../types'
 import { Button } from '../components/ui/button'
 import { Progress } from '../components/ui/progress'
 import { SentenceCompletionQuestion } from '../components/SentenceCompletionQuestion'
+import { PuzzleQuestion } from '../components/PuzzleQuestion'
 import { ErrorMessage, QuestionSkeleton } from '../components/shared'
 import { useApp } from '../contexts/hooks'
 import { cn } from '../lib/utils'
@@ -265,7 +266,7 @@ export const ModulePage = () => {
                         Check Answer
                       </Button>
                     </div>
-                  ) : (
+                  ) : module.type === 'sentence-completion' ? (
                     <SentenceCompletionQuestion
                       question={currentQuestion as SentenceQuestion}
                       onCorrect={() => {
@@ -280,20 +281,35 @@ export const ModulePage = () => {
                         }
                       }}
                     />
-                  )}
+                  ) : module.type === 'puzzle' ? (
+                    <PuzzleQuestion
+                      question={currentQuestion as PuzzleQuestionType}
+                      onCorrect={() => {
+                        const newCompletedQuestions = [...completedQuestions, currentQuestionIndex]
+                        setCompletedQuestions(newCompletedQuestions)
+                        
+                        if (newCompletedQuestions.length === module.questions.length) {
+                          markModuleAsCompleted(moduleId!)
+                          navigate('/')
+                        } else {
+                          nextQuestion()
+                        }
+                      }}
+                    />
+                  ) : null}
 
-                  {(currentQuestion as SentenceQuestion).hint && !isCorrect && (
+                  {(currentQuestion as SentenceQuestion | PuzzleQuestionType).hint && !isCorrect && module.type !== 'puzzle' && (
                     <div 
                       className="mt-4 p-4 bg-primary/5 rounded-xl transition-all duration-300" 
                       role="alert"
                     >
                       <p className="text-sm text-primary/80">
-                        💡 Hint: {(currentQuestion as SentenceQuestion).hint}
+                        💡 Hint: {(currentQuestion as SentenceQuestion | PuzzleQuestionType).hint}
                       </p>
                     </div>
                   )}
 
-                  {isCorrect === false && (
+                  {isCorrect === false && module.type !== 'puzzle' && (
                     <div 
                       className="mt-4 p-4 bg-red-50 rounded-xl animate-shake" 
                       role="alert" 

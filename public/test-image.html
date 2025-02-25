@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .image-container {
+      margin-bottom: 30px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .path {
+      font-family: monospace;
+      background-color: #f0f0f0;
+      padding: 5px;
+      border-radius: 3px;
+    }
+    .error {
+      border-color: red;
+      background-color: #fff0f0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Image Test Page</h1>
+  <p>This page tests if the puzzle images can be loaded directly.</p>
+  
+  <div class="image-container">
+    <h2>Dog in Park</h2>
+    <img src="/images/puzzle-sample/dog-in-park.webp" alt="Dog in Park" onerror="this.parentNode.classList.add('error'); this.nextElementSibling.textContent = 'Error loading image';">
+    <p class="status"></p>
+    <p class="path">Path: /images/puzzle-sample/dog-in-park.webp</p>
+  </div>
+  
+  <div class="image-container">
+    <h2>Bird in Trees</h2>
+    <img src="/images/puzzle-sample/bird-in-trees.webp" alt="Bird in Trees" onerror="this.parentNode.classList.add('error'); this.nextElementSibling.textContent = 'Error loading image';">
+    <p class="status"></p>
+    <p class="path">Path: /images/puzzle-sample/bird-in-trees.webp</p>
+  </div>
+  
+  <div class="image-container">
+    <h2>Lion in Savannah</h2>
+    <img src="/images/puzzle-sample/lion-in-savannah.webp" alt="Lion in Savannah" onerror="this.parentNode.classList.add('error'); this.nextElementSibling.textContent = 'Error loading image';">
+    <p class="status"></p>
+    <p class="path">Path: /images/puzzle-sample/lion-in-savannah.webp</p>
+  </div>
+
+  <div class="image-container">
+    <h2>Logo (for comparison)</h2>
+    <img src="/images/logo.svg" alt="Logo" onerror="this.parentNode.classList.add('error'); this.nextElementSibling.textContent = 'Error loading image';">
+    <p class="status"></p>
+    <p class="path">Path: /images/logo.svg</p>
+  </div>
+
+  <script>
+    // Add success message for images that load successfully
+    document.querySelectorAll('img').forEach(img => {
+      img.onload = function() {
+        this.nextElementSibling.textContent = 'Image loaded successfully';
+        this.nextElementSibling.style.color = 'green';
+      };
+    });
+  </script>
+</body>
+</html> 

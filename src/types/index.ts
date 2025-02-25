@@ -2,9 +2,9 @@ export interface Module {
   id: string;
   title: string;
   description: string;
-  type: 'flashcards' | 'sentence-completion';
+  type: 'flashcards' | 'sentence-completion' | 'puzzle';
   difficulty: 'easy' | 'hard';
-  questions: (FlashcardQuestion | ImageFlashcardQuestion | SentenceQuestion)[];
+  questions: (FlashcardQuestion | ImageFlashcardQuestion | SentenceQuestion | PuzzleQuestion)[];
 }
 
 export interface FlashcardQuestion {
@@ -31,10 +31,21 @@ export interface SentenceQuestion {
   hint?: string;
 }
 
+export interface PuzzleQuestion {
+  type: 'puzzle';
+  prompt?: string;  // Making prompt optional since we'll rely on the image
+  imagePath?: string;
+  correctAnswer: string;
+  englishTranslation: string;  // Adding English translation
+  fragments: string[];  // The fragments available for constructing the story
+  hint?: string;  // Hint is optional and won't be displayed in the UI
+}
+
 export interface DraggableWordItem {
   id: string;
   content: string;
   isCorrect?: boolean;
+  isPartiallyCorrect?: boolean;
 }
 
 export interface SentenceConstructionState {
@@ -49,7 +60,7 @@ export interface ModuleManifest {
     id: string;
     title: string;
     description: string;
-    type: 'flashcards' | 'sentence-completion';
+    type: 'flashcards' | 'sentence-completion' | 'puzzle';
     difficulty: 'easy' | 'hard';
   }[];
 }
