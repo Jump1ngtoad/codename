@@ -5,6 +5,7 @@ import { Module, FlashcardQuestion, ImageFlashcardQuestion, SentenceQuestion } f
 import { Button } from '../components/ui/button'
 import { Progress } from '../components/ui/progress'
 import { SentenceCompletionQuestion } from '../components/SentenceCompletionQuestion'
+import { LoadingOverlay, ErrorMessage } from '../components/shared'
 import { useApp } from '../contexts/AppContext'
 
 // Cache for module data
@@ -202,131 +203,94 @@ export const ModulePage = () => {
     }
   };
 
-  // Show loading state
-  if (isLoading) return (
-    <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl w-full max-w-2xl">
-        <div className="p-6 text-center text-muted-foreground">
-          Loading...
-        </div>
-      </div>
-    </div>
-  )
-
-  // Show error state
-  if (error) {
-    return (
-      <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
-        <div className="bg-white rounded-2xl w-full max-w-2xl">
-          <div className="p-6">
-            <div className="bg-red-50 p-4 rounded-xl text-red-600">
-              <p>{error}</p>
-              <Button
-                onClick={() => navigate('/')}
-                variant="ghost"
-                className="mt-4"
-              >
-                Return to Home
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  // Show error if module is not loaded
-  if (!module) {
-    return (
-      <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
-        <div className="bg-white rounded-2xl w-full max-w-2xl">
-          <div className="p-6">
-            <div className="bg-red-50 p-4 rounded-xl text-red-600">
-              <p>Failed to load module. Please try again.</p>
-              <Button
-                onClick={() => navigate('/')}
-                variant="ghost"
-                className="mt-4"
-              >
-                Return to Home
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  const currentQuestion = module.questions[currentQuestionIndex];
-  const progress = (completedQuestions.length / module.questions.length) * 100;
-
   return (
-    <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl w-full max-w-2xl">
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <Button
-              onClick={() => navigate('/')}
-              variant="ghost"
-              size="icon"
-              className="rounded-full"
-            >
-              <X className="w-4 h-4" />
-            </Button>
-            <Progress value={progress} className="w-32" />
-          </div>
+    <LoadingOverlay isLoading={isLoading}>
+      {error ? (
+        <ErrorMessage 
+          message={error} 
+          onBack={() => navigate('/')}
+          fullScreen
+        />
+      ) : !module ? (
+        <ErrorMessage 
+          message="Failed to load module. Please try again." 
+          onBack={() => navigate('/')}
+          fullScreen
+        />
+      ) : (() => {
+        const currentQuestion = module.questions[currentQuestionIndex];
+        const progress = (completedQuestions.length / module.questions.length) * 100;
+        
+        return (
+          <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
+            <div className="bg-white rounded-2xl w-full max-w-2xl">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <Button
+                    onClick={() => navigate('/')}
+                    variant="ghost"
+                    size="icon"
+                    className="rounded-full"
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                  <Progress value={progress} className="w-32" />
+                </div>
 
-          <div className="space-y-4 sm:space-y-6">
-            {module.type === 'flashcards' ? (
-              <>
-                {renderQuestion()}
-                {renderOptions()}
-                <Button
-                  className="w-full mt-6 hidden md:block"
-                  size="lg"
-                  variant={isCorrect ? "secondary" : "default"}
-                  onClick={() => handleOptionSelect(userAnswer)}
-                  disabled={!userAnswer}
-                  aria-label="Check your answer"
-                >
-                  Check Answer
-                </Button>
-              </>
-            ) : (
-              <SentenceCompletionQuestion
-                question={currentQuestion as SentenceQuestion}
-                onCorrect={() => {
-                  const newCompletedQuestions = [...completedQuestions, currentQuestionIndex]
-                  setCompletedQuestions(newCompletedQuestions)
-                  
-                  if (newCompletedQuestions.length === module.questions.length) {
-                    markModuleAsCompleted(moduleId!)
-                    navigate('/')
-                  } else {
-                    nextQuestion()
-                  }
-                }}
-              />
-            )}
+                <div className="space-y-4 sm:space-y-6">
+                  {module.type === 'flashcards' ? (
+                    <>
+                      {renderQuestion()}
+                      {renderOptions()}
+                      <Button
+                        className="w-full mt-6 hidden md:block"
+                        size="lg"
+                        variant={isCorrect ? "secondary" : "default"}
+                        onClick={() => handleOptionSelect(userAnswer)}
+                        disabled={!userAnswer}
+                        aria-label="Check your answer"
+                      >
+                        Check Answer
+                      </Button>
+                    </>
+                  ) : (
+                    <SentenceCompletionQuestion
+                      question={currentQuestion as SentenceQuestion}
+                      onCorrect={() => {
+                        const newCompletedQuestions = [...completedQuestions, currentQuestionIndex]
+                        setCompletedQuestions(newCompletedQuestions)
+                        
+                        if (newCompletedQuestions.length === module.questions.length) {
+                          markModuleAsCompleted(moduleId!)
+                          navigate('/')
+                        } else {
+                          nextQuestion()
+                        }
+                      }}
+                    />
+                  )}
 
-            {(currentQuestion as SentenceQuestion).hint && !isCorrect && (
-              <div className="mt-4 p-4 bg-primary/5 rounded-xl" role="alert">
-                <p className="text-sm text-primary/80">
-                  💡 Hint: {(currentQuestion as SentenceQuestion).hint}
-                </p>
+                  {(currentQuestion as SentenceQuestion).hint && !isCorrect && (
+                    <div className="mt-4 p-4 bg-primary/5 rounded-xl" role="alert">
+                      <p className="text-sm text-primary/80">
+                        💡 Hint: {(currentQuestion as SentenceQuestion).hint}
+                      </p>
+                    </div>
+                  )}
+
+                  {isCorrect === false && (
+                    <div className="mt-4 p-4 bg-red-50 rounded-xl" role="alert" aria-live="polite">
+                      <p className="text-sm text-red-600">
+                        Try again! The correct answer is: {currentQuestion.correctAnswer}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
-            )}
-
-            {isCorrect === false && (
-              <div className="mt-4 p-4 bg-red-50 rounded-xl" role="alert" aria-live="polite">
-                <p className="text-sm text-red-600">
-                  Try again! The correct answer is: {currentQuestion.correctAnswer}
-                </p>
-              </div>
-            )}
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        )
+      })()}
+    </LoadingOverlay>
   )
 } 
