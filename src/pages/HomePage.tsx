@@ -11,21 +11,15 @@ import {
   ArrowRight,
   Search,
   Trophy,
-  Eye,
-  EyeOff,
-  CalendarDays,
-  BarChart,
   Turtle,
   Rabbit,
-  X as XIcon,
-  Filter,
   Book,
   BookImage,
   BookA,
   Brain
 } from 'lucide-react'
 import { useApp } from '../contexts/hooks'
-import { LoadingOverlay, ErrorMessage, ModuleSkeletonGrid } from '../components/shared'
+import { ErrorMessage, ModuleSkeletonGrid } from '../components/shared'
 import { cn } from '../lib/utils'
 import { useState, useMemo } from 'react'
 
@@ -109,12 +103,6 @@ export const HomePage = () => {
       })
   }, [modules, completedModules, showCompleted, moduleType, searchQuery, difficultyFilter])
 
-  // Helper function to determine if a module is hard (true) or easy (false)
-  const getDifficulty = (moduleId: string) => {
-    // For now, let's make animals and numbers easy, everything else hard
-    return !['animals-1', 'numbers-1'].includes(moduleId)
-  }
-
   console.log('HomePage Debug:', {
     modulesLength: modules?.length,
     modules,
@@ -144,86 +132,83 @@ export const HomePage = () => {
           )}
 
           <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between p-4 bg-white rounded-xl border shadow-sm">
-            {/* Left side - Search and Show/Hide Completed */}
-            <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:gap-4">
-              <div className="relative flex-1 sm:flex-none">
-                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-                <input 
-                  type="text" 
-                  placeholder="Search modules..." 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full sm:w-[200px] pl-9 pr-4 py-1 text-sm bg-secondary rounded-lg focus:outline-none focus:ring-2 ring-primary/20"
-                />
-              </div>
-              <div className="flex items-center justify-between sm:justify-start gap-2">
-                <button 
-                  onClick={() => setShowCompleted(prev => !prev)}
-                  className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
-                >
-                  <Trophy className="w-4 h-4" />
-                  <span>{showCompleted ? 'Hide' : 'Show'}</span>
-                </button>
-                {(searchQuery || moduleType !== 'all' || difficultyFilter !== 'all' || !showCompleted) && (
-                  <button
-                    onClick={() => {
-                      setSearchQuery('')
-                      setModuleType('all')
-                      setDifficultyFilter('all')
-                      setShowCompleted(true)
-                    }}
-                    className="text-sm text-red-500 hover:text-red-600 transition-colors"
-                  >
-                    <span>Clear All</span>
-                  </button>
-                )}
-              </div>
+            {/* Search input - Full width on mobile */}
+            <div className="relative w-full sm:w-[200px]">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+              <input 
+                type="text" 
+                placeholder="Search modules..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-9 pr-4 py-1 text-sm bg-secondary rounded-lg focus:outline-none focus:ring-2 ring-primary/20"
+              />
             </div>
 
-            {/* Right side - Type and Difficulty filters */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              <div className="flex items-center gap-2">
-                <button 
-                  onClick={() => setModuleType(current => {
-                    switch (current) {
-                      case 'all': return 'flashcards'
-                      case 'flashcards': return 'sentence-completion'
-                      case 'sentence-completion': return 'all'
-                    }
-                  })}
-                  className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
+            {/* Filter actions - Row on mobile, inline on desktop */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+              <button 
+                onClick={() => setShowCompleted(prev => !prev)}
+                className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
+              >
+                <Trophy className="w-4 h-4" />
+                <span>{showCompleted ? 'Hide' : 'Show'}</span>
+              </button>
+
+              <button 
+                onClick={() => setModuleType(current => {
+                  switch (current) {
+                    case 'all': return 'flashcards'
+                    case 'flashcards': return 'sentence-completion'
+                    case 'sentence-completion': return 'all'
+                  }
+                })}
+                className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
+              >
+                {moduleType === 'flashcards' ? (
+                  <BookImage className="w-4 h-4" />
+                ) : moduleType === 'sentence-completion' ? (
+                  <BookA className="w-4 h-4" />
+                ) : (
+                  <Book className="w-4 h-4" />
+                )}
+                <span>{moduleType === 'all' ? 'All' : 
+                  moduleType === 'flashcards' ? 'Cards' : 'Sentence'}</span>
+              </button>
+
+              <button 
+                onClick={() => setDifficultyFilter(current => {
+                  switch (current) {
+                    case 'all': return 'easy'
+                    case 'easy': return 'hard'
+                    case 'hard': return 'all'
+                  }
+                })}
+                className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
+              >
+                {difficultyFilter === 'easy' ? (
+                  <Turtle className="w-4 h-4" />
+                ) : difficultyFilter === 'hard' ? (
+                  <Rabbit className="w-4 h-4" />
+                ) : (
+                  <Brain className="w-4 h-4" />
+                )}
+                <span>{difficultyFilter === 'all' ? 'All' : 
+                  difficultyFilter === 'easy' ? 'Easy' : 'Hard'}</span>
+              </button>
+
+              {(searchQuery || moduleType !== 'all' || difficultyFilter !== 'all' || !showCompleted) && (
+                <button
+                  onClick={() => {
+                    setSearchQuery('')
+                    setModuleType('all')
+                    setDifficultyFilter('all')
+                    setShowCompleted(true)
+                  }}
+                  className="text-sm text-red-500 hover:text-red-600 transition-colors"
                 >
-                  {moduleType === 'flashcards' ? (
-                    <BookImage className="w-4 h-4" />
-                  ) : moduleType === 'sentence-completion' ? (
-                    <BookA className="w-4 h-4" />
-                  ) : (
-                    <Book className="w-4 h-4" />
-                  )}
-                  <span>{moduleType === 'all' ? 'All' : 
-                    moduleType === 'flashcards' ? 'Cards' : 'Sentence'}</span>
+                  <span>Clear All</span>
                 </button>
-                <button 
-                  onClick={() => setDifficultyFilter(current => {
-                    switch (current) {
-                      case 'all': return 'easy'
-                      case 'easy': return 'hard'
-                      case 'hard': return 'all'
-                    }
-                  })}
-                  className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
-                >
-                  {difficultyFilter === 'easy' ? (
-                    <Turtle className="w-4 h-4" />
-                  ) : difficultyFilter === 'hard' ? (
-                    <Rabbit className="w-4 h-4" />
-                  ) : (
-                    <Brain className="w-4 h-4" />
-                  )}
-                  <span>{difficultyFilter === 'all' ? 'All' : 
-                    difficultyFilter === 'easy' ? 'Easy' : 'Hard'}</span>
-                </button>
-              </div>
+              )}
             </div>
           </div>
 
@@ -242,7 +227,7 @@ export const HomePage = () => {
                   <Link 
                     key={module.id} 
                     to={`/module/${module.id}`}
-                    className="block transition-transform hover:scale-[1.02] motion-reduce:hover:scale-100"
+                    className="block transition-all duration-300 animate-in fade-in-0 zoom-in-95 hover:scale-[1.02] motion-reduce:hover:scale-100"
                   >
                     <div className={cn(
                       "bg-white rounded-[24px] p-6 shadow-sm border transition-colors group",

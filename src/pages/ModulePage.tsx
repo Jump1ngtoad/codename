@@ -5,7 +5,7 @@ import { Module, FlashcardQuestion, ImageFlashcardQuestion, SentenceQuestion } f
 import { Button } from '../components/ui/button'
 import { Progress } from '../components/ui/progress'
 import { SentenceCompletionQuestion } from '../components/SentenceCompletionQuestion'
-import { LoadingOverlay, ErrorMessage, QuestionSkeleton } from '../components/shared'
+import { ErrorMessage, QuestionSkeleton } from '../components/shared'
 import { useApp } from '../contexts/hooks'
 import { cn } from '../lib/utils'
 

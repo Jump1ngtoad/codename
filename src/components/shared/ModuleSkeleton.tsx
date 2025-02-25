@@ -1,6 +1,4 @@
-import { cn } from '../../lib/utils'
-
-export function ModuleSkeleton() {
+export const ModuleSkeleton = () => {
   return (
     <div className="bg-white rounded-[24px] p-6 shadow-sm border animate-pulse">
       <div className="space-y-4 min-w-0">
