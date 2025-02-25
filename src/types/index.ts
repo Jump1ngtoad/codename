@@ -3,6 +3,7 @@ export interface Module {
   title: string;
   description: string;
   type: 'flashcards' | 'sentence-completion';
+  difficulty: 'easy' | 'hard';
   questions: (FlashcardQuestion | ImageFlashcardQuestion | SentenceQuestion)[];
 }
 
@@ -49,6 +50,7 @@ export interface ModuleManifest {
     title: string;
     description: string;
     type: 'flashcards' | 'sentence-completion';
+    difficulty: 'easy' | 'hard';
   }[];
 }
 

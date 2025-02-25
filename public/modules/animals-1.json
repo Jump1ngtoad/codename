@@ -3,6 +3,7 @@
     "title": "Animals 1",
     "description": "Expand your Afrikaans vocabulary with common animal names.",
     "type": "flashcards",
+    "difficulty": "easy",
     "questions": [
       {
         "type": "flashcards",

@@ -8,11 +8,26 @@ import {
   MessageSquare, 
   Hash, 
   Play,
-  ArrowRight
+  ArrowRight,
+  Search,
+  Trophy,
+  Eye,
+  EyeOff,
+  CalendarDays,
+  BarChart,
+  Turtle,
+  Rabbit,
+  X as XIcon,
+  Filter,
+  Book,
+  BookImage,
+  BookA,
+  Brain
 } from 'lucide-react'
 import { useApp } from '../contexts/hooks'
 import { LoadingOverlay, ErrorMessage, ModuleSkeletonGrid } from '../components/shared'
 import { cn } from '../lib/utils'
+import { useState, useMemo } from 'react'
 
 // Icon mapping for different module categories
 const MODULE_ICONS = {
@@ -56,6 +71,50 @@ const getModuleIcon = (moduleId: string, isCompleted: boolean) => {
 export const HomePage = () => {
   const { modules, completedModules, isLoading, error } = useApp()
   
+  // Toolbar state
+  const [showCompleted, setShowCompleted] = useState(true)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [moduleType, setModuleType] = useState<'all' | 'flashcards' | 'sentence-completion'>('all')
+  const [difficultyFilter, setDifficultyFilter] = useState<'all' | 'easy' | 'hard'>('all')
+
+  // Filter modules
+  const filteredModules = useMemo(() => {
+    return modules
+      .filter(module => {
+        // Filter by completion status
+        if (!showCompleted && completedModules.includes(module.id)) {
+          return false
+        }
+        
+        // Filter by type
+        if (moduleType !== 'all' && module.type !== moduleType) {
+          return false
+        }
+
+        // Filter by difficulty
+        if (difficultyFilter !== 'all' && module.difficulty !== difficultyFilter) {
+          return false
+        }
+        
+        // Filter by search query
+        if (searchQuery) {
+          const query = searchQuery.toLowerCase()
+          return (
+            module.title.toLowerCase().includes(query) ||
+            module.description.toLowerCase().includes(query)
+          )
+        }
+        
+        return true
+      })
+  }, [modules, completedModules, showCompleted, moduleType, searchQuery, difficultyFilter])
+
+  // Helper function to determine if a module is hard (true) or easy (false)
+  const getDifficulty = (moduleId: string) => {
+    // For now, let's make animals and numbers easy, everything else hard
+    return !['animals-1', 'numbers-1'].includes(moduleId)
+  }
+
   console.log('HomePage Debug:', {
     modulesLength: modules?.length,
     modules,
@@ -84,11 +143,95 @@ export const HomePage = () => {
             <ErrorMessage message={error} />
           )}
 
+          <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between p-4 bg-white rounded-xl border shadow-sm">
+            {/* Left side - Search and Show/Hide Completed */}
+            <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:gap-4">
+              <div className="relative flex-1 sm:flex-none">
+                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <input 
+                  type="text" 
+                  placeholder="Search modules..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full sm:w-[200px] pl-9 pr-4 py-1 text-sm bg-secondary rounded-lg focus:outline-none focus:ring-2 ring-primary/20"
+                />
+              </div>
+              <div className="flex items-center justify-between sm:justify-start gap-2">
+                <button 
+                  onClick={() => setShowCompleted(prev => !prev)}
+                  className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
+                >
+                  <Trophy className="w-4 h-4" />
+                  <span>{showCompleted ? 'Hide' : 'Show'}</span>
+                </button>
+                {(searchQuery || moduleType !== 'all' || difficultyFilter !== 'all' || !showCompleted) && (
+                  <button
+                    onClick={() => {
+                      setSearchQuery('')
+                      setModuleType('all')
+                      setDifficultyFilter('all')
+                      setShowCompleted(true)
+                    }}
+                    className="text-sm text-red-500 hover:text-red-600 transition-colors"
+                  >
+                    <span>Clear All</span>
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Right side - Type and Difficulty filters */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={() => setModuleType(current => {
+                    switch (current) {
+                      case 'all': return 'flashcards'
+                      case 'flashcards': return 'sentence-completion'
+                      case 'sentence-completion': return 'all'
+                    }
+                  })}
+                  className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
+                >
+                  {moduleType === 'flashcards' ? (
+                    <BookImage className="w-4 h-4" />
+                  ) : moduleType === 'sentence-completion' ? (
+                    <BookA className="w-4 h-4" />
+                  ) : (
+                    <Book className="w-4 h-4" />
+                  )}
+                  <span>{moduleType === 'all' ? 'All' : 
+                    moduleType === 'flashcards' ? 'Cards' : 'Sentence'}</span>
+                </button>
+                <button 
+                  onClick={() => setDifficultyFilter(current => {
+                    switch (current) {
+                      case 'all': return 'easy'
+                      case 'easy': return 'hard'
+                      case 'hard': return 'all'
+                    }
+                  })}
+                  className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
+                >
+                  {difficultyFilter === 'easy' ? (
+                    <Turtle className="w-4 h-4" />
+                  ) : difficultyFilter === 'hard' ? (
+                    <Rabbit className="w-4 h-4" />
+                  ) : (
+                    <Brain className="w-4 h-4" />
+                  )}
+                  <span>{difficultyFilter === 'all' ? 'All' : 
+                    difficultyFilter === 'easy' ? 'Easy' : 'Hard'}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
           {isLoading ? (
             <ModuleSkeletonGrid />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {modules.map((module) => {
+              {filteredModules.map((module) => {
                 const isCompleted = completedModules.includes(module.id)
                 console.log('Rendering module:', {
                   id: module.id,
@@ -120,9 +263,16 @@ export const HomePage = () => {
                           </p>
                         </div>
                         <div className="flex items-center justify-between">
-                          <span className="text-black font-semibold text-foreground tracking-wide">
-                            {module.type === 'flashcards' ? 'Flashcards' : 'Sentence Completion'}
-                          </span>
+                          <div className="flex items-center gap-2">
+                            {module.difficulty === 'hard' ? (
+                              <Rabbit className="w-4 h-4 text-zinc-400" />
+                            ) : (
+                              <Turtle className="w-4 h-4 text-zinc-400" />
+                            )}
+                            <span className="text-black font-semibold text-foreground tracking-wide">
+                              {module.type === 'flashcards' ? 'Flashcards' : 'Sentence Completion'}
+                            </span>
+                          </div>
                           <div className={cn(
                             "text-primary font-medium flex items-center gap-2",
                             isCompleted && "text-amber-600"
