@@ -3,6 +3,7 @@
     "title": "Numbers 1-10",
     "description": "Learn to count from 1 to 10 in Afrikaans with number flashcards.",
     "type": "flashcards",
+    "difficulty": "easy",
     "questions": [
       {
         "type": "flashcards",

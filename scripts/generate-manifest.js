@@ -38,7 +38,8 @@ async function generateManifest() {
           id: module.id,
           title: module.title,
           description: module.description,
-          type: module.type
+          type: module.type,
+          difficulty: module.difficulty
         }
       })
     )

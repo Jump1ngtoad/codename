@@ -3,6 +3,7 @@
     "title": "Food 2",
     "description": "Expand your food vocabulary with more Afrikaans words for everyday meals.",
     "type": "flashcards",
+    "difficulty": "easy",
     "questions": [
       {
         "type": "flashcards",

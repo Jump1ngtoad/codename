@@ -3,6 +3,7 @@
   "title": "Greetings",
   "description": "Learn common Afrikaans greetings and introductions using flashcards.",
   "type": "flashcards",
+  "difficulty": "easy",
   "questions": [
     {
       "type": "flashcards",

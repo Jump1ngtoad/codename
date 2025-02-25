@@ -3,6 +3,7 @@
   "title": "Phrases 1",
   "description": "Practice essential Afrikaans phrases for daily communication.",
   "type": "sentence-completion",
+  "difficulty": "hard",
   "questions": [
     {
       "type": "sentence-completion",

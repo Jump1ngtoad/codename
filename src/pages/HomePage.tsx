@@ -73,38 +73,54 @@ export const HomePage = () => {
 
   // Filter modules
   const filteredModules = useMemo(() => {
+    console.log('Starting filtering with:', {
+      totalModules: modules.length,
+      difficultyFilter,
+      moduleType,
+      showCompleted
+    });
+
     return modules
       .filter(module => {
+        // Debug logs for difficulty filtering
+        console.log('Module filtering:', {
+          id: module.id,
+          type: module.type,
+          difficulty: module.difficulty,
+          filterDifficulty: difficultyFilter,
+          matches: difficultyFilter === 'all' || module.difficulty === difficultyFilter
+        });
+
         // Filter by completion status
         if (!showCompleted && completedModules.includes(module.id)) {
-          return false
+          return false;
         }
         
         // Filter by type
         if (moduleType !== 'all') {
-          const type = moduleType === 'cards' ? 'flashcards' : 'sentence-completion'
+          const type = moduleType === 'cards' ? 'flashcards' : 'sentence-completion';
           if (module.type !== type) {
-            return false
+            return false;
           }
         }
 
         // Filter by difficulty
         if (difficultyFilter !== 'all' && module.difficulty !== difficultyFilter) {
-          return false
+          return false;
         }
         
         // Filter by search query
         if (searchQuery) {
-          const query = searchQuery.toLowerCase()
+          const query = searchQuery.toLowerCase();
           return (
             module.title.toLowerCase().includes(query) ||
             module.description.toLowerCase().includes(query)
-          )
+          );
         }
         
-        return true
-      })
-  }, [modules, completedModules, showCompleted, moduleType, searchQuery, difficultyFilter])
+        return true;
+      });
+  }, [modules, completedModules, showCompleted, moduleType, searchQuery, difficultyFilter]);
 
   console.log('HomePage Debug:', {
     modulesLength: modules?.length,
@@ -254,8 +270,10 @@ export const HomePage = () => {
                           <div className="flex items-center gap-2">
                             {module.difficulty === 'hard' ? (
                               <Rabbit className="w-4 h-4 text-zinc-400" />
-                            ) : (
+                            ) : module.difficulty === 'easy' ? (
                               <Turtle className="w-4 h-4 text-zinc-400" />
+                            ) : (
+                              <Brain className="w-4 h-4 text-zinc-400" />
                             )}
                             <span className="text-black font-semibold text-foreground tracking-wide">
                               {module.type === 'flashcards' ? 'Cards' : 'Words'}
