@@ -11,7 +11,7 @@ import {
   ArrowRight
 } from 'lucide-react'
 import { useApp } from '../contexts/hooks'
-import { LoadingOverlay, ErrorMessage } from '../components/shared'
+import { LoadingOverlay, ErrorMessage, ModuleSkeletonGrid } from '../components/shared'
 import { cn } from '../lib/utils'
 
 // Icon mapping for different module categories
@@ -57,27 +57,29 @@ export const HomePage = () => {
   const { modules, completedModules, isLoading, error } = useApp()
 
   return (
-    <LoadingOverlay isLoading={isLoading}>
-      <div className="min-h-screen">
-        <div className="container mx-auto py-12 px-4">
-          <div className="max-w-4xl mx-auto space-y-8">
-            <div className="text-center space-y-6">
-              <div className="inline-flex items-center space-x-2 text-primary font-bold mb-4">
-              </div>
-              <img 
-                src="/images/logo.svg" 
-                alt="Lekker Learning"
-                className="h-20 mx-auto animate-fade-up"
-              />
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Master Afrikaans through playful flashcards and interactive exercises!
-              </p>
+    <div className="min-h-screen">
+      <div className="container mx-auto py-12 px-4">
+        <div className="max-w-4xl mx-auto space-y-8">
+          <div className="text-center space-y-6">
+            <div className="inline-flex items-center space-x-2 text-primary font-bold mb-4">
             </div>
+            <img 
+              src="/images/logo.svg" 
+              alt="Lekker Learning"
+              className="h-20 mx-auto animate-fade-up"
+            />
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Master Afrikaans through playful flashcards and interactive exercises!
+            </p>
+          </div>
 
-            {error && (
-              <ErrorMessage message={error} />
-            )}
+          {error && (
+            <ErrorMessage message={error} />
+          )}
 
+          {isLoading ? (
+            <ModuleSkeletonGrid />
+          ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {modules.map((module) => {
                 const isCompleted = completedModules.includes(module.id)
@@ -85,7 +87,7 @@ export const HomePage = () => {
                   <Link 
                     key={module.id} 
                     to={`/module/${module.id}`}
-                    className="block"
+                    className="block transition-transform hover:scale-[1.02] motion-reduce:hover:scale-100"
                   >
                     <div className={cn(
                       "bg-white rounded-[24px] p-6 shadow-sm border transition-colors group",
@@ -123,22 +125,22 @@ export const HomePage = () => {
                 )
               })}
             </div>
+          )}
 
-            <div className="text-center">
-              <div className="inline-block p-3 rounded-xl bg-secondary">
-                <p className="text-sm font-medium text-muted-foreground">
-                  {completedModules.length === 0 
-                    ? "Start your learning journey by completing a module! 🎉"
-                    : completedModules.length === modules.length
-                      ? "Congratulations! You've completed all modules! 🎉"
-                      : "Keep practicing to unlock more exciting modules! 🎉"
-                  }
-                </p>
-              </div>
+          <div className="text-center">
+            <div className="inline-block p-3 rounded-xl bg-secondary">
+              <p className="text-sm font-medium text-muted-foreground">
+                {completedModules.length === 0 
+                  ? "Start your learning journey by completing a module! 🎉"
+                  : completedModules.length === modules.length
+                    ? "Congratulations! You've completed all modules! 🎉"
+                    : "Keep practicing to unlock more exciting modules! 🎉"
+                }
+              </p>
             </div>
           </div>
         </div>
       </div>
-    </LoadingOverlay>
+    </div>
   )
 } 

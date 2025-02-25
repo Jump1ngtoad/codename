@@ -5,8 +5,9 @@ import { Module, FlashcardQuestion, ImageFlashcardQuestion, SentenceQuestion } f
 import { Button } from '../components/ui/button'
 import { Progress } from '../components/ui/progress'
 import { SentenceCompletionQuestion } from '../components/SentenceCompletionQuestion'
-import { LoadingOverlay, ErrorMessage } from '../components/shared'
+import { LoadingOverlay, ErrorMessage, QuestionSkeleton } from '../components/shared'
 import { useApp } from '../contexts/hooks'
+import { cn } from '../lib/utils'
 
 // Cache for module data
 const moduleCache = new Map<string, { data: Module; timestamp: number }>()
@@ -204,46 +205,52 @@ export const ModulePage = () => {
   };
 
   return (
-    <LoadingOverlay isLoading={isLoading}>
-      {error ? (
-        <ErrorMessage 
-          message={error} 
-          onBack={() => navigate('/')}
-          fullScreen
-        />
-      ) : !module ? (
-        <ErrorMessage 
-          message="Failed to load module. Please try again." 
-          onBack={() => navigate('/')}
-          fullScreen
-        />
-      ) : (() => {
-        const currentQuestion = module.questions[currentQuestionIndex];
-        const progress = (completedQuestions.length / module.questions.length) * 100;
-        
-        return (
-          <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
-            <div className="bg-white rounded-2xl w-full max-w-2xl">
-              <div className="p-6">
+    <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
+      <div className={cn(
+        "bg-white rounded-2xl w-full max-w-2xl transition-all duration-300",
+        isLoading && "opacity-50"
+      )}>
+        <div className="p-6">
+          {error ? (
+            <ErrorMessage 
+              message={error} 
+              onBack={() => navigate('/')}
+            />
+          ) : !module ? (
+            <ErrorMessage 
+              message="Failed to load module. Please try again." 
+              onBack={() => navigate('/')}
+            />
+          ) : (() => {
+            const currentQuestion = module.questions[currentQuestionIndex];
+            const progress = (completedQuestions.length / module.questions.length) * 100;
+
+            return (
+              <>
                 <div className="flex items-center justify-between mb-6">
                   <Button
                     onClick={() => navigate('/')}
                     variant="ghost"
                     size="icon"
-                    className="rounded-full"
+                    className="rounded-full transition-transform hover:scale-105"
                   >
                     <X className="w-4 h-4" />
                   </Button>
-                  <Progress value={progress} className="w-32" />
+                  <Progress 
+                    value={progress} 
+                    className="w-32 transition-all duration-500 ease-out"
+                  />
                 </div>
 
                 <div className="space-y-4 sm:space-y-6">
-                  {module.type === 'flashcards' ? (
-                    <>
+                  {isLoading ? (
+                    <QuestionSkeleton />
+                  ) : module.type === 'flashcards' ? (
+                    <div className="transition-opacity duration-300">
                       {renderQuestion()}
                       {renderOptions()}
                       <Button
-                        className="w-full mt-6 hidden md:block"
+                        className="w-full mt-6 hidden md:block transition-all duration-300"
                         size="lg"
                         variant={isCorrect ? "secondary" : "default"}
                         onClick={() => handleOptionSelect(userAnswer)}
@@ -252,7 +259,7 @@ export const ModulePage = () => {
                       >
                         Check Answer
                       </Button>
-                    </>
+                    </div>
                   ) : (
                     <SentenceCompletionQuestion
                       question={currentQuestion as SentenceQuestion}
@@ -271,7 +278,10 @@ export const ModulePage = () => {
                   )}
 
                   {(currentQuestion as SentenceQuestion).hint && !isCorrect && (
-                    <div className="mt-4 p-4 bg-primary/5 rounded-xl" role="alert">
+                    <div 
+                      className="mt-4 p-4 bg-primary/5 rounded-xl transition-all duration-300" 
+                      role="alert"
+                    >
                       <p className="text-sm text-primary/80">
                         💡 Hint: {(currentQuestion as SentenceQuestion).hint}
                       </p>
@@ -279,18 +289,22 @@ export const ModulePage = () => {
                   )}
 
                   {isCorrect === false && (
-                    <div className="mt-4 p-4 bg-red-50 rounded-xl" role="alert" aria-live="polite">
+                    <div 
+                      className="mt-4 p-4 bg-red-50 rounded-xl animate-shake" 
+                      role="alert" 
+                      aria-live="polite"
+                    >
                       <p className="text-sm text-red-600">
                         Try again! The correct answer is: {currentQuestion.correctAnswer}
                       </p>
                     </div>
                   )}
                 </div>
-              </div>
-            </div>
-          </div>
-        )
-      })()}
-    </LoadingOverlay>
+              </>
+            )
+          })()}
+        </div>
+      </div>
+    </div>
   )
 } 
