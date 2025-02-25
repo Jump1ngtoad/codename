@@ -150,27 +150,38 @@ export const HomePage = () => {
             <ErrorMessage message={error} />
           )}
 
-          <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between p-4 bg-white rounded-xl border shadow-sm">
+          <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between p-3 bg-white rounded-lg border border-zinc-200">
             {/* Search input - Full width on mobile */}
-            <div className="relative w-full sm:w-[200px]">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+            <div className="relative w-full sm:w-[400px]">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
               <input 
                 type="text" 
                 placeholder="Search modules..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-1 text-sm bg-secondary rounded-lg focus:outline-none focus:ring-2 ring-primary/20"
+                className="w-full pl-9 pr-4 py-2 text-sm bg-zinc-100 rounded-sm focus:outline-none focus:ring-2 ring-primary/20"
               />
             </div>
 
             {/* Filter actions - Row on mobile, inline on desktop */}
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-2 shrink-0">
               <button 
                 onClick={() => setShowCompleted(prev => !prev)}
-                className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
+                className={cn(
+                  "inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-sm transition-all relative",
+                  showCompleted 
+                    ? cn(
+                        "bg-amber-400 text-amber-600 shadow-[0_3px_0_#D97706]",
+                        // First diagonal line (16-20 to 1-5)
+                        "before:absolute before:w-[4px] before:h-[200%] before:bg-white/25 before:rotate-[20deg] before:top-[-50%] before:left-[25%]",
+                        // Second diagonal line (22-24 to 7-9)
+                        "after:absolute after:w-[2px] after:h-[200%] after:bg-white/25 after:rotate-[20deg] after:top-[-50%] after:left-[35%]"
+                      )
+                    : "bg-zinc-200 text-zinc-500 shadow-[0_3px_0_#a1a1aa]"
+                )}
               >
-                <Trophy className="w-4 h-4" />
-                <span>{showCompleted ? 'Hide' : 'Show'}</span>
+                <Trophy className="w-4 h-4 relative z-10" />
+                <span className="relative z-10">{showCompleted ? 'Hide' : 'Show'}</span>
               </button>
 
               <button 
@@ -181,7 +192,12 @@ export const HomePage = () => {
                     case 'words': return 'all'
                   }
                 })}
-                className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
+                className={cn(
+                  "inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-sm transition-all shadow-[0_3px_0_#a1a1aa]",
+                  moduleType !== 'all' 
+                    ? "bg-zinc-200 text-zinc-500" 
+                    : "bg-zinc-200 text-zinc-500"
+                )}
               >
                 {moduleType === 'cards' ? (
                   <BookImage className="w-4 h-4" />
@@ -202,7 +218,12 @@ export const HomePage = () => {
                     case 'hard': return 'all'
                   }
                 })}
-                className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
+                className={cn(
+                  "inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-sm transition-all shadow-[0_3px_0_#a1a1aa]",
+                  difficultyFilter !== 'all' 
+                    ? "bg-zinc-200 text-zinc-500" 
+                    : "bg-zinc-200 text-zinc-500"
+                )}
               >
                 {difficultyFilter === 'easy' ? (
                   <Turtle className="w-4 h-4" />
