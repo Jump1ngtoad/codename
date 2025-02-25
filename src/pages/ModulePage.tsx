@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Trophy, PointerIcon, X } from 'lucide-react'
+import { PointerIcon, X } from 'lucide-react'
 import { Module, FlashcardQuestion, ImageFlashcardQuestion, SentenceQuestion } from '../types'
 import { Button } from '../components/ui/button'
 import { Progress } from '../components/ui/progress'
 import { SentenceCompletionQuestion } from '../components/SentenceCompletionQuestion'
-import { cn } from '../lib/utils'
+import { useApp } from '../contexts/AppContext'
+
+// Cache for module data
+const moduleCache = new Map<string, { data: Module; timestamp: number }>()
+const MODULE_CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
 
 export const ModulePage = () => {
   const { moduleId } = useParams<{ moduleId: string }>()
   const navigate = useNavigate()
+  const { markModuleAsCompleted, completedModules } = useApp()
 
   const [module, setModule] = useState<Module | null>(null)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
@@ -17,55 +22,82 @@ export const ModulePage = () => {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
   const [completedQuestions, setCompletedQuestions] = useState<number[]>([])
   const [error, setError] = useState<string | null>(null)
-  const [isModuleCompleted, setIsModuleCompleted] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    let isMounted = true
+    
     const fetchModule = async () => {
+      if (!moduleId) return
+      setIsLoading(true)
+
       try {
+        console.log('Fetching module:', moduleId)
+        // Check cache first
+        const cached = moduleCache.get(moduleId)
+        const now = Date.now()
+        
+        if (cached && (now - cached.timestamp < MODULE_CACHE_DURATION)) {
+          console.log('Loading from cache:', cached.data)
+          if (isMounted) {
+            setModule(cached.data)
+            setIsLoading(false)
+          }
+          return
+        }
+
+        console.log('Fetching from server...')
         const response = await fetch(`/modules/${moduleId}.json`)
+        console.log('Response status:', response.status)
+        
         if (!response.ok) {
           throw new Error(`Failed to load module (${response.status})`)
         }
+        
         const data: Module = await response.json()
+        console.log('Fetched data:', data)
+        
+        if (!isMounted) return
+
+        // Update cache
+        moduleCache.set(moduleId, {
+          data,
+          timestamp: now
+        })
+        
         setModule(data)
-        
-        // Check if module is completed
-        const completedModules = JSON.parse(localStorage.getItem('completedModules') || '[]')
-        setIsModuleCompleted(completedModules.includes(moduleId))
-        
         setError(null)
       } catch (error) {
         console.error('Error loading module:', error)
-        setError('Failed to load module. Please try again later.')
+        if (isMounted) {
+          setError('Failed to load module. Please try again later.')
+          // Try to load from cache as fallback
+          const cached = moduleCache.get(moduleId)
+          if (cached) {
+            console.log('Loading from cache after error:', cached.data)
+            setModule(cached.data)
+          }
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false)
+        }
       }
     }
 
     fetchModule()
+    
+    return () => {
+      isMounted = false
+    }
   }, [moduleId])
 
-  const saveProgress = (moduleId: string) => {
-    try {
-      const completedModules = JSON.parse(localStorage.getItem('completedModules') || '[]')
-      if (!completedModules.includes(moduleId)) {
-        localStorage.setItem('completedModules', JSON.stringify([...completedModules, moduleId]))
-      }
-    } catch (error) {
-      console.error('Error saving progress:', error)
-      // Continue without saving progress
-    }
-  }
-
   const handleOptionSelect = (option: string) => {
-    if (!module) return
+    if (!module || !moduleId) return
     
     const currentQuestion = module.questions[currentQuestionIndex]
-    console.log('Selected option:', option)
-    console.log('Current userAnswer:', userAnswer)
-    console.log('Current question:', currentQuestion.correctAnswer)
-    
     setUserAnswer(option)
     const isAnswerCorrect = option.toLowerCase() === currentQuestion.correctAnswer.toLowerCase()
-    console.log('Is answer correct?', isAnswerCorrect)
     setIsCorrect(isAnswerCorrect)
 
     if (isAnswerCorrect) {
@@ -74,7 +106,7 @@ export const ModulePage = () => {
       
       if (newCompletedQuestions.length === module.questions.length) {
         setTimeout(() => {
-          saveProgress(moduleId!)
+          markModuleAsCompleted(moduleId)
           navigate('/')
         }, 500)
       } else {
@@ -170,7 +202,18 @@ export const ModulePage = () => {
     }
   };
 
-  // Show error state if module failed to load
+  // Show loading state
+  if (isLoading) return (
+    <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
+      <div className="bg-white rounded-2xl w-full max-w-2xl">
+        <div className="p-6 text-center text-muted-foreground">
+          Loading...
+        </div>
+      </div>
+    </div>
+  )
+
+  // Show error state
   if (error) {
     return (
       <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
@@ -192,66 +235,47 @@ export const ModulePage = () => {
     )
   }
 
-  // Show loading state
-  if (!module) return (
-    <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl w-full max-w-2xl">
-        <div className="p-6 text-center text-muted-foreground">
-          Loading...
+  // Show error if module is not loaded
+  if (!module) {
+    return (
+      <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div className="bg-white rounded-2xl w-full max-w-2xl">
+          <div className="p-6">
+            <div className="bg-red-50 p-4 rounded-xl text-red-600">
+              <p>Failed to load module. Please try again.</p>
+              <Button
+                onClick={() => navigate('/')}
+                variant="ghost"
+                className="mt-4"
+              >
+                Return to Home
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 
   const currentQuestion = module.questions[currentQuestionIndex];
   const progress = (completedQuestions.length / module.questions.length) * 100;
 
   return (
-    <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-2 sm:p-4 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[calc(100vh-16px)] sm:max-h-[calc(100vh-32px)] overflow-y-auto">
-        <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
-          {/* Header integrated into the card */}
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-semibold text-black">
-              {module.title}
-            </h1>
+    <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
+      <div className="bg-white rounded-2xl w-full max-w-2xl">
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-6">
             <Button
+              onClick={() => navigate('/')}
               variant="ghost"
               size="icon"
-              onClick={() => navigate('/')}
-              className={cn(
-                isModuleCompleted 
-                  ? "text-amber-600 hover:text-amber-700 hover:bg-amber-50"
-                  : "text-primary hover:text-primary/80 hover:bg-primary/5"
-              )}
-              aria-label="Close module"
+              className="rounded-full"
             >
-              <X className="w-4 h-4" aria-hidden="true" />
+              <X className="w-4 h-4" />
             </Button>
+            <Progress value={progress} className="w-32" />
           </div>
 
-          {/* Progress section */}
-          <div className="flex items-center gap-3">
-            <div className={cn(
-              "flex items-center text-sm shrink-0",
-              isModuleCompleted ? "text-amber-600" : "text-primary"
-            )} role="status" aria-label="Question progress">
-              <Trophy className="w-4 h-4 mr-1.5" aria-hidden="true" />
-              <span className="font-medium">{completedQuestions.length}/{module.questions.length}</span>
-            </div>
-            <Progress 
-              value={progress} 
-              className={cn(
-                "h-2 flex-1",
-                isModuleCompleted 
-                  ? "bg-amber-100 [&>[role=progressbar]]:bg-amber-400"
-                  : "bg-primary/20 [&>[role=progressbar]]:bg-primary"
-              )}
-              aria-label="Module progress" 
-            />
-          </div>
-
-          {/* Question content */}
           <div className="space-y-4 sm:space-y-6">
             {module.type === 'flashcards' ? (
               <>
@@ -270,13 +294,13 @@ export const ModulePage = () => {
               </>
             ) : (
               <SentenceCompletionQuestion
-                question={module.questions[currentQuestionIndex] as SentenceQuestion}
+                question={currentQuestion as SentenceQuestion}
                 onCorrect={() => {
                   const newCompletedQuestions = [...completedQuestions, currentQuestionIndex]
                   setCompletedQuestions(newCompletedQuestions)
                   
                   if (newCompletedQuestions.length === module.questions.length) {
-                    saveProgress(moduleId!)
+                    markModuleAsCompleted(moduleId!)
                     navigate('/')
                   } else {
                     nextQuestion()

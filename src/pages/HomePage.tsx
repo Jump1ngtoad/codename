@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { 
   FileType, 
@@ -11,7 +10,7 @@ import {
   Play,
   ArrowRight
 } from 'lucide-react'
-import { ModuleManifest } from '../types'
+import { useApp } from '../contexts/AppContext'
 import { cn } from '../lib/utils'
 
 // Icon mapping for different module categories
@@ -54,37 +53,20 @@ const getModuleIcon = (moduleId: string, isCompleted: boolean) => {
 }
 
 export const HomePage = () => {
-  const [modules, setModules] = useState<ModuleManifest['modules']>([])
-  const [completedModules, setCompletedModules] = useState<string[]>([])
-  const [error, setError] = useState<string | null>(null)
+  const { modules, completedModules, isLoading, error } = useApp()
 
-  useEffect(() => {
-    const fetchModules = async () => {
-      try {
-        const response = await fetch('/modules/manifest.json')
-        if (!response.ok) {
-          throw new Error(`Failed to load modules (${response.status})`)
-        }
-        const data: ModuleManifest = await response.json()
-        setModules(data.modules)
-        
-        // Load completed modules from localStorage
-        try {
-          const completed = JSON.parse(localStorage.getItem('completedModules') || '[]')
-          setCompletedModules(completed)
-        } catch (storageError) {
-          console.error('Error loading progress:', storageError)
-          // Continue with empty completed modules
-          setCompletedModules([])
-        }
-      } catch (error) {
-        console.error('Error loading modules:', error)
-        setError('Failed to load modules. Please try again later.')
-      }
-    }
-
-    fetchModules()
-  }, [])
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div className="bg-white rounded-2xl w-full max-w-2xl">
+          <div className="p-6 text-center text-muted-foreground">
+            Loading...
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen">
