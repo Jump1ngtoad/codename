@@ -194,7 +194,7 @@ export const ModulePage = () => {
         );
       } else {
         return (
-          <p className="text-2xl font-medium mb-8 text-center">
+          <p className="text-2xl font-medium mb-8 text-center text-zinc-900">
             {(currentQuestion as FlashcardQuestion).prompt}
           </p>
         );
@@ -228,17 +228,22 @@ export const ModulePage = () => {
             return (
               <>
                 <div className="flex items-center justify-between mb-6">
-                  <Button
-                    onClick={() => navigate('/')}
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full transition-transform hover:scale-105"
-                  >
-                    <X className="w-4 h-4" />
-                  </Button>
+                  <div className="flex items-center gap-4">
+                    <Button
+                      onClick={() => navigate('/')}
+                      variant="ghost"
+                      size="icon"
+                      className="rounded-full transition-transform hover:scale-105"
+                    >
+                      <X className="w-4 h-4" />
+                    </Button>
+                    <h1 className="text-xl font-semibold text-zinc-900">
+                      {module.title}
+                    </h1>
+                  </div>
                   <Progress 
                     value={progress} 
-                    className="w-32 transition-all duration-500 ease-out"
+                    className="flex-1 ml-6 transition-all duration-500 ease-out"
                   />
                 </div>
 

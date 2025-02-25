@@ -55,6 +55,13 @@ const getModuleIcon = (moduleId: string, isCompleted: boolean) => {
 
 export const HomePage = () => {
   const { modules, completedModules, isLoading, error } = useApp()
+  
+  console.log('HomePage Debug:', {
+    modulesLength: modules?.length,
+    modules,
+    isLoading,
+    error
+  })
 
   return (
     <div className="min-h-screen">
@@ -83,6 +90,11 @@ export const HomePage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {modules.map((module) => {
                 const isCompleted = completedModules.includes(module.id)
+                console.log('Rendering module:', {
+                  id: module.id,
+                  title: module.title,
+                  isCompleted
+                })
                 return (
                   <Link 
                     key={module.id} 
@@ -99,11 +111,11 @@ export const HomePage = () => {
                         <div className="space-y-4">
                           <div className="flex items-center gap-3">
                             {getModuleIcon(module.id, isCompleted)}
-                            <h3 className="text-xl font-semibold">
+                            <h3 className="text-xl font-semibold text-zinc-900">
                               {module.title}
                             </h3>
                           </div>
-                          <p className="text-md text-muted-foreground">
+                          <p className="text-md text-zinc-600">
                             {module.description}
                           </p>
                         </div>
