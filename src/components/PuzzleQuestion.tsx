@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import {
   DndContext,
   DragOverlay,
@@ -16,10 +16,30 @@ import { StoryConstruction } from './StoryConstruction'
 import { StoryFragment } from './StoryFragment'
 import { Button } from './ui/button'
 import { cn } from '../lib/utils'
+import { RefreshCw } from 'lucide-react'
 
 interface PuzzleQuestionProps {
   question: PuzzleQuestionType
   onCorrect: () => void
+}
+
+// Loading skeleton component
+const LoadingSkeleton = () => (
+  <div className="animate-pulse">
+    <div className="w-full h-64 bg-zinc-200 rounded-2xl" />
+  </div>
+)
+
+// Image preloader function
+const preloadImage = (imagePath: string): Promise<void> => {
+  if (!imagePath) return Promise.resolve()
+  
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.onload = () => resolve()
+    img.onerror = () => reject()
+    img.src = imagePath
+  })
 }
 
 export function PuzzleQuestion({
@@ -35,6 +55,8 @@ export function PuzzleQuestion({
   const [isFlipped, setIsFlipped] = useState(false)
   const [showContinueButton, setShowContinueButton] = useState(false)
   const [imageError, setImageError] = useState<string | null>(null)
+  const [isImageLoading, setIsImageLoading] = useState(true)
+  const [retryCount, setRetryCount] = useState(0)
 
   // Set up drag sensors with increased distance to better differentiate between taps and drags
   const sensors = useSensors(
@@ -51,8 +73,23 @@ export function PuzzleQuestion({
     })
   )
 
+  // Handle image load success
+  const handleImageLoad = useCallback(() => {
+    console.log('PuzzleQuestion: Image loaded successfully')
+    setIsImageLoading(false)
+    setImageError(null)
+  }, [])
+
+  // Handle image load error
+  const handleImageError = useCallback(() => {
+    console.log('PuzzleQuestion: Image failed to load:', question.imagePath)
+    setIsImageLoading(false)
+    setImageError(`Failed to load image: ${question.imagePath}`)
+  }, [question.imagePath])
+
   // Initialize available fragments and place the first fragment in the correct position
   useEffect(() => {
+    console.log('PuzzleQuestion: Initializing with question:', question)
     // Create all fragments
     const allFragments = question.fragments.map((fragment, index) => ({
       id: `fragment-${index}`,
@@ -70,7 +107,49 @@ export function PuzzleQuestion({
     setIsFlipped(false)
     setShowContinueButton(false)
     setImageError(null)
+    setIsImageLoading(true)
+    setRetryCount(0)
   }, [question])
+
+  // Preload image when question changes
+  useEffect(() => {
+    if (!question.imagePath) return
+
+    const preload = async () => {
+      try {
+        if (question.imagePath) {
+          await preloadImage(question.imagePath)
+          handleImageLoad()
+        }
+      } catch (err) {
+        console.error('Failed to preload image:', err)
+        handleImageError()
+      }
+    }
+
+    preload()
+  }, [question.imagePath, handleImageLoad, handleImageError])
+
+  // Handle image retry
+  const retryLoadImage = () => {
+    if (retryCount >= 3) {
+      setImageError('Maximum retry attempts reached. Please check your connection.')
+      return
+    }
+
+    if (!question.imagePath) {
+      setImageError('No image path provided.')
+      return
+    }
+
+    setIsImageLoading(true)
+    setImageError(null)
+    setRetryCount(prev => prev + 1)
+    
+    preloadImage(question.imagePath)
+      .then(handleImageLoad)
+      .catch(handleImageError)
+  }
 
   // Handle drag start
   const handleDragStart = (event: DragStartEvent) => {
@@ -264,16 +343,6 @@ export function PuzzleQuestion({
     }
   }
 
-  // Handle image load success
-  const handleImageLoad = () => {
-    setImageError(null)
-  }
-
-  // Handle image load error
-  const handleImageError = () => {
-    setImageError(`Failed to load image: ${question.imagePath}`)
-  }
-
   // Find active fragment for overlay
   const activeFragment = activeId
     ? [...availableFragments, ...constructedStory].find((fragment) => fragment.id === activeId)
@@ -305,13 +374,17 @@ export function PuzzleQuestion({
               )}
               style={{ backfaceVisibility: "hidden" }}
             >
-              <img 
-                src={question.imagePath} 
-                alt="Puzzle image"
-                className="w-full h-full object-cover"
-                onLoad={handleImageLoad}
-                onError={handleImageError}
-              />
+              {isImageLoading ? (
+                <LoadingSkeleton />
+              ) : (
+                <img 
+                  src={question.imagePath} 
+                  alt="Puzzle image"
+                  className="w-full h-full object-cover transition-opacity duration-300"
+                  onLoad={handleImageLoad}
+                  onError={handleImageError}
+                />
+              )}
             </div>
             
             {/* Back of card (translation) */}
@@ -336,10 +409,21 @@ export function PuzzleQuestion({
             </div>
           </div>
           
-          {/* Display error message if image fails to load */}
-          {imageError && (
-            <div className="text-red-500 text-sm text-center">
-              {imageError}
+          {/* Display error message with retry button if image fails to load */}
+          {imageError && !isImageLoading && (
+            <div className="text-center space-y-2">
+              <div className="text-red-500 text-sm">
+                {imageError}
+              </div>
+              {retryCount < 3 && (
+                <button
+                  onClick={retryLoadImage}
+                  className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                  Retry loading image
+                </button>
+              )}
             </div>
           )}
         </div>
