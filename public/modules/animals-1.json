@@ -1,65 +1,105 @@
 {
-    "id": "animals-1",
-    "title": "Animals 1",
-    "description": "Expand your Afrikaans vocabulary with common animal names.",
-    "type": "flashcards",
-    "difficulty": "easy",
-    "questions": [
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/animals-1/dog.webp",
-        "correctAnswer": "Hond",
-        "options": ["Hond", "Kat", "Perd", "Koei"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/animals-1/cat.webp",
-        "correctAnswer": "Kat",
-        "options": ["Hond", "Kat", "Perd", "Koei"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/animals-1/horse.webp",
-        "correctAnswer": "Perd",
-        "options": ["Hond", "Kat", "Perd", "Koei"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/animals-1/cow.webp",
-        "correctAnswer": "Koei",
-        "options": ["Hond", "Kat", "Perd", "Koei"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/animals-1/bird.webp",
-        "correctAnswer": "Voël",
-        "options": ["Voël", "Vis", "Leeu", "Olifant"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/animals-1/fish.webp",
-        "correctAnswer": "Vis",
-        "options": ["Voël", "Vis", "Leeu", "Olifant"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/animals-1/lion.webp",
-        "correctAnswer": "Leeu",
-        "options": ["Voël", "Vis", "Leeu", "Olifant"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/animals-1/elephant.webp",
-        "correctAnswer": "Olifant",
-        "options": ["Voël", "Vis", "Leeu", "Olifant"]
-      }
-    ]
-  }
+  "id": "animals-1",
+  "title": "Animals 1",
+  "description": "Expand your Afrikaans vocabulary with common animal names.",
+  "type": "flashcards",
+  "difficulty": "easy",
+  "questions": [
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/animals-1/dog.webp",
+      "correctAnswer": "Hond",
+      "options": [
+        "Perd",
+        "Kat",
+        "Hond",
+        "Koei"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/animals-1/cat.webp",
+      "correctAnswer": "Kat",
+      "options": [
+        "Koei",
+        "Kat",
+        "Hond",
+        "Perd"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/animals-1/horse.webp",
+      "correctAnswer": "Perd",
+      "options": [
+        "Kat",
+        "Hond",
+        "Koei",
+        "Perd"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/animals-1/cow.webp",
+      "correctAnswer": "Koei",
+      "options": [
+        "Kat",
+        "Hond",
+        "Koei",
+        "Perd"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/animals-1/bird.webp",
+      "correctAnswer": "Voël",
+      "options": [
+        "Olifant",
+        "Leeu",
+        "Vis",
+        "Voël"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/animals-1/fish.webp",
+      "correctAnswer": "Vis",
+      "options": [
+        "Olifant",
+        "Vis",
+        "Leeu",
+        "Voël"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/animals-1/lion.webp",
+      "correctAnswer": "Leeu",
+      "options": [
+        "Voël",
+        "Leeu",
+        "Olifant",
+        "Vis"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/animals-1/elephant.webp",
+      "correctAnswer": "Olifant",
+      "options": [
+        "Olifant",
+        "Vis",
+        "Leeu",
+        "Voël"
+      ]
+    }
+  ]
+}

@@ -160,7 +160,7 @@ export const HomePage = () => {
                 )}
               >
                 <Trophy className="w-4 h-4 relative z-10" />
-                <span className="relative z-10">{showCompleted ? 'Completed' : 'Incomplete'}</span>
+                <span className="relative z-10">{showCompleted ? 'Hide' : 'Show'}</span>
               </button>
 
               <button 

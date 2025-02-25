@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "validate-modules": "node scripts/validate-modules.js",
-    "generate-manifest": "node scripts/generate-manifest.js"
+    "generate-manifest": "node scripts/generate-manifest.js",
+    "shuffle-modules": "node scripts/shuffle-modules.js"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",

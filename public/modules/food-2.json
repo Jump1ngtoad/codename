@@ -1,66 +1,105 @@
 {
-    "id": "food-2",
-    "title": "Food 2",
-    "description": "Expand your food vocabulary with more Afrikaans words for everyday meals.",
-    "type": "flashcards",
-    "difficulty": "easy",
-    "questions": [
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-2/carrot.webp",
-        "correctAnswer": "Wortel",
-        "options": ["Kaas", "Wortel", "Aartappel", "Piesang"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-2/potato.webp",
-        "correctAnswer": "Aartappel",
-        "options": ["Vrugte", "Brood", "Aartappel", "Wortel"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-2/rice.webp",
-        "correctAnswer": "Rys",
-        "options": ["Vleis", "Rys", "Brood", "Suiker"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-2/sugar.webp",
-        "correctAnswer": "Suiker",
-        "options": ["Sap", "Sout", "Suiker", "Melk"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-2/salt.webp",
-        "correctAnswer": "Sout",
-        "options": ["Vrugte", "Eier", "Suiker", "Sout"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-2/egg.webp",
-        "correctAnswer": "Eier",
-        "options": ["Kaas", "Eier", "Vleis", "Piesang"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-2/soup.webp",
-        "correctAnswer": "Sop",
-        "options": ["Rys", "Brood", "Sop", "Vleis"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-2/juice.webp",
-        "correctAnswer": "Sap",
-        "options": ["Water", "Melk", "Sap", "Sout"]
-      }
-    ]
-  }
-  
+  "id": "food-2",
+  "title": "Food 2",
+  "description": "Expand your food vocabulary with more Afrikaans words for everyday meals.",
+  "type": "flashcards",
+  "difficulty": "easy",
+  "questions": [
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-2/carrot.webp",
+      "correctAnswer": "Wortel",
+      "options": [
+        "Aartappel",
+        "Wortel",
+        "Kaas",
+        "Piesang"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-2/potato.webp",
+      "correctAnswer": "Aartappel",
+      "options": [
+        "Wortel",
+        "Aartappel",
+        "Vrugte",
+        "Brood"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-2/rice.webp",
+      "correctAnswer": "Rys",
+      "options": [
+        "Rys",
+        "Vleis",
+        "Brood",
+        "Suiker"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-2/sugar.webp",
+      "correctAnswer": "Suiker",
+      "options": [
+        "Melk",
+        "Suiker",
+        "Sout",
+        "Sap"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-2/salt.webp",
+      "correctAnswer": "Sout",
+      "options": [
+        "Vrugte",
+        "Suiker",
+        "Sout",
+        "Eier"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-2/egg.webp",
+      "correctAnswer": "Eier",
+      "options": [
+        "Vleis",
+        "Eier",
+        "Kaas",
+        "Piesang"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-2/soup.webp",
+      "correctAnswer": "Sop",
+      "options": [
+        "Brood",
+        "Sop",
+        "Rys",
+        "Vleis"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-2/juice.webp",
+      "correctAnswer": "Sap",
+      "options": [
+        "Melk",
+        "Water",
+        "Sout",
+        "Sap"
+      ]
+    }
+  ]
+}

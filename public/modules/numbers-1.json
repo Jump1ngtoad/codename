@@ -1,70 +1,119 @@
 {
-    "id": "numbers-1",
-    "title": "Numbers 1-10",
-    "description": "Learn to count from 1 to 10 in Afrikaans with number flashcards.",
-    "type": "flashcards",
-    "difficulty": "easy",
-    "questions": [
-      {
-        "type": "flashcards",
-        "prompt": "One",
-        "correctAnswer": "Een",
-        "options": ["Een", "Twee", "Drie", "Vier"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "Two",
-        "correctAnswer": "Twee",
-        "options": ["Een", "Twee", "Vyf", "Ses"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "Three",
-        "correctAnswer": "Drie",
-        "options": ["Vier", "Ses", "Drie", "Agt"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "Four",
-        "correctAnswer": "Vier",
-        "options": ["Vier", "Sewe", "Vyf", "Tien"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "Five",
-        "correctAnswer": "Vyf",
-        "options": ["Een", "Vier", "Vyf", "Nege"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "Six",
-        "correctAnswer": "Ses",
-        "options": ["Sewwe", "Ses", "Twee", "Agt"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "Seven",
-        "correctAnswer": "Sewe",
-        "options": ["Vyf", "Ses", "Agt", "Sewe"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "Eight",
-        "correctAnswer": "Agt",
-        "options": ["Nege", "Agt", "Tien", "Drie"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "Nine",
-        "correctAnswer": "Nege",
-        "options": ["Een", "Tien", "Nege", "Vier"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "Ten",
-        "correctAnswer": "Tien",
-        "options": ["Nege", "Tien", "Ses", "Vyf"]
-      }
-    ]
-  }
-  
+  "id": "numbers-1",
+  "title": "Numbers 1-10",
+  "description": "Learn to count from 1 to 10 in Afrikaans with number flashcards.",
+  "type": "flashcards",
+  "difficulty": "easy",
+  "questions": [
+    {
+      "type": "flashcards",
+      "prompt": "One",
+      "correctAnswer": "Een",
+      "options": [
+        "Een",
+        "Drie",
+        "Vier",
+        "Twee"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "Two",
+      "correctAnswer": "Twee",
+      "options": [
+        "Vyf",
+        "Twee",
+        "Een",
+        "Ses"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "Three",
+      "correctAnswer": "Drie",
+      "options": [
+        "Agt",
+        "Vier",
+        "Drie",
+        "Ses"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "Four",
+      "correctAnswer": "Vier",
+      "options": [
+        "Vyf",
+        "Tien",
+        "Sewe",
+        "Vier"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "Five",
+      "correctAnswer": "Vyf",
+      "options": [
+        "Nege",
+        "Vyf",
+        "Vier",
+        "Een"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "Six",
+      "correctAnswer": "Ses",
+      "options": [
+        "Agt",
+        "Twee",
+        "Ses",
+        "Sewwe"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "Seven",
+      "correctAnswer": "Sewe",
+      "options": [
+        "Ses",
+        "Sewe",
+        "Vyf",
+        "Agt"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "Eight",
+      "correctAnswer": "Agt",
+      "options": [
+        "Nege",
+        "Tien",
+        "Drie",
+        "Agt"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "Nine",
+      "correctAnswer": "Nege",
+      "options": [
+        "Nege",
+        "Tien",
+        "Vier",
+        "Een"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "Ten",
+      "correctAnswer": "Tien",
+      "options": [
+        "Nege",
+        "Tien",
+        "Ses",
+        "Vyf"
+      ]
+    }
+  ]
+}

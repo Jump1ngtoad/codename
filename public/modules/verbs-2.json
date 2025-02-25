@@ -1,70 +1,119 @@
 {
-    "id": "verbs-2",
-    "title": "Verbs 2",
-    "description": "Build on your verb knowledge with more commonly used Afrikaans verbs.",
-    "type": "flashcards",
-    "difficulty": "easy",
-    "questions": [
-      {
-        "type": "flashcards",
-        "prompt": "To walk",
-        "correctAnswer": "Loop",
-        "options": ["Loop", "Ry", "Spring", "Swem"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "To run",
-        "correctAnswer": "Hardloop",
-        "options": ["Hardloop", "Staan", "Ry", "Werk"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "To sit",
-        "correctAnswer": "Sit",
-        "options": ["Slaap", "Sit", "Staan", "Lag"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "To stand",
-        "correctAnswer": "Staan",
-        "options": ["Staan", "Ry", "Spring", "Sing"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "To swim",
-        "correctAnswer": "Swem",
-        "options": ["Swem", "Eet", "Drink", "Ry"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "To write",
-        "correctAnswer": "Skryf",
-        "options": ["Lees", "Skryf", "Werk", "Slaap"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "To listen",
-        "correctAnswer": "Luister",
-        "options": ["Luister", "Lees", "Sing", "Ry"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "To talk",
-        "correctAnswer": "Praat",
-        "options": ["Sing", "Luister", "Praat", "Werk"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "To drive",
-        "correctAnswer": "Ry",
-        "options": ["Ry", "Swem", "Spring", "Skryf"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "To sing",
-        "correctAnswer": "Sing",
-        "options": ["Sing", "Lees", "Skryf", "Lag"]
-      }
-    ]
-  }
-  
+  "id": "verbs-2",
+  "title": "Verbs 2",
+  "description": "Build on your verb knowledge with more commonly used Afrikaans verbs.",
+  "type": "flashcards",
+  "difficulty": "easy",
+  "questions": [
+    {
+      "type": "flashcards",
+      "prompt": "To walk",
+      "correctAnswer": "Loop",
+      "options": [
+        "Loop",
+        "Spring",
+        "Swem",
+        "Ry"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "To run",
+      "correctAnswer": "Hardloop",
+      "options": [
+        "Hardloop",
+        "Staan",
+        "Ry",
+        "Werk"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "To sit",
+      "correctAnswer": "Sit",
+      "options": [
+        "Sit",
+        "Slaap",
+        "Lag",
+        "Staan"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "To stand",
+      "correctAnswer": "Staan",
+      "options": [
+        "Ry",
+        "Staan",
+        "Spring",
+        "Sing"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "To swim",
+      "correctAnswer": "Swem",
+      "options": [
+        "Ry",
+        "Eet",
+        "Drink",
+        "Swem"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "To write",
+      "correctAnswer": "Skryf",
+      "options": [
+        "Werk",
+        "Skryf",
+        "Slaap",
+        "Lees"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "To listen",
+      "correctAnswer": "Luister",
+      "options": [
+        "Ry",
+        "Lees",
+        "Luister",
+        "Sing"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "To talk",
+      "correctAnswer": "Praat",
+      "options": [
+        "Werk",
+        "Sing",
+        "Praat",
+        "Luister"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "To drive",
+      "correctAnswer": "Ry",
+      "options": [
+        "Skryf",
+        "Spring",
+        "Swem",
+        "Ry"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "To sing",
+      "correctAnswer": "Sing",
+      "options": [
+        "Sing",
+        "Lees",
+        "Skryf",
+        "Lag"
+      ]
+    }
+  ]
+}

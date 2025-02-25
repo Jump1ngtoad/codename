@@ -1,40 +1,64 @@
 {
-    "id": "verbs-1",
-    "title": "Verbs 1",
-    "description": "Learn essential Afrikaans verbs for everyday conversations.",
-    "type": "flashcards",
-    "difficulty": "easy",
-    "questions": [
-      {
-        "type": "flashcards",
-        "prompt": "To eat",
-        "correctAnswer": "Eet",
-        "options": ["Eet", "Drink", "Loop", "Werk"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "To drink",
-        "correctAnswer": "Drink",
-        "options": ["Skryf", "Lees", "Drink", "Eet"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "To run",
-        "correctAnswer": "Hardloop",
-        "options": ["Loop", "Hardloop", "Spring", "Ry"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "To sleep",
-        "correctAnswer": "Slaap",
-        "options": ["Slaap", "Staan", "Swem", "Lag"]
-      },
-      {
-        "type": "flashcards",
-        "prompt": "To read",
-        "correctAnswer": "Lees",
-        "options": ["Skryf", "Lees", "Sing", "Kook"]
-      }
-    ]
-  }
-  
+  "id": "verbs-1",
+  "title": "Verbs 1",
+  "description": "Learn essential Afrikaans verbs for everyday conversations.",
+  "type": "flashcards",
+  "difficulty": "easy",
+  "questions": [
+    {
+      "type": "flashcards",
+      "prompt": "To eat",
+      "correctAnswer": "Eet",
+      "options": [
+        "Drink",
+        "Eet",
+        "Werk",
+        "Loop"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "To drink",
+      "correctAnswer": "Drink",
+      "options": [
+        "Eet",
+        "Lees",
+        "Skryf",
+        "Drink"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "To run",
+      "correctAnswer": "Hardloop",
+      "options": [
+        "Ry",
+        "Hardloop",
+        "Spring",
+        "Loop"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "To sleep",
+      "correctAnswer": "Slaap",
+      "options": [
+        "Swem",
+        "Lag",
+        "Staan",
+        "Slaap"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "To read",
+      "correctAnswer": "Lees",
+      "options": [
+        "Sing",
+        "Skryf",
+        "Lees",
+        "Kook"
+      ]
+    }
+  ]
+}

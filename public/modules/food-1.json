@@ -1,80 +1,129 @@
 {
-    "id": "food-1",
-    "title": "Food 1",
-    "description": "Recognize and learn Afrikaans words for common foods and drinks.",
-    "type": "flashcards",
-    "difficulty": "easy",
-    "questions": [
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-1/apple.webp",
-        "correctAnswer": "Appel",
-        "options": ["Water", "Appel", "Kaas", "Tee"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-1/banana.webp",
-        "correctAnswer": "Piesang",
-        "options": ["Piesang", "Brood", "Koffie", "Lemoen"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-1/orange.webp",
-        "correctAnswer": "Lemoen",
-        "options": ["Botter", "Melk", "Lemoen", "Eier"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-1/bread.webp",
-        "correctAnswer": "Brood",
-        "options": ["Tee", "Piesang", "Appel", "Brood"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-1/milk.webp",
-        "correctAnswer": "Melk",
-        "options": ["Koffie", "Water", "Melk", "Botter"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-1/cheese.webp",
-        "correctAnswer": "Kaas",
-        "options": ["Lemoen", "Kaas", "Eier", "Koffie"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-1/water.webp",
-        "correctAnswer": "Water",
-        "options": ["Brood", "Botter", "Water", "Appel"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-1/coffee.webp",
-        "correctAnswer": "Koffie",
-        "options": ["Piesang", "Koffie", "Kaas", "Melk"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-1/tea.webp",
-        "correctAnswer": "Tee",
-        "options": ["Eier", "Lemoen", "Tee", "Botter"]
-      },
-      {
-        "type": "flashcards",
-        "variant": "image",
-        "imagePath": "/images/food-1/butter.webp",
-        "correctAnswer": "Botter",
-        "options": ["Water", "Brood", "Tee", "Botter"]
-      }
-    ]
-  }
-  
+  "id": "food-1",
+  "title": "Food 1",
+  "description": "Recognize and learn Afrikaans words for common foods and drinks.",
+  "type": "flashcards",
+  "difficulty": "easy",
+  "questions": [
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-1/apple.webp",
+      "correctAnswer": "Appel",
+      "options": [
+        "Appel",
+        "Water",
+        "Tee",
+        "Kaas"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-1/banana.webp",
+      "correctAnswer": "Piesang",
+      "options": [
+        "Koffie",
+        "Piesang",
+        "Lemoen",
+        "Brood"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-1/orange.webp",
+      "correctAnswer": "Lemoen",
+      "options": [
+        "Melk",
+        "Botter",
+        "Lemoen",
+        "Eier"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-1/bread.webp",
+      "correctAnswer": "Brood",
+      "options": [
+        "Piesang",
+        "Appel",
+        "Tee",
+        "Brood"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-1/milk.webp",
+      "correctAnswer": "Melk",
+      "options": [
+        "Melk",
+        "Botter",
+        "Koffie",
+        "Water"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-1/cheese.webp",
+      "correctAnswer": "Kaas",
+      "options": [
+        "Kaas",
+        "Koffie",
+        "Lemoen",
+        "Eier"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-1/water.webp",
+      "correctAnswer": "Water",
+      "options": [
+        "Appel",
+        "Botter",
+        "Brood",
+        "Water"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-1/coffee.webp",
+      "correctAnswer": "Koffie",
+      "options": [
+        "Melk",
+        "Koffie",
+        "Piesang",
+        "Kaas"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-1/tea.webp",
+      "correctAnswer": "Tee",
+      "options": [
+        "Tee",
+        "Lemoen",
+        "Eier",
+        "Botter"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "variant": "image",
+      "imagePath": "/images/food-1/butter.webp",
+      "correctAnswer": "Botter",
+      "options": [
+        "Tee",
+        "Brood",
+        "Botter",
+        "Water"
+      ]
+    }
+  ]
+}
