@@ -68,7 +68,7 @@ export const HomePage = () => {
   // Toolbar state
   const [showCompleted, setShowCompleted] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
-  const [moduleType, setModuleType] = useState<'all' | 'flashcards' | 'sentence-completion'>('all')
+  const [moduleType, setModuleType] = useState<'all' | 'cards' | 'words'>('all')
   const [difficultyFilter, setDifficultyFilter] = useState<'all' | 'easy' | 'hard'>('all')
 
   // Filter modules
@@ -81,8 +81,11 @@ export const HomePage = () => {
         }
         
         // Filter by type
-        if (moduleType !== 'all' && module.type !== moduleType) {
-          return false
+        if (moduleType !== 'all') {
+          const type = moduleType === 'cards' ? 'flashcards' : 'sentence-completion'
+          if (module.type !== type) {
+            return false
+          }
         }
 
         // Filter by difficulty
@@ -157,22 +160,22 @@ export const HomePage = () => {
               <button 
                 onClick={() => setModuleType(current => {
                   switch (current) {
-                    case 'all': return 'flashcards'
-                    case 'flashcards': return 'sentence-completion'
-                    case 'sentence-completion': return 'all'
+                    case 'all': return 'cards'
+                    case 'cards': return 'words'
+                    case 'words': return 'all'
                   }
                 })}
                 className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
               >
-                {moduleType === 'flashcards' ? (
+                {moduleType === 'cards' ? (
                   <BookImage className="w-4 h-4" />
-                ) : moduleType === 'sentence-completion' ? (
+                ) : moduleType === 'words' ? (
                   <BookA className="w-4 h-4" />
                 ) : (
                   <Book className="w-4 h-4" />
                 )}
                 <span>{moduleType === 'all' ? 'All' : 
-                  moduleType === 'flashcards' ? 'Cards' : 'Sentence'}</span>
+                  moduleType === 'cards' ? 'Cards' : 'Words'}</span>
               </button>
 
               <button 
@@ -255,7 +258,7 @@ export const HomePage = () => {
                               <Turtle className="w-4 h-4 text-zinc-400" />
                             )}
                             <span className="text-black font-semibold text-foreground tracking-wide">
-                              {module.type === 'flashcards' ? 'Flashcards' : 'Sentence Completion'}
+                              {module.type === 'flashcards' ? 'Cards' : 'Words'}
                             </span>
                           </div>
                           <div className={cn(
