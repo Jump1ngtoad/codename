@@ -30,12 +30,10 @@ export function PuzzleQuestion({
   const [availableFragments, setAvailableFragments] = useState<DraggableWordItem[]>([])
   const [constructedStory, setConstructedStory] = useState<DraggableWordItem[]>([])
   const [activeId, setActiveId] = useState<string | null>(null)
-  const [attemptCount, setAttemptCount] = useState(0)
   const [isCorrect, setIsCorrect] = useState(false)
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null)
   const [isFlipped, setIsFlipped] = useState(false)
   const [showContinueButton, setShowContinueButton] = useState(false)
-  const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState<string | null>(null)
 
   // Set up drag sensors with increased distance to better differentiate between taps and drags
@@ -67,12 +65,10 @@ export function PuzzleQuestion({
     
     setConstructedStory([{ ...firstFragment, isCorrect: true }])
     setAvailableFragments(remainingFragments)
-    setAttemptCount(0)
     setIsCorrect(false)
     setFeedbackMessage(null)
     setIsFlipped(false)
     setShowContinueButton(false)
-    setImageLoaded(false)
     setImageError(null)
   }, [question])
 
@@ -98,37 +94,75 @@ export function PuzzleQuestion({
       ? 'fragment-bank'
       : 'story-construction'
 
-    // If dropping back into the same container, only handle reordering if needed
-    if (
-      (sourceContainer === 'fragment-bank' && over.id === 'fragment-bank') ||
-      (sourceContainer === 'story-construction' && over.id === 'story-construction')
-    ) {
-      // Only reorder if dropping onto another fragment
-      if (over.id !== 'fragment-bank' && over.id !== 'story-construction') {
-        const items = sourceContainer === 'fragment-bank' ? availableFragments : constructedStory
-        const oldIndex = items.findIndex((fragment) => fragment.id === active.id)
-        const newIndex = items.findIndex((fragment) => fragment.id === over.id)
-        
-        if (sourceContainer === 'fragment-bank') {
-          setAvailableFragments(arrayMove(availableFragments, oldIndex, newIndex))
-        } else {
-          setConstructedStory(arrayMove(constructedStory, oldIndex, newIndex))
-        }
+    // Don't allow moving the first fragment
+    if (sourceContainer === 'story-construction' && constructedStory[0].id === active.id) {
+      return
+    }
+
+    // Handle dropping onto a container (not a fragment)
+    if (over.id === 'fragment-bank' || over.id === 'story-construction') {
+      // Moving between containers
+      if (over.id === 'story-construction' && sourceContainer === 'fragment-bank') {
+        setAvailableFragments(availableFragments.filter((fragment) => fragment.id !== active.id))
+        setConstructedStory([...constructedStory, activeFragment])
+      } else if (over.id === 'fragment-bank' && sourceContainer === 'story-construction') {
+        setConstructedStory(constructedStory.filter((fragment) => fragment.id !== active.id))
+        setAvailableFragments([...availableFragments, activeFragment])
       }
       return
     }
 
-    // Handle moving between containers
-    if (over.id === 'story-construction' && sourceContainer === 'fragment-bank') {
-      setAvailableFragments(availableFragments.filter((fragment) => fragment.id !== active.id))
-      setConstructedStory([...constructedStory, activeFragment])
-    } else if (over.id === 'fragment-bank' && sourceContainer === 'story-construction') {
-      // Don't allow moving the first fragment back to the bank
-      if (constructedStory[0].id === active.id) {
+    // At this point, we're dropping onto another fragment
+    
+    // Find which container the target fragment is in
+    const isOverFragmentInBank = availableFragments.some(f => f.id === over.id)
+    const isOverFragmentInStory = constructedStory.some(f => f.id === over.id)
+    
+    if (isOverFragmentInBank && sourceContainer === 'fragment-bank') {
+      // Reordering within fragment bank
+      const oldIndex = availableFragments.findIndex((fragment) => fragment.id === active.id)
+      const newIndex = availableFragments.findIndex((fragment) => fragment.id === over.id)
+      
+      const newOrder = arrayMove(availableFragments, oldIndex, newIndex)
+      setAvailableFragments(newOrder)
+    } else if (isOverFragmentInStory && sourceContainer === 'story-construction') {
+      // Reordering within story construction
+      const oldIndex = constructedStory.findIndex((fragment) => fragment.id === active.id)
+      const newIndex = constructedStory.findIndex((fragment) => fragment.id === over.id)
+      
+      // Don't allow moving fragments before the first fragment
+      if (newIndex === 0) {
         return
       }
-      setConstructedStory(constructedStory.filter((fragment) => fragment.id !== active.id))
-      setAvailableFragments([...availableFragments, activeFragment])
+      
+      const newOrder = arrayMove(constructedStory, oldIndex, newIndex)
+      setConstructedStory(newOrder)
+    } else if (isOverFragmentInBank && sourceContainer === 'story-construction') {
+      // Moving from story to fragment bank, placing before a specific fragment
+      const newIndex = availableFragments.findIndex((fragment) => fragment.id === over.id)
+      const filteredStory = constructedStory.filter((fragment) => fragment.id !== active.id)
+      const newFragmentBank = [...availableFragments]
+      newFragmentBank.splice(newIndex, 0, activeFragment)
+      
+      setConstructedStory(filteredStory)
+      setAvailableFragments(newFragmentBank)
+    } else if (isOverFragmentInStory && sourceContainer === 'fragment-bank') {
+      // Moving from fragment bank to story, placing before a specific fragment
+      const newIndex = constructedStory.findIndex((fragment) => fragment.id === over.id)
+      
+      // Don't allow placing fragments before the first fragment
+      if (newIndex === 0) {
+        setAvailableFragments(availableFragments.filter((fragment) => fragment.id !== active.id))
+        setConstructedStory([...constructedStory, activeFragment])
+        return
+      }
+      
+      const filteredFragmentBank = availableFragments.filter((fragment) => fragment.id !== active.id)
+      const newStory = [...constructedStory]
+      newStory.splice(newIndex, 0, activeFragment)
+      
+      setAvailableFragments(filteredFragmentBank)
+      setConstructedStory(newStory)
     }
   }
 
@@ -227,19 +261,16 @@ export function PuzzleQuestion({
       
       setConstructedStory(updatedStory)
       setFeedbackMessage(generateFeedback(updatedStory))
-      setAttemptCount((prev) => prev + 1)
     }
   }
 
   // Handle image load success
   const handleImageLoad = () => {
-    setImageLoaded(true)
     setImageError(null)
   }
 
   // Handle image load error
   const handleImageError = () => {
-    setImageLoaded(false)
     setImageError(`Failed to load image: ${question.imagePath}`)
   }
 

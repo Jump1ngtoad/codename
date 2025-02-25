@@ -43,6 +43,13 @@
       "difficulty": "hard"
     },
     {
+      "id": "puzzle-sample",
+      "title": "Story Puzzle",
+      "description": "Arrange the fragments to form a coherent story",
+      "type": "puzzle",
+      "difficulty": "hard"
+    },
+    {
       "id": "verbs-1",
       "title": "Verbs 1",
       "description": "Learn essential Afrikaans verbs for everyday conversations.",
@@ -55,14 +62,7 @@
       "description": "Build on your verb knowledge with more commonly used Afrikaans verbs.",
       "type": "flashcards",
       "difficulty": "easy"
-    },
-    {
-      "id": "puzzle-sample",
-      "title": "Story Puzzle",
-      "description": "Arrange the fragments to form a coherent story",
-      "type": "puzzle",
-      "difficulty": "easy"
     }
   ],
-  "generatedAt": "2025-02-25T14:22:48.448Z"
+  "generatedAt": "2025-02-25T20:37:54.935Z"
 }

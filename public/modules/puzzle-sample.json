@@ -3,7 +3,7 @@
   "title": "Story Puzzle",
   "description": "Arrange the fragments to form a coherent story",
   "type": "puzzle",
-  "difficulty": "easy",
+  "difficulty": "hard",
   "questions": [
     {
       "type": "puzzle",

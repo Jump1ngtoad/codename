@@ -4,7 +4,7 @@ import path from 'path'
 const MODULES_DIR = 'public/modules'
 
 const REQUIRED_MODULE_FIELDS = ['id', 'title', 'description', 'type', 'questions']
-const VALID_TYPES = ['flashcards', 'sentence-completion']
+const VALID_TYPES = ['flashcards', 'sentence-completion', 'puzzle']
 const VALID_VARIANTS = ['text', 'image']
 
 async function validateModules() {
@@ -82,6 +82,24 @@ async function validateModules() {
             if (question.type === 'sentence-completion') {
               if (!question.prompt || !question.correctAnswer) {
                 console.error(`❌ ${file}: Question ${index + 1} must have prompt and correctAnswer`)
+                hasErrors = true
+              }
+            }
+            
+            // Validate puzzle questions
+            if (question.type === 'puzzle') {
+              if (!question.correctAnswer) {
+                console.error(`❌ ${file}: Question ${index + 1} must have correctAnswer`)
+                hasErrors = true
+              }
+              
+              if (!Array.isArray(question.fragments) || question.fragments.length < 2) {
+                console.error(`❌ ${file}: Question ${index + 1} must have at least 2 fragments`)
+                hasErrors = true
+              }
+              
+              if (question.imagePath && !question.imagePath.startsWith('/images/')) {
+                console.error(`❌ ${file}: Question ${index + 1} image path must start with '/images/'`)
                 hasErrors = true
               }
             }

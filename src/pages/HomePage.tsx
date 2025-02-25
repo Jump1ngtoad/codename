@@ -1,13 +1,5 @@
 import { Link } from 'react-router-dom'
 import { 
-  FileType, 
-  Type, 
-  Bird, 
-  Apple, 
-  Coffee, 
-  MessageSquare, 
-  Hash, 
-  Play,
   ArrowRight,
   Search,
   Trophy,
@@ -17,19 +9,18 @@ import {
   BookImage,
   BookA,
   BookHeart,
-  Brain,
-  Puzzle,
-  BookOpen,
-  Layers
+  Brain
 } from 'lucide-react'
 import { useApp } from '../contexts/hooks'
 import { ErrorMessage, ModuleSkeletonGrid } from '../components/shared'
 import { cn } from '../lib/utils'
 import { useState, useMemo } from 'react'
-import { Button } from '../components/ui/button'
+
+// Define a type for Lucide icon components
+type LucideIconComponent = React.ComponentType<React.SVGAttributes<SVGElement>>;
 
 // Icon mapping for different module types
-const MODULE_ICONS: Record<string, any> = {
+const MODULE_ICONS: Record<string, LucideIconComponent> = {
   'flashcards': BookImage,
   'sentence-completion': BookA,
   'puzzle': BookHeart,
@@ -56,7 +47,6 @@ const getModuleIcon = (moduleType: string, isCompleted: boolean) => {
           isCompleted ? "text-amber-600" : "text-foreground"
         )} 
         strokeWidth={2} 
-        absoluteStrokeWidth 
       />
     </div>
   )
@@ -131,7 +121,7 @@ export const HomePage = () => {
               className="h-14 mx-auto animate-fade-up"
             />
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Master Afrikaans through playful flashcards and interactive exercises!
+              Learn Afrikaans through playful interactive exercises!
             </p>
           </div>
 

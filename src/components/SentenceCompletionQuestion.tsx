@@ -81,33 +81,57 @@ export function SentenceCompletionQuestion({
       ? 'word-bank'
       : 'sentence-construction'
 
-    // If dropping back into the same container, only handle reordering if needed
-    if (
-      (sourceContainer === 'word-bank' && over.id === 'word-bank') ||
-      (sourceContainer === 'sentence-construction' && over.id === 'sentence-construction')
-    ) {
-      // Only reorder if dropping onto another word
-      if (over.id !== 'word-bank' && over.id !== 'sentence-construction') {
-        const items = sourceContainer === 'word-bank' ? availableWords : constructedSentence
-        const oldIndex = items.findIndex((word) => word.id === active.id)
-        const newIndex = items.findIndex((word) => word.id === over.id)
-        
-        if (sourceContainer === 'word-bank') {
-          setAvailableWords(arrayMove(availableWords, oldIndex, newIndex))
-        } else {
-          setConstructedSentence(arrayMove(constructedSentence, oldIndex, newIndex))
-        }
+    // Handle dropping onto a container (not a word)
+    if (over.id === 'word-bank' || over.id === 'sentence-construction') {
+      // Moving between containers
+      if (over.id === 'sentence-construction' && sourceContainer === 'word-bank') {
+        setAvailableWords(availableWords.filter((word) => word.id !== active.id))
+        setConstructedSentence([...constructedSentence, activeWord])
+      } else if (over.id === 'word-bank' && sourceContainer === 'sentence-construction') {
+        setConstructedSentence(constructedSentence.filter((word) => word.id !== active.id))
+        setAvailableWords([...availableWords, activeWord])
       }
       return
     }
 
-    // Handle moving between containers
-    if (over.id === 'sentence-construction' && sourceContainer === 'word-bank') {
-      setAvailableWords(availableWords.filter((word) => word.id !== active.id))
-      setConstructedSentence([...constructedSentence, activeWord])
-    } else if (over.id === 'word-bank' && sourceContainer === 'sentence-construction') {
-      setConstructedSentence(constructedSentence.filter((word) => word.id !== active.id))
-      setAvailableWords([...availableWords, activeWord])
+    // At this point, we're dropping onto another word
+    
+    // Find which container the target word is in
+    const isOverWordInBank = availableWords.some(w => w.id === over.id)
+    const isOverWordInSentence = constructedSentence.some(w => w.id === over.id)
+    
+    if (isOverWordInBank && sourceContainer === 'word-bank') {
+      // Reordering within word bank
+      const oldIndex = availableWords.findIndex((word) => word.id === active.id)
+      const newIndex = availableWords.findIndex((word) => word.id === over.id)
+      
+      const newOrder = arrayMove(availableWords, oldIndex, newIndex)
+      setAvailableWords(newOrder)
+    } else if (isOverWordInSentence && sourceContainer === 'sentence-construction') {
+      // Reordering within sentence construction
+      const oldIndex = constructedSentence.findIndex((word) => word.id === active.id)
+      const newIndex = constructedSentence.findIndex((word) => word.id === over.id)
+      
+      const newOrder = arrayMove(constructedSentence, oldIndex, newIndex)
+      setConstructedSentence(newOrder)
+    } else if (isOverWordInBank && sourceContainer === 'sentence-construction') {
+      // Moving from sentence to word bank, placing before a specific word
+      const newIndex = availableWords.findIndex((word) => word.id === over.id)
+      const filteredSentence = constructedSentence.filter((word) => word.id !== active.id)
+      const newWordBank = [...availableWords]
+      newWordBank.splice(newIndex, 0, activeWord)
+      
+      setConstructedSentence(filteredSentence)
+      setAvailableWords(newWordBank)
+    } else if (isOverWordInSentence && sourceContainer === 'word-bank') {
+      // Moving from word bank to sentence, placing before a specific word
+      const newIndex = constructedSentence.findIndex((word) => word.id === over.id)
+      const filteredWordBank = availableWords.filter((word) => word.id !== active.id)
+      const newSentence = [...constructedSentence]
+      newSentence.splice(newIndex, 0, activeWord)
+      
+      setAvailableWords(filteredWordBank)
+      setConstructedSentence(newSentence)
     }
   }
 
