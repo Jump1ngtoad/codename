@@ -50,7 +50,6 @@ export interface DraggableWordItem {
 export interface SentenceConstructionState {
   availableWords: DraggableWordItem[];
   constructedSentence: DraggableWordItem[];
-  attemptCount: number;
 }
 
 export interface ModuleManifest {

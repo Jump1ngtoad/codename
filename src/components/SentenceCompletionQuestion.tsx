@@ -29,7 +29,6 @@ export function SentenceCompletionQuestion({
   const [availableWords, setAvailableWords] = useState<DraggableWordItem[]>([])
   const [constructedSentence, setConstructedSentence] = useState<DraggableWordItem[]>([])
   const [activeId, setActiveId] = useState<string | null>(null)
-  const [attemptCount, setAttemptCount] = useState(0)
 
   // Set up drag sensors with increased distance to better differentiate between taps and drags
   const sensors = useSensors(
@@ -54,7 +53,6 @@ export function SentenceCompletionQuestion({
     }))
     setAvailableWords(words)
     setConstructedSentence([])
-    setAttemptCount(0)
   }, [question])
 
   // Handle drag start
@@ -163,7 +161,6 @@ export function SentenceCompletionQuestion({
       setConstructedSentence(
         constructedSentence.map((word) => ({ ...word, isCorrect: false }))
       )
-      setAttemptCount((prev) => prev + 1)
     }
   }
 

@@ -7,47 +7,44 @@
   "questions": [
     {
       "type": "puzzle",
-      "imagePath": "/images/puzzle-sample/dog-in-park.webp",
-      "correctAnswer": "Die hond hardloop in die park. Hy jaag 'n bal en blaf van opgewondenheid.",
-      "englishTranslation": "The dog runs in the park. He chases a ball and barks with excitement.",
+      "imagePath": "/images/puzzle-sample/dog-find-shoe.webp",
+      "correctAnswer": "Die hond het 'n ou skoen in die tuin gevind.",
+      "englishTranslation": "The dog found an old shoe in the garden.",
       "fragments": [
         "Die hond",
-        "en",
-        "blaf",
-        "Hy jaag",
-        "van opgewondenheid.",
-        "'n bal",
-        "hardloop in die park."
+        "het",
+        "'n ou skoen",
+        "in",
+        "die tuin",
+        "gevind"
       ]
     },
     {
       "type": "puzzle",
-      "imagePath": "/images/puzzle-sample/bird-in-trees.webp",
-      "correctAnswer": "Die voël vlieg oor die bome. Dit sing 'n lied en geniet die wind.",
-      "englishTranslation": "The bird flies over the trees. It sings a song and enjoys the wind.",
+      "imagePath": "/images/puzzle-sample/dog-chase-butterfly.webp",
+      "correctAnswer": "Later that day, it chased a butterfly across the yard.",
+      "englishTranslation": "Later daardie dag het hy 'n skoenlapper oor die erf gejaag.",
       "fragments": [
-        "Die voël",
-        "sing 'n lied",
-        "Dit",
-        "vlieg",
-        "en",
-        "oor die bome.",
-        "geniet die wind."
+        "Later daardie dag",
+        "het hy",
+        "'n skoenlapper",
+        "oor",
+        "die erf",
+        "gejaag"
       ]
     },
     {
       "type": "puzzle",
-      "imagePath": "/images/puzzle-sample/lion-in-savannah.webp",
-      "correctAnswer": "Die leeu stap deur die savanne. Dit brul hard en wys sy krag.",
-      "englishTranslation": "The lion walks through the savannah. It roars loudly and shows its strength.",
+      "imagePath": "/images/puzzle-sample/dog-sleep-fire.webp",
+      "correctAnswer": "In die aand het hy by die kaggel opgekrul en aan die slaap geraak.",
+      "englishTranslation": "At night, it curled up by the fireplace and fell asleep.",
       "fragments": [
-        "Die leeu",
-        "Dit",
-        "wys sy krag.",
-        "stap",
-        "brul hard",
-        "deur die savanne.",
-        "en"
+        "In die aand",
+        "het hy",
+        "by die kaggel",
+        "opgekrul",
+        "en aan die",
+        "slaap geraak."
       ]
     }
   ]
