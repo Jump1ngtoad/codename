@@ -118,7 +118,7 @@ export const HomePage = () => {
             <img 
               src="/images/logo.svg" 
               alt="Lekker Learning"
-              className="h-14 mx-auto animate-fade-up"
+              className="h-20 mx-auto animate-fade-up"
             />
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Learn Afrikaans through playful interactive exercises!
@@ -138,7 +138,7 @@ export const HomePage = () => {
                 placeholder="Search modules..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 text-sm bg-zinc-100 rounded-sm focus:outline-none focus:ring-2 ring-primary/20"
+                className="w-full pl-9 pr-4 py-2 text-sm bg-zinc-100 rounded-sm focus:outline-none focus:ring-1 ring-zinc-300"
               />
             </div>
 
@@ -150,13 +150,13 @@ export const HomePage = () => {
                   "inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-sm transition-all relative",
                   showCompleted 
                     ? cn(
-                        "bg-amber-400 text-amber-600 shadow-[0_3px_0_#D97706]",
+                        "bg-amber-400 text-amber-600 shadow-[0_3px_0_#D97706] hover:bg-amber-400/80",
                         // First diagonal line (16-20 to 1-5)
                         "before:absolute before:w-[4px] before:h-[200%] before:bg-white/25 before:rotate-[20deg] before:top-[-50%] before:left-[25%]",
                         // Second diagonal line (22-24 to 7-9)
                         "after:absolute after:w-[2px] after:h-[200%] after:bg-white/25 after:rotate-[20deg] after:top-[-50%] after:left-[35%]"
                       )
-                    : "bg-zinc-200 text-zinc-500 shadow-[0_3px_0_#a1a1aa]"
+                    : "bg-zinc-200 text-zinc-500 shadow-[0_3px_0_#a1a1aa] hover:bg-zinc-300/80"
                 )}
               >
                 <Trophy className="w-4 h-4 relative z-10" />
@@ -173,7 +173,7 @@ export const HomePage = () => {
                   }
                 })}
                 className={cn(
-                  "inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-sm transition-all shadow-[0_3px_0_#a1a1aa]",
+                  "inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-sm transition-all shadow-[0_3px_0_#a1a1aa] hover:bg-zinc-300/80",
                   moduleType !== 'all' 
                     ? "bg-zinc-200 text-zinc-500" 
                     : "bg-zinc-200 text-zinc-500"
@@ -202,7 +202,7 @@ export const HomePage = () => {
                   }
                 })}
                 className={cn(
-                  "inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-sm transition-all shadow-[0_3px_0_#a1a1aa]",
+                  "inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-sm transition-all shadow-[0_3px_0_#a1a1aa] hover:bg-zinc-300/80",
                   difficultyFilter !== 'all' 
                     ? "bg-zinc-200 text-zinc-500" 
                     : "bg-zinc-200 text-zinc-500"
@@ -275,7 +275,7 @@ export const HomePage = () => {
                           </p>
                         </div>
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-1">
                             {module.difficulty === 'hard' ? (
                               <Rabbit className="w-4 h-4 text-zinc-400" />
                             ) : module.difficulty === 'easy' ? (
@@ -283,13 +283,13 @@ export const HomePage = () => {
                             ) : (
                               <Brain className="w-4 h-4 text-zinc-400" />
                             )}
-                            <span className="text-black font-semibold text-foreground tracking-wide">
+                            <span className="text-sm text-zinc-400 font-md">
                               {module.type === 'flashcards' ? 'Cards' : 
                                module.type === 'sentence-completion' ? 'Words' : 'Puzzle'}
                             </span>
                           </div>
                           <div className={cn(
-                            "text-primary font-medium flex items-center gap-2",
+                            "text-primary font-medium flex items-center gap-1",
                             isCompleted && "text-amber-600"
                           )}>
                             {isCompleted ? 'Review' : 'Start Learning'}

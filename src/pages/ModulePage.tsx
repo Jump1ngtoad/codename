@@ -252,19 +252,9 @@ export const ModulePage = () => {
                   {isLoading ? (
                     <QuestionSkeleton />
                   ) : module.type === 'flashcards' ? (
-                    <div className="transition-opacity duration-300">
+                    <div className="space-y-6">
                       {renderQuestion()}
                       {renderOptions()}
-                      <Button
-                        className="w-full mt-6 hidden md:block transition-all duration-300"
-                        size="lg"
-                        variant={isCorrect ? "secondary" : "default"}
-                        onClick={() => handleOptionSelect(userAnswer)}
-                        disabled={!userAnswer}
-                        aria-label="Check your answer"
-                      >
-                        Check Answer
-                      </Button>
                     </div>
                   ) : module.type === 'sentence-completion' ? (
                     <SentenceCompletionQuestion
@@ -296,7 +286,11 @@ export const ModulePage = () => {
                         }
                       }}
                     />
-                  ) : null}
+                  ) : (
+                    <div className="text-center text-red-500">
+                      Unknown module type: {module.type}
+                    </div>
+                  )}
 
                   {(currentQuestion as SentenceQuestion | PuzzleQuestionType).hint && !isCorrect && module.type !== 'puzzle' && (
                     <div 
@@ -319,6 +313,18 @@ export const ModulePage = () => {
                         Try again! The correct answer is: {currentQuestion.correctAnswer}
                       </p>
                     </div>
+                  )}
+
+                  {/* Show submit button only for modules that don't handle their own buttons */}
+                  {(module.type === 'flashcards' || module.type === 'puzzle' || module.type === 'sentence-completion') ? null : (
+                    <Button
+                      className="w-full mt-6"
+                      size="lg"
+                      onClick={() => handleOptionSelect(userAnswer)}
+                      disabled={!userAnswer}
+                    >
+                      {isCorrect ? "Continue" : "Check Answer"}
+                    </Button>
                   )}
                 </div>
               </>
