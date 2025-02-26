@@ -1,7 +1,7 @@
 {
-  "id": "puzzle-sample",
-  "title": "Story Puzzle",
-  "description": "Arrange the fragments to form a coherent story",
+  "id": "a-dogs-life",
+  "title": "A Dog's Life",
+  "description": "Build a story by organizing its parts.",
   "type": "puzzle",
   "difficulty": "hard",
   "questions": [
@@ -22,8 +22,8 @@
     {
       "type": "puzzle",
       "imagePath": "/images/puzzle-sample/dog-chase-butterfly.webp",
-      "correctAnswer": "Later that day, it chased a butterfly across the yard.",
-      "englishTranslation": "Later daardie dag het hy 'n skoenlapper oor die erf gejaag.",
+      "correctAnswer": "Later daardie dag het hy 'n skoenlapper oor die erf gejaag.",
+      "englishTranslation": "Later that day, it chased a butterfly across the yard.",
       "fragments": [
         "Later daardie dag",
         "die erf",

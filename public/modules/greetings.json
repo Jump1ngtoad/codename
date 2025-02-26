@@ -1,7 +1,7 @@
 {
   "id": "greetings",
   "title": "Greetings",
-  "description": "Learn common Afrikaans greetings and introductions using flashcards.",
+  "description": "Match flashcards to their correct translations.",
   "type": "flashcards",
   "difficulty": "easy",
   "questions": [

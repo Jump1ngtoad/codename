@@ -1,68 +1,68 @@
 {
   "modules": [
     {
+      "id": "a-dogs-life",
+      "title": "A Dog's Life",
+      "description": "Build a story by organizing its parts.",
+      "type": "puzzle",
+      "difficulty": "hard"
+    },
+    {
       "id": "animals-1",
       "title": "Animals 1",
-      "description": "Expand your Afrikaans vocabulary with common animal names.",
+      "description": "Match flashcards to their correct translations.",
       "type": "flashcards",
       "difficulty": "easy"
     },
     {
       "id": "food-1",
       "title": "Food 1",
-      "description": "Recognize and learn Afrikaans words for common foods and drinks.",
+      "description": "Match flashcards to their correct translations.",
       "type": "flashcards",
       "difficulty": "easy"
     },
     {
       "id": "food-2",
       "title": "Food 2",
-      "description": "Expand your food vocabulary with more Afrikaans words for everyday meals.",
+      "description": "Match flashcards to their correct translations.",
       "type": "flashcards",
       "difficulty": "easy"
     },
     {
       "id": "greetings",
       "title": "Greetings",
-      "description": "Learn common Afrikaans greetings and introductions using flashcards.",
+      "description": "Match flashcards to their correct translations.",
       "type": "flashcards",
       "difficulty": "easy"
     },
     {
       "id": "numbers-1",
       "title": "Numbers 1-10",
-      "description": "Learn to count from 1 to 10 in Afrikaans with number flashcards.",
+      "description": "Match flashcards to their correct translations.",
       "type": "flashcards",
       "difficulty": "easy"
     },
     {
       "id": "phrases-1",
       "title": "Phrases 1",
-      "description": "Practice essential Afrikaans phrases for daily communication.",
+      "description": "Translate simple phrases and sentences.",
       "type": "sentence-completion",
-      "difficulty": "hard"
-    },
-    {
-      "id": "puzzle-sample",
-      "title": "Story Puzzle",
-      "description": "Arrange the fragments to form a coherent story",
-      "type": "puzzle",
       "difficulty": "hard"
     },
     {
       "id": "verbs-1",
       "title": "Verbs 1",
-      "description": "Learn essential Afrikaans verbs for everyday conversations.",
+      "description": "Match flashcards to their correct translations.",
       "type": "flashcards",
       "difficulty": "easy"
     },
     {
       "id": "verbs-2",
       "title": "Verbs 2",
-      "description": "Build on your verb knowledge with more commonly used Afrikaans verbs.",
+      "description": "Match flashcards to their correct translations.",
       "type": "flashcards",
       "difficulty": "easy"
     }
   ],
-  "generatedAt": "2025-02-26T16:53:25.137Z"
+  "generatedAt": "2025-02-26T18:03:55.154Z"
 }

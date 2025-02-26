@@ -1,7 +1,7 @@
 {
   "id": "food-1",
   "title": "Food 1",
-  "description": "Recognize and learn Afrikaans words for common foods and drinks.",
+  "description": "Match flashcards to their correct translations.",
   "type": "flashcards",
   "difficulty": "easy",
   "questions": [
