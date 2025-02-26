@@ -15,13 +15,17 @@ export function FragmentBank({ fragments, activeId, onFragmentTap }: FragmentBan
     id: 'fragment-bank',
   })
 
+  // If there are no fragments, don't render the component
+  if (fragments.length === 0) {
+    return null
+  }
+
   return (
     <div
       ref={setNodeRef}
       className={cn(
         'p-4 rounded-xl bg-secondary/50',
-        'transition-colors duration-200',
-        fragments.length === 0 && 'bg-secondary/20'
+        'transition-colors duration-200'
       )}
     >
       <SortableContext id="fragment-bank" items={fragments} strategy={rectSortingStrategy}>

@@ -10,28 +10,6 @@
       "prompt": "Hello",
       "correctAnswer": "Hallo",
       "options": [
-        "Totsiens",
-        "Dankie",
-        "Asseblief",
-        "Hallo"
-      ]
-    },
-    {
-      "type": "flashcards",
-      "prompt": "Goodbye",
-      "correctAnswer": "Totsiens",
-      "options": [
-        "Dankie",
-        "Hallo",
-        "Totsiens",
-        "Lekker"
-      ]
-    },
-    {
-      "type": "flashcards",
-      "prompt": "Thank you",
-      "correctAnswer": "Dankie",
-      "options": [
         "Hallo",
         "Asseblief",
         "Dankie",
@@ -40,13 +18,35 @@
     },
     {
       "type": "flashcards",
+      "prompt": "Goodbye",
+      "correctAnswer": "Totsiens",
+      "options": [
+        "Lekker",
+        "Totsiens",
+        "Hallo",
+        "Dankie"
+      ]
+    },
+    {
+      "type": "flashcards",
+      "prompt": "Thank you",
+      "correctAnswer": "Dankie",
+      "options": [
+        "Totsiens",
+        "Asseblief",
+        "Hallo",
+        "Dankie"
+      ]
+    },
+    {
+      "type": "flashcards",
       "prompt": "Please",
       "correctAnswer": "Asseblief",
       "options": [
-        "Totsiens",
-        "Hallo",
+        "Asseblief",
         "Dankie",
-        "Asseblief"
+        "Hallo",
+        "Totsiens"
       ]
     }
   ]

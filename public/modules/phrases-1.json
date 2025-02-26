@@ -11,9 +11,9 @@
       "correctAnswer": "Hoe gaan dit",
       "words": [
         "gaan",
+        "dit",
         "Hoe",
-        "jou",
-        "dit"
+        "jou"
       ],
       "hint": "Remember: 'Hoe' means 'How'"
     },
@@ -22,11 +22,11 @@
       "prompt": "I am fine, thank you",
       "correctAnswer": "Ek is goed dankie",
       "words": [
+        "dankie",
+        "is",
         "goed",
         "Ek",
-        "is",
-        "baie",
-        "dankie"
+        "baie"
       ],
       "hint": "Remember: 'Ek' means 'I'"
     },
@@ -36,10 +36,10 @@
       "correctAnswer": "Wat is jou naam",
       "words": [
         "my",
-        "Wat",
-        "jou",
         "is",
-        "naam"
+        "naam",
+        "jou",
+        "Wat"
       ],
       "hint": "Remember: 'Wat' means 'What'"
     },
@@ -48,10 +48,10 @@
       "prompt": "My name is...",
       "correctAnswer": "My naam is",
       "words": [
-        "jou",
         "naam",
-        "My",
-        "is"
+        "jou",
+        "is",
+        "My"
       ],
       "hint": "Very similar to English!"
     },
@@ -60,11 +60,11 @@
       "prompt": "Have a good day",
       "correctAnswer": "Lekker dag vir jou",
       "words": [
-        "vir",
+        "dag",
+        "Lekker",
         "jou",
         "goed",
-        "Lekker",
-        "dag"
+        "vir"
       ],
       "hint": "Remember: 'Lekker' means 'nice/good'"
     }

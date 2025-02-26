@@ -12,12 +12,12 @@
       "englishTranslation": "The dog runs in the park. He chases a ball and barks with excitement.",
       "fragments": [
         "Die hond",
-        "Hy jaag",
         "en",
-        "van opgewondenheid.",
-        "hardloop in die park.",
         "blaf",
-        "'n bal"
+        "Hy jaag",
+        "van opgewondenheid.",
+        "'n bal",
+        "hardloop in die park."
       ]
     },
     {
@@ -27,12 +27,12 @@
       "englishTranslation": "The bird flies over the trees. It sings a song and enjoys the wind.",
       "fragments": [
         "Die voël",
+        "sing 'n lied",
+        "Dit",
         "vlieg",
         "en",
         "oor die bome.",
-        "geniet die wind.",
-        "Dit",
-        "sing 'n lied"
+        "geniet die wind."
       ]
     },
     {
@@ -42,12 +42,12 @@
       "englishTranslation": "The lion walks through the savannah. It roars loudly and shows its strength.",
       "fragments": [
         "Die leeu",
-        "wys sy krag.",
-        "brul hard",
-        "stap",
         "Dit",
-        "en",
-        "deur die savanne."
+        "wys sy krag.",
+        "stap",
+        "brul hard",
+        "deur die savanne.",
+        "en"
       ]
     }
   ]

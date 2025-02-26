@@ -8,9 +8,15 @@ interface StoryConstructionProps {
   fragments: DraggableWordItem[]
   activeId: string | null
   onFragmentTap: (fragmentId: string, container: 'fragment-bank' | 'story-construction') => void
+  overFragment?: string | null
 }
 
-export function StoryConstruction({ fragments, activeId, onFragmentTap }: StoryConstructionProps) {
+export function StoryConstruction({ 
+  fragments, 
+  activeId, 
+  onFragmentTap,
+  overFragment 
+}: StoryConstructionProps) {
   const { setNodeRef, isOver } = useDroppable({
     id: 'story-construction',
   })
@@ -19,35 +25,31 @@ export function StoryConstruction({ fragments, activeId, onFragmentTap }: StoryC
     <div
       ref={setNodeRef}
       className={cn(
-        'p-4 rounded-xl bg-white min-h-[120px] border-2 border-dashed',
-        'transition-all duration-200',
-        isOver ? 'border-primary bg-primary/5' : 'border-border',
-        fragments.length === 0 && 'flex items-center justify-center'
+        'min-h-[100px] p-4 rounded-xl',
+        'transition-colors duration-200',
+        isOver && fragments.length === 0 ? 'bg-primary/10' : 'bg-secondary/20',
+        'relative'
       )}
     >
-      {fragments.length === 0 ? (
-        <div className="text-sm text-muted-foreground">
-          Tap or drag fragments here to construct your story
+      <SortableContext id="story-construction" items={fragments} strategy={horizontalListSortingStrategy}>
+        <div className="flex flex-wrap gap-2">
+          {fragments.map((fragment) => (
+            <StoryFragment
+              key={fragment.id}
+              fragment={fragment}
+              isDragging={activeId === fragment.id}
+              container="story-construction"
+              onTap={onFragmentTap}
+              isOver={overFragment === fragment.id}
+            />
+          ))}
+          {fragments.length === 0 && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <p className="text-sm text-zinc-500">Drop fragments here to construct your story</p>
+            </div>
+          )}
         </div>
-      ) : (
-        <SortableContext
-          id="story-construction"
-          items={fragments}
-          strategy={horizontalListSortingStrategy}
-        >
-          <div className="flex flex-wrap gap-2">
-            {fragments.map((fragment) => (
-              <StoryFragment
-                key={fragment.id}
-                fragment={fragment}
-                isDragging={activeId === fragment.id}
-                container="story-construction"
-                onTap={onFragmentTap}
-              />
-            ))}
-          </div>
-        </SortableContext>
-      )}
+      </SortableContext>
     </div>
   )
 } 

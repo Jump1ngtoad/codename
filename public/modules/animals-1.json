@@ -11,10 +11,10 @@
       "imagePath": "/images/animals-1/dog.webp",
       "correctAnswer": "Hond",
       "options": [
-        "Perd",
         "Kat",
         "Hond",
-        "Koei"
+        "Koei",
+        "Perd"
       ]
     },
     {
@@ -23,10 +23,10 @@
       "imagePath": "/images/animals-1/cat.webp",
       "correctAnswer": "Kat",
       "options": [
-        "Koei",
-        "Kat",
+        "Perd",
         "Hond",
-        "Perd"
+        "Koei",
+        "Kat"
       ]
     },
     {
@@ -35,9 +35,9 @@
       "imagePath": "/images/animals-1/horse.webp",
       "correctAnswer": "Perd",
       "options": [
+        "Koei",
         "Kat",
         "Hond",
-        "Koei",
         "Perd"
       ]
     },
@@ -47,9 +47,9 @@
       "imagePath": "/images/animals-1/cow.webp",
       "correctAnswer": "Koei",
       "options": [
+        "Koei",
         "Kat",
         "Hond",
-        "Koei",
         "Perd"
       ]
     },
@@ -59,10 +59,10 @@
       "imagePath": "/images/animals-1/bird.webp",
       "correctAnswer": "Voël",
       "options": [
-        "Olifant",
         "Leeu",
-        "Vis",
-        "Voël"
+        "Olifant",
+        "Voël",
+        "Vis"
       ]
     },
     {
@@ -73,8 +73,8 @@
       "options": [
         "Olifant",
         "Vis",
-        "Leeu",
-        "Voël"
+        "Voël",
+        "Leeu"
       ]
     },
     {
@@ -83,9 +83,9 @@
       "imagePath": "/images/animals-1/lion.webp",
       "correctAnswer": "Leeu",
       "options": [
-        "Voël",
-        "Leeu",
         "Olifant",
+        "Leeu",
+        "Voël",
         "Vis"
       ]
     },
@@ -95,10 +95,10 @@
       "imagePath": "/images/animals-1/elephant.webp",
       "correctAnswer": "Olifant",
       "options": [
-        "Olifant",
-        "Vis",
         "Leeu",
-        "Voël"
+        "Voël",
+        "Olifant",
+        "Vis"
       ]
     }
   ]

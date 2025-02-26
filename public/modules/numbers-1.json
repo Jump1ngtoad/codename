@@ -10,10 +10,10 @@
       "prompt": "One",
       "correctAnswer": "Een",
       "options": [
+        "Twee",
         "Een",
         "Drie",
-        "Vier",
-        "Twee"
+        "Vier"
       ]
     },
     {
@@ -21,9 +21,9 @@
       "prompt": "Two",
       "correctAnswer": "Twee",
       "options": [
-        "Vyf",
         "Twee",
         "Een",
+        "Vyf",
         "Ses"
       ]
     },
@@ -32,10 +32,10 @@
       "prompt": "Three",
       "correctAnswer": "Drie",
       "options": [
-        "Agt",
-        "Vier",
         "Drie",
-        "Ses"
+        "Agt",
+        "Ses",
+        "Vier"
       ]
     },
     {
@@ -44,9 +44,9 @@
       "correctAnswer": "Vier",
       "options": [
         "Vyf",
-        "Tien",
+        "Vier",
         "Sewe",
-        "Vier"
+        "Tien"
       ]
     },
     {
@@ -54,9 +54,9 @@
       "prompt": "Five",
       "correctAnswer": "Vyf",
       "options": [
+        "Vier",
         "Nege",
         "Vyf",
-        "Vier",
         "Een"
       ]
     },
@@ -65,10 +65,10 @@
       "prompt": "Six",
       "correctAnswer": "Ses",
       "options": [
-        "Agt",
         "Twee",
-        "Ses",
-        "Sewwe"
+        "Sewwe",
+        "Agt",
+        "Ses"
       ]
     },
     {
@@ -76,9 +76,9 @@
       "prompt": "Seven",
       "correctAnswer": "Sewe",
       "options": [
-        "Ses",
-        "Sewe",
         "Vyf",
+        "Sewe",
+        "Ses",
         "Agt"
       ]
     },
@@ -87,10 +87,10 @@
       "prompt": "Eight",
       "correctAnswer": "Agt",
       "options": [
-        "Nege",
+        "Agt",
         "Tien",
-        "Drie",
-        "Agt"
+        "Nege",
+        "Drie"
       ]
     },
     {
@@ -98,8 +98,8 @@
       "prompt": "Nine",
       "correctAnswer": "Nege",
       "options": [
-        "Nege",
         "Tien",
+        "Nege",
         "Vier",
         "Een"
       ]
@@ -109,9 +109,9 @@
       "prompt": "Ten",
       "correctAnswer": "Tien",
       "options": [
-        "Nege",
         "Tien",
         "Ses",
+        "Nege",
         "Vyf"
       ]
     }

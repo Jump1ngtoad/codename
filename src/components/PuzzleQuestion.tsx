@@ -8,6 +8,7 @@ import {
   useSensors,
   DragStartEvent,
   DragEndEvent,
+  DragOverEvent,
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 import { PuzzleQuestion as PuzzleQuestionType, DraggableWordItem } from '../types'
@@ -57,6 +58,7 @@ export function PuzzleQuestion({
   const [imageError, setImageError] = useState<string | null>(null)
   const [isImageLoading, setIsImageLoading] = useState(true)
   const [retryCount, setRetryCount] = useState(0)
+  const [overFragment, setOverFragment] = useState<string | null>(null)
 
   // Set up drag sensors with increased distance to better differentiate between taps and drags
   const sensors = useSensors(
@@ -96,12 +98,13 @@ export function PuzzleQuestion({
       content: fragment,
     }))
     
-    // Place the first fragment in the constructed story
-    const firstFragment = allFragments[0]
-    const remainingFragments = allFragments.slice(1)
-    
-    setConstructedStory([{ ...firstFragment, isCorrect: true }])
-    setAvailableFragments(remainingFragments)
+    // Place all fragments in the constructed story, with first fragment marked as correct
+    const [firstFragment, ...remainingFragments] = allFragments
+    setConstructedStory([
+      { ...firstFragment, isCorrect: true },
+      ...remainingFragments
+    ])
+    setAvailableFragments([])
     setIsCorrect(false)
     setFeedbackMessage(null)
     setIsFlipped(false)
@@ -154,12 +157,25 @@ export function PuzzleQuestion({
   // Handle drag start
   const handleDragStart = (event: DragStartEvent) => {
     setActiveId(event.active.id as string)
+    setOverFragment(null)
+  }
+
+  // Handle drag over
+  const handleDragOver = (event: DragOverEvent) => {
+    const { over } = event
+    const overId = over?.id
+    if (overId === 'story-construction' || overId === 'fragment-bank' || !overId) {
+      setOverFragment(null)
+    } else {
+      setOverFragment(String(overId))
+    }
   }
 
   // Handle drag end
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event
     setActiveId(null)
+    setOverFragment(null)
 
     if (!over) return
 
@@ -180,13 +196,10 @@ export function PuzzleQuestion({
 
     // Handle dropping onto a container (not a fragment)
     if (over.id === 'fragment-bank' || over.id === 'story-construction') {
-      // Moving between containers
+      // Only allow moving from bank to story, not the other way around
       if (over.id === 'story-construction' && sourceContainer === 'fragment-bank') {
         setAvailableFragments(availableFragments.filter((fragment) => fragment.id !== active.id))
         setConstructedStory([...constructedStory, activeFragment])
-      } else if (over.id === 'fragment-bank' && sourceContainer === 'story-construction') {
-        setConstructedStory(constructedStory.filter((fragment) => fragment.id !== active.id))
-        setAvailableFragments([...availableFragments, activeFragment])
       }
       return
     }
@@ -217,14 +230,8 @@ export function PuzzleQuestion({
       const newOrder = arrayMove(constructedStory, oldIndex, newIndex)
       setConstructedStory(newOrder)
     } else if (isOverFragmentInBank && sourceContainer === 'story-construction') {
-      // Moving from story to fragment bank, placing before a specific fragment
-      const newIndex = availableFragments.findIndex((fragment) => fragment.id === over.id)
-      const filteredStory = constructedStory.filter((fragment) => fragment.id !== active.id)
-      const newFragmentBank = [...availableFragments]
-      newFragmentBank.splice(newIndex, 0, activeFragment)
-      
-      setConstructedStory(filteredStory)
-      setAvailableFragments(newFragmentBank)
+      // Prevent moving from story to bank by dropping on a bank fragment
+      return
     } else if (isOverFragmentInStory && sourceContainer === 'fragment-bank') {
       // Moving from fragment bank to story, placing before a specific fragment
       const newIndex = constructedStory.findIndex((fragment) => fragment.id === over.id)
@@ -250,18 +257,10 @@ export function PuzzleQuestion({
     const fragment = [...availableFragments, ...constructedStory].find((f) => f.id === fragmentId)
     if (!fragment) return
 
+    // Only allow moving fragments from bank to story, not the other way around
     if (container === 'fragment-bank') {
-      // Move from fragment bank to story construction
       setAvailableFragments(availableFragments.filter((f) => f.id !== fragmentId))
       setConstructedStory([...constructedStory, fragment])
-    } else {
-      // Don't allow tapping the first fragment to move it back
-      if (constructedStory[0].id === fragmentId) {
-        return
-      }
-      // Move from story construction back to fragment bank
-      setConstructedStory(constructedStory.filter((f) => f.id !== fragmentId))
-      setAvailableFragments([...availableFragments, fragment])
     }
   }
 
@@ -432,6 +431,7 @@ export function PuzzleQuestion({
       <DndContext
         sensors={sensors}
         onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
         <div className="space-y-4">
@@ -439,12 +439,15 @@ export function PuzzleQuestion({
             fragments={constructedStory} 
             activeId={activeId} 
             onFragmentTap={handleFragmentTap}
+            overFragment={overFragment}
           />
-          <FragmentBank 
-            fragments={availableFragments} 
-            activeId={activeId} 
-            onFragmentTap={handleFragmentTap}
-          />
+          {availableFragments.length > 0 && (
+            <FragmentBank 
+              fragments={availableFragments} 
+              activeId={activeId} 
+              onFragmentTap={handleFragmentTap}
+            />
+          )}
         </div>
 
         <DragOverlay>
