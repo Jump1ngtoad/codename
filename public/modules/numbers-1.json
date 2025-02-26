@@ -1,7 +1,7 @@
 {
   "id": "numbers-1",
   "title": "Numbers 1-10",
-  "description": "Match flashcards to their correct translations.",
+  "description": "Match to the correct translations.",
   "type": "flashcards",
   "difficulty": "easy",
   "questions": [

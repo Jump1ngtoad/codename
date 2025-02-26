@@ -1,7 +1,7 @@
 {
   "id": "animals-1",
   "title": "Animals 1",
-  "description": "Match flashcards to their correct translations.",
+  "description": "Match to the correct translations.",
   "type": "flashcards",
   "difficulty": "easy",
   "questions": [

@@ -1,7 +1,7 @@
 {
   "id": "food-2",
   "title": "Food 2",
-  "description": "Match flashcards to their correct translations.",
+  "description": "Match to the correct translations.",
   "type": "flashcards",
   "difficulty": "easy",
   "questions": [
