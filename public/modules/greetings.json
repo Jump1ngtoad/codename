@@ -10,10 +10,10 @@
       "prompt": "Hello",
       "correctAnswer": "Hallo",
       "options": [
-        "Hallo",
+        "Totsiens",
         "Asseblief",
-        "Dankie",
-        "Totsiens"
+        "Hallo",
+        "Dankie"
       ]
     },
     {
@@ -21,10 +21,10 @@
       "prompt": "Goodbye",
       "correctAnswer": "Totsiens",
       "options": [
-        "Lekker",
         "Totsiens",
-        "Hallo",
-        "Dankie"
+        "Lekker",
+        "Dankie",
+        "Hallo"
       ]
     },
     {
@@ -32,9 +32,9 @@
       "prompt": "Thank you",
       "correctAnswer": "Dankie",
       "options": [
-        "Totsiens",
         "Asseblief",
         "Hallo",
+        "Totsiens",
         "Dankie"
       ]
     },
@@ -43,10 +43,10 @@
       "prompt": "Please",
       "correctAnswer": "Asseblief",
       "options": [
-        "Asseblief",
         "Dankie",
-        "Hallo",
-        "Totsiens"
+        "Asseblief",
+        "Totsiens",
+        "Hallo"
       ]
     }
   ]

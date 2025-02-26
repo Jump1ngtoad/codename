@@ -11,10 +11,10 @@
       "imagePath": "/images/animals-1/dog.webp",
       "correctAnswer": "Hond",
       "options": [
-        "Kat",
-        "Hond",
+        "Perd",
         "Koei",
-        "Perd"
+        "Hond",
+        "Kat"
       ]
     },
     {
@@ -23,10 +23,10 @@
       "imagePath": "/images/animals-1/cat.webp",
       "correctAnswer": "Kat",
       "options": [
-        "Perd",
-        "Hond",
         "Koei",
-        "Kat"
+        "Kat",
+        "Hond",
+        "Perd"
       ]
     },
     {
@@ -35,10 +35,10 @@
       "imagePath": "/images/animals-1/horse.webp",
       "correctAnswer": "Perd",
       "options": [
-        "Koei",
-        "Kat",
         "Hond",
-        "Perd"
+        "Perd",
+        "Kat",
+        "Koei"
       ]
     },
     {
@@ -47,10 +47,10 @@
       "imagePath": "/images/animals-1/cow.webp",
       "correctAnswer": "Koei",
       "options": [
-        "Koei",
-        "Kat",
         "Hond",
-        "Perd"
+        "Perd",
+        "Kat",
+        "Koei"
       ]
     },
     {
@@ -59,10 +59,10 @@
       "imagePath": "/images/animals-1/bird.webp",
       "correctAnswer": "Voël",
       "options": [
+        "Vis",
         "Leeu",
         "Olifant",
-        "Voël",
-        "Vis"
+        "Voël"
       ]
     },
     {
@@ -71,10 +71,10 @@
       "imagePath": "/images/animals-1/fish.webp",
       "correctAnswer": "Vis",
       "options": [
-        "Olifant",
         "Vis",
-        "Voël",
-        "Leeu"
+        "Leeu",
+        "Olifant",
+        "Voël"
       ]
     },
     {
@@ -83,10 +83,10 @@
       "imagePath": "/images/animals-1/lion.webp",
       "correctAnswer": "Leeu",
       "options": [
-        "Olifant",
-        "Leeu",
         "Voël",
-        "Vis"
+        "Leeu",
+        "Vis",
+        "Olifant"
       ]
     },
     {
@@ -95,8 +95,8 @@
       "imagePath": "/images/animals-1/elephant.webp",
       "correctAnswer": "Olifant",
       "options": [
-        "Leeu",
         "Voël",
+        "Leeu",
         "Olifant",
         "Vis"
       ]

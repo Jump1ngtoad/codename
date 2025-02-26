@@ -10,10 +10,10 @@
       "prompt": "One",
       "correctAnswer": "Een",
       "options": [
+        "Vier",
         "Twee",
         "Een",
-        "Drie",
-        "Vier"
+        "Drie"
       ]
     },
     {
@@ -21,9 +21,9 @@
       "prompt": "Two",
       "correctAnswer": "Twee",
       "options": [
+        "Vyf",
         "Twee",
         "Een",
-        "Vyf",
         "Ses"
       ]
     },
@@ -32,10 +32,10 @@
       "prompt": "Three",
       "correctAnswer": "Drie",
       "options": [
+        "Vier",
         "Drie",
-        "Agt",
         "Ses",
-        "Vier"
+        "Agt"
       ]
     },
     {
@@ -43,10 +43,10 @@
       "prompt": "Four",
       "correctAnswer": "Vier",
       "options": [
-        "Vyf",
-        "Vier",
         "Sewe",
-        "Tien"
+        "Tien",
+        "Vyf",
+        "Vier"
       ]
     },
     {
@@ -55,9 +55,9 @@
       "correctAnswer": "Vyf",
       "options": [
         "Vier",
+        "Een",
         "Nege",
-        "Vyf",
-        "Een"
+        "Vyf"
       ]
     },
     {
@@ -78,8 +78,8 @@
       "options": [
         "Vyf",
         "Sewe",
-        "Ses",
-        "Agt"
+        "Agt",
+        "Ses"
       ]
     },
     {
@@ -87,10 +87,10 @@
       "prompt": "Eight",
       "correctAnswer": "Agt",
       "options": [
-        "Agt",
-        "Tien",
         "Nege",
-        "Drie"
+        "Drie",
+        "Tien",
+        "Agt"
       ]
     },
     {
@@ -98,10 +98,10 @@
       "prompt": "Nine",
       "correctAnswer": "Nege",
       "options": [
-        "Tien",
         "Nege",
-        "Vier",
-        "Een"
+        "Tien",
+        "Een",
+        "Vier"
       ]
     },
     {
@@ -109,10 +109,10 @@
       "prompt": "Ten",
       "correctAnswer": "Tien",
       "options": [
-        "Tien",
+        "Vyf",
         "Ses",
         "Nege",
-        "Vyf"
+        "Tien"
       ]
     }
   ]

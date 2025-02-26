@@ -13,10 +13,10 @@
       "fragments": [
         "Die hond",
         "het",
+        "gevind.",
         "'n ou skoen",
-        "in",
         "die tuin",
-        "gevind"
+        "in"
       ]
     },
     {
@@ -26,11 +26,11 @@
       "englishTranslation": "Later daardie dag het hy 'n skoenlapper oor die erf gejaag.",
       "fragments": [
         "Later daardie dag",
-        "het hy",
-        "'n skoenlapper",
-        "oor",
         "die erf",
-        "gejaag"
+        "gejaag.",
+        "het hy",
+        "oor",
+        "'n skoenlapper"
       ]
     },
     {
@@ -40,11 +40,11 @@
       "englishTranslation": "At night, it curled up by the fireplace and fell asleep.",
       "fragments": [
         "In die aand",
-        "het hy",
         "by die kaggel",
-        "opgekrul",
+        "slaap geraak.",
+        "het hy",
         "en aan die",
-        "slaap geraak."
+        "opgekrul"
       ]
     }
   ]

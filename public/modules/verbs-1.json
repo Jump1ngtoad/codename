@@ -10,8 +10,8 @@
       "prompt": "To eat",
       "correctAnswer": "Eet",
       "options": [
-        "Werk",
         "Loop",
+        "Werk",
         "Eet",
         "Drink"
       ]
@@ -23,8 +23,8 @@
       "options": [
         "Skryf",
         "Drink",
-        "Lees",
-        "Eet"
+        "Eet",
+        "Lees"
       ]
     },
     {
@@ -32,9 +32,9 @@
       "prompt": "To run",
       "correctAnswer": "Hardloop",
       "options": [
+        "Ry",
         "Spring",
         "Hardloop",
-        "Ry",
         "Loop"
       ]
     },
@@ -44,9 +44,9 @@
       "correctAnswer": "Slaap",
       "options": [
         "Staan",
-        "Lag",
         "Swem",
-        "Slaap"
+        "Slaap",
+        "Lag"
       ]
     },
     {
@@ -54,10 +54,10 @@
       "prompt": "To read",
       "correctAnswer": "Lees",
       "options": [
-        "Kook",
         "Skryf",
-        "Lees",
-        "Sing"
+        "Kook",
+        "Sing",
+        "Lees"
       ]
     }
   ]

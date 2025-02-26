@@ -11,9 +11,9 @@
       "imagePath": "/images/food-1/apple.webp",
       "correctAnswer": "Appel",
       "options": [
-        "Kaas",
-        "Tee",
         "Appel",
+        "Tee",
+        "Kaas",
         "Water"
       ]
     },
@@ -23,10 +23,10 @@
       "imagePath": "/images/food-1/banana.webp",
       "correctAnswer": "Piesang",
       "options": [
-        "Koffie",
-        "Brood",
+        "Lemoen",
         "Piesang",
-        "Lemoen"
+        "Koffie",
+        "Brood"
       ]
     },
     {
@@ -36,9 +36,9 @@
       "correctAnswer": "Lemoen",
       "options": [
         "Melk",
+        "Botter",
         "Lemoen",
-        "Eier",
-        "Botter"
+        "Eier"
       ]
     },
     {
@@ -47,10 +47,10 @@
       "imagePath": "/images/food-1/bread.webp",
       "correctAnswer": "Brood",
       "options": [
-        "Tee",
-        "Appel",
+        "Brood",
         "Piesang",
-        "Brood"
+        "Appel",
+        "Tee"
       ]
     },
     {
@@ -59,10 +59,10 @@
       "imagePath": "/images/food-1/milk.webp",
       "correctAnswer": "Melk",
       "options": [
-        "Water",
         "Botter",
         "Koffie",
-        "Melk"
+        "Melk",
+        "Water"
       ]
     },
     {
@@ -71,9 +71,9 @@
       "imagePath": "/images/food-1/cheese.webp",
       "correctAnswer": "Kaas",
       "options": [
+        "Koffie",
         "Eier",
         "Lemoen",
-        "Koffie",
         "Kaas"
       ]
     },
@@ -83,10 +83,10 @@
       "imagePath": "/images/food-1/water.webp",
       "correctAnswer": "Water",
       "options": [
+        "Appel",
         "Botter",
         "Water",
-        "Brood",
-        "Appel"
+        "Brood"
       ]
     },
     {
@@ -96,8 +96,8 @@
       "correctAnswer": "Koffie",
       "options": [
         "Koffie",
-        "Piesang",
         "Kaas",
+        "Piesang",
         "Melk"
       ]
     },
@@ -108,8 +108,8 @@
       "correctAnswer": "Tee",
       "options": [
         "Botter",
-        "Eier",
         "Tee",
+        "Eier",
         "Lemoen"
       ]
     },
@@ -119,9 +119,9 @@
       "imagePath": "/images/food-1/butter.webp",
       "correctAnswer": "Botter",
       "options": [
-        "Botter",
         "Tee",
         "Brood",
+        "Botter",
         "Water"
       ]
     }

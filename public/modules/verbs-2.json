@@ -10,10 +10,10 @@
       "prompt": "To walk",
       "correctAnswer": "Loop",
       "options": [
-        "Swem",
-        "Ry",
         "Spring",
-        "Loop"
+        "Ry",
+        "Loop",
+        "Swem"
       ]
     },
     {
@@ -21,10 +21,10 @@
       "prompt": "To run",
       "correctAnswer": "Hardloop",
       "options": [
+        "Werk",
         "Ry",
-        "Hardloop",
         "Staan",
-        "Werk"
+        "Hardloop"
       ]
     },
     {
@@ -32,10 +32,10 @@
       "prompt": "To sit",
       "correctAnswer": "Sit",
       "options": [
-        "Slaap",
-        "Lag",
         "Staan",
-        "Sit"
+        "Slaap",
+        "Sit",
+        "Lag"
       ]
     },
     {
@@ -43,10 +43,10 @@
       "prompt": "To stand",
       "correctAnswer": "Staan",
       "options": [
-        "Spring",
-        "Staan",
         "Sing",
-        "Ry"
+        "Spring",
+        "Ry",
+        "Staan"
       ]
     },
     {
@@ -54,9 +54,9 @@
       "prompt": "To swim",
       "correctAnswer": "Swem",
       "options": [
-        "Ry",
         "Eet",
         "Swem",
+        "Ry",
         "Drink"
       ]
     },
@@ -65,10 +65,10 @@
       "prompt": "To write",
       "correctAnswer": "Skryf",
       "options": [
-        "Lees",
         "Slaap",
-        "Werk",
-        "Skryf"
+        "Lees",
+        "Skryf",
+        "Werk"
       ]
     },
     {
@@ -76,9 +76,9 @@
       "prompt": "To listen",
       "correctAnswer": "Luister",
       "options": [
-        "Luister",
         "Ry",
         "Lees",
+        "Luister",
         "Sing"
       ]
     },
@@ -89,8 +89,8 @@
       "options": [
         "Werk",
         "Luister",
-        "Praat",
-        "Sing"
+        "Sing",
+        "Praat"
       ]
     },
     {
@@ -98,10 +98,10 @@
       "prompt": "To drive",
       "correctAnswer": "Ry",
       "options": [
-        "Ry",
-        "Spring",
         "Skryf",
-        "Swem"
+        "Swem",
+        "Spring",
+        "Ry"
       ]
     },
     {
@@ -110,9 +110,9 @@
       "correctAnswer": "Sing",
       "options": [
         "Lag",
-        "Lees",
         "Sing",
-        "Skryf"
+        "Skryf",
+        "Lees"
       ]
     }
   ]

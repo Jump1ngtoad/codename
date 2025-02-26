@@ -11,10 +11,10 @@
       "imagePath": "/images/food-2/carrot.webp",
       "correctAnswer": "Wortel",
       "options": [
-        "Piesang",
         "Aartappel",
         "Wortel",
-        "Kaas"
+        "Kaas",
+        "Piesang"
       ]
     },
     {
@@ -23,10 +23,10 @@
       "imagePath": "/images/food-2/potato.webp",
       "correctAnswer": "Aartappel",
       "options": [
-        "Aartappel",
         "Wortel",
         "Vrugte",
-        "Brood"
+        "Brood",
+        "Aartappel"
       ]
     },
     {
@@ -35,10 +35,10 @@
       "imagePath": "/images/food-2/rice.webp",
       "correctAnswer": "Rys",
       "options": [
-        "Brood",
         "Vleis",
-        "Suiker",
-        "Rys"
+        "Rys",
+        "Brood",
+        "Suiker"
       ]
     },
     {
@@ -47,10 +47,10 @@
       "imagePath": "/images/food-2/sugar.webp",
       "correctAnswer": "Suiker",
       "options": [
-        "Sout",
-        "Suiker",
         "Melk",
-        "Sap"
+        "Suiker",
+        "Sap",
+        "Sout"
       ]
     },
     {
@@ -59,10 +59,10 @@
       "imagePath": "/images/food-2/salt.webp",
       "correctAnswer": "Sout",
       "options": [
-        "Suiker",
-        "Vrugte",
+        "Sout",
         "Eier",
-        "Sout"
+        "Suiker",
+        "Vrugte"
       ]
     },
     {
@@ -71,9 +71,9 @@
       "imagePath": "/images/food-2/egg.webp",
       "correctAnswer": "Eier",
       "options": [
+        "Kaas",
         "Vleis",
         "Eier",
-        "Kaas",
         "Piesang"
       ]
     },
@@ -83,10 +83,10 @@
       "imagePath": "/images/food-2/soup.webp",
       "correctAnswer": "Sop",
       "options": [
-        "Brood",
-        "Vleis",
         "Rys",
-        "Sop"
+        "Sop",
+        "Brood",
+        "Vleis"
       ]
     },
     {
@@ -95,8 +95,8 @@
       "imagePath": "/images/food-2/juice.webp",
       "correctAnswer": "Sap",
       "options": [
-        "Water",
         "Sap",
+        "Water",
         "Sout",
         "Melk"
       ]
