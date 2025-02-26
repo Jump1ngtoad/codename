@@ -292,17 +292,6 @@ export const ModulePage = () => {
                     </div>
                   )}
 
-                  {(currentQuestion as SentenceQuestion | PuzzleQuestionType).hint && !isCorrect && module.type !== 'puzzle' && (
-                    <div 
-                      className="mt-4 p-4 bg-primary/5 rounded-xl transition-all duration-300" 
-                      role="alert"
-                    >
-                      <p className="text-sm text-primary/80">
-                        💡 Hint: {(currentQuestion as SentenceQuestion | PuzzleQuestionType).hint}
-                      </p>
-                    </div>
-                  )}
-
                   {isCorrect === false && module.type !== 'puzzle' && (
                     <div 
                       className="mt-4 p-4 bg-red-50 rounded-xl animate-shake" 

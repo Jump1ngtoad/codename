@@ -9,13 +9,15 @@ interface StoryConstructionProps {
   activeId: string | null
   onFragmentTap: (fragmentId: string, container: 'fragment-bank' | 'story-construction') => void
   overFragment?: string | null
+  selectedFragmentId?: string | null
 }
 
 export function StoryConstruction({ 
   fragments, 
   activeId, 
   onFragmentTap,
-  overFragment 
+  overFragment,
+  selectedFragmentId
 }: StoryConstructionProps) {
   const { setNodeRef, isOver } = useDroppable({
     id: 'story-construction',
@@ -32,16 +34,24 @@ export function StoryConstruction({
       )}
     >
       <SortableContext id="story-construction" items={fragments} strategy={horizontalListSortingStrategy}>
-        <div className="flex flex-wrap gap-2">
+        <div className={cn(
+          "flex flex-wrap gap-2",
+          "transition-all duration-200 ease-in-out",
+        )}>
           {fragments.map((fragment) => (
-            <StoryFragment
+            <div
               key={fragment.id}
-              fragment={fragment}
-              isDragging={activeId === fragment.id}
-              container="story-construction"
-              onTap={onFragmentTap}
-              isOver={overFragment === fragment.id}
-            />
+              className="transition-all duration-200 ease-in-out transform-gpu"
+            >
+              <StoryFragment
+                fragment={fragment}
+                isDragging={activeId === fragment.id}
+                container="story-construction"
+                onTap={onFragmentTap}
+                isOver={overFragment === fragment.id}
+                isSelected={selectedFragmentId === fragment.id}
+              />
+            </div>
           ))}
           {fragments.length === 0 && (
             <div className="absolute inset-0 flex items-center justify-center">

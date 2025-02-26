@@ -8,9 +8,15 @@ interface FragmentBankProps {
   fragments: DraggableWordItem[]
   activeId: string | null
   onFragmentTap: (fragmentId: string, container: 'fragment-bank' | 'story-construction') => void
+  selectedFragmentId?: string | null
 }
 
-export function FragmentBank({ fragments, activeId, onFragmentTap }: FragmentBankProps) {
+export function FragmentBank({ 
+  fragments, 
+  activeId, 
+  onFragmentTap,
+  selectedFragmentId 
+}: FragmentBankProps) {
   const { setNodeRef } = useDroppable({
     id: 'fragment-bank',
   })
@@ -29,15 +35,23 @@ export function FragmentBank({ fragments, activeId, onFragmentTap }: FragmentBan
       )}
     >
       <SortableContext id="fragment-bank" items={fragments} strategy={rectSortingStrategy}>
-        <div className="flex flex-wrap gap-2">
+        <div className={cn(
+          "flex flex-wrap gap-2",
+          "transition-all duration-200 ease-in-out",
+        )}>
           {fragments.map((fragment) => (
-            <StoryFragment
+            <div
               key={fragment.id}
-              fragment={fragment}
-              isDragging={activeId === fragment.id}
-              container="fragment-bank"
-              onTap={onFragmentTap}
-            />
+              className="transition-all duration-200 ease-in-out transform-gpu"
+            >
+              <StoryFragment
+                fragment={fragment}
+                isDragging={activeId === fragment.id}
+                container="fragment-bank"
+                onTap={onFragmentTap}
+                isSelected={selectedFragmentId === fragment.id}
+              />
+            </div>
           ))}
         </div>
       </SortableContext>

@@ -9,6 +9,7 @@ interface StoryFragmentProps {
   container: 'fragment-bank' | 'story-construction'
   onTap: (fragmentId: string, container: 'fragment-bank' | 'story-construction') => void
   isOver?: boolean
+  isSelected?: boolean
 }
 
 export function StoryFragment({ 
@@ -16,7 +17,8 @@ export function StoryFragment({
   isDragging, 
   container,
   onTap,
-  isOver
+  isOver,
+  isSelected
 }: StoryFragmentProps) {
   const {
     attributes,
@@ -31,7 +33,13 @@ export function StoryFragment({
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition,
+    transition: [
+      transition,
+      'transform 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+      'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1)',
+      'border-color 150ms cubic-bezier(0.4, 0, 0.2, 1)',
+      'box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1)'
+    ].filter(Boolean).join(', '),
   }
 
   return (
@@ -43,24 +51,46 @@ export function StoryFragment({
       onClick={() => onTap(fragment.id, container)}
       className={cn(
         'px-3 py-2 rounded-lg select-none touch-none cursor-grab active:cursor-grabbing',
-        'transition-colors duration-150',
+        'transition-all duration-200',
         'border-2',
+        'transform-gpu',
         isDragging || isSortableDragging ? [
           'opacity-50',
           'border-primary/50',
           'shadow-lg',
-          'scale-105'
+          'scale-105',
+          'z-50'
         ] : [
-          fragment.isCorrect ? 'border-green-500 bg-green-50' :
-          fragment.isPartiallyCorrect ? 'border-yellow-500 bg-yellow-50' :
-          'border-zinc-200 bg-white hover:border-primary/50'
+          fragment.isCorrect ? [
+            'border-green-500 bg-green-50',
+            'shadow-green-100'
+          ] :
+          isSelected ? [
+            'border-primary bg-primary/10',
+            'shadow-md',
+            'scale-105',
+            'z-10'
+          ] :
+          fragment.isPartiallyCorrect ? [
+            'border-yellow-500 bg-yellow-50',
+            'shadow-yellow-100'
+          ] :
+          'border-zinc-200 bg-white hover:border-primary/50 hover:shadow-sm'
         ],
-        isOver && 'before:absolute before:inset-0 before:bg-primary/10 before:rounded-lg',
-        'relative'
+        isOver && [
+          'before:absolute before:inset-0 before:bg-primary/10 before:rounded-lg',
+          'scale-105',
+          'z-10'
+        ],
+        'relative',
+        'active:scale-95 active:shadow-inner',
+        'transition-transform transition-colors transition-shadow',
+        'ease-out'
       )}
     >
       <span className={cn(
-        'text-sm font-medium',
+        'text-sm font-medium block',
+        'transition-colors duration-150',
         fragment.isCorrect ? 'text-green-700' :
         fragment.isPartiallyCorrect ? 'text-yellow-700' :
         'text-zinc-700'

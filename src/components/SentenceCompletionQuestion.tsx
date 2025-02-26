@@ -30,19 +30,18 @@ export function SentenceCompletionQuestion({
   const [constructedSentence, setConstructedSentence] = useState<DraggableWordItem[]>([])
   const [activeId, setActiveId] = useState<string | null>(null)
   const [attemptCount, setAttemptCount] = useState(0)
-  const [showHint, setShowHint] = useState(false)
 
   // Set up drag sensors with increased distance to better differentiate between taps and drags
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: {
-        distance: 8, // Increased from 5px to 8px
+        distance: 8,
       },
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 150, // Increased from 100ms to 150ms
-        tolerance: 8, // Increased from 5px to 8px
+        delay: 150,
+        tolerance: 8,
       },
     })
   )
@@ -56,7 +55,6 @@ export function SentenceCompletionQuestion({
     setAvailableWords(words)
     setConstructedSentence([])
     setAttemptCount(0)
-    setShowHint(false)
   }, [question])
 
   // Handle drag start
@@ -166,9 +164,6 @@ export function SentenceCompletionQuestion({
         constructedSentence.map((word) => ({ ...word, isCorrect: false }))
       )
       setAttemptCount((prev) => prev + 1)
-      if (attemptCount + 1 >= 2) {
-        setShowHint(true)
-      }
     }
   }
 
@@ -210,12 +205,6 @@ export function SentenceCompletionQuestion({
           ) : null}
         </DragOverlay>
       </DndContext>
-
-      {showHint && question.hint && (
-        <div className="mt-4 p-4 bg-primary/5 rounded-xl" role="alert">
-          <p className="text-sm text-primary/80">💡 Hint: {question.hint}</p>
-        </div>
-      )}
 
       <Button
         className="w-full mt-6"

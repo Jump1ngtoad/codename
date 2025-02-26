@@ -59,6 +59,7 @@ export function PuzzleQuestion({
   const [isImageLoading, setIsImageLoading] = useState(true)
   const [retryCount, setRetryCount] = useState(0)
   const [overFragment, setOverFragment] = useState<string | null>(null)
+  const [selectedFragmentId, setSelectedFragmentId] = useState<string | null>(null)
 
   // Set up drag sensors with increased distance to better differentiate between taps and drags
   const sensors = useSensors(
@@ -254,31 +255,83 @@ export function PuzzleQuestion({
 
   // Handle fragment taps
   const handleFragmentTap = (fragmentId: string, container: 'fragment-bank' | 'story-construction') => {
-    const fragment = [...availableFragments, ...constructedStory].find((f) => f.id === fragmentId)
-    if (!fragment) return
+    // If we have a selected fragment and it's different from the current one
+    if (selectedFragmentId && selectedFragmentId !== fragmentId) {
+      const selectedFragment = [...availableFragments, ...constructedStory].find(
+        (f) => f.id === selectedFragmentId
+      )
+      const targetFragment = [...availableFragments, ...constructedStory].find(
+        (f) => f.id === fragmentId
+      )
 
-    // Only allow moving fragments from bank to story, not the other way around
-    if (container === 'fragment-bank') {
-      setAvailableFragments(availableFragments.filter((f) => f.id !== fragmentId))
-      setConstructedStory([...constructedStory, fragment])
+      if (!selectedFragment || !targetFragment) {
+        setSelectedFragmentId(null)
+        return
+      }
+
+      // Don't allow swapping with the first fragment in story construction
+      if (container === 'story-construction' && constructedStory[0].id === fragmentId) {
+        setSelectedFragmentId(null)
+        return
+      }
+
+      // Handle swapping between containers
+      const selectedInBank = availableFragments.some(f => f.id === selectedFragmentId)
+      const targetInBank = availableFragments.some(f => f.id === fragmentId)
+
+      if (selectedInBank && targetInBank) {
+        // Swap within fragment bank
+        const newFragments = [...availableFragments]
+        const selectedIndex: number = newFragments.findIndex(f => f.id === selectedFragmentId)
+        const targetIndex: number = newFragments.findIndex(f => f.id === fragmentId)
+        const temp = newFragments[selectedIndex]
+        newFragments[selectedIndex] = newFragments[targetIndex]
+        newFragments[targetIndex] = temp
+        setAvailableFragments(newFragments)
+      } else if (!selectedInBank && !targetInBank) {
+        // Swap within story construction
+        const newStory = [...constructedStory]
+        const selectedIndex: number = newStory.findIndex(f => f.id === selectedFragmentId)
+        const targetIndex: number = newStory.findIndex(f => f.id === fragmentId)
+        const temp = newStory[selectedIndex]
+        newStory[selectedIndex] = newStory[targetIndex]
+        newStory[targetIndex] = temp
+        setConstructedStory(newStory)
+      } else if (selectedInBank && !targetInBank) {
+        // Move from bank to story, replacing target
+        const selectedFragment = availableFragments.find(f => f.id === selectedFragmentId)!
+        const newFragments = availableFragments.filter(f => f.id !== selectedFragmentId)
+        const newStory = [...constructedStory]
+        const targetIndex: number = newStory.findIndex(f => f.id === fragmentId)
+        const replacedFragment = newStory[targetIndex]
+        newStory[targetIndex] = selectedFragment
+        setAvailableFragments([...newFragments, replacedFragment])
+        setConstructedStory(newStory)
+      } else if (!selectedInBank && targetInBank) {
+        // Move from story to bank, replacing target
+        const selectedFragment = constructedStory.find(f => f.id === selectedFragmentId)!
+        const newStory = constructedStory.filter(f => f.id !== selectedFragmentId)
+        const newFragments = [...availableFragments]
+        const targetIndex: number = newFragments.findIndex(f => f.id === fragmentId)
+        const replacedFragment = newFragments[targetIndex]
+        newFragments[targetIndex] = selectedFragment
+        setConstructedStory([...newStory, replacedFragment])
+        setAvailableFragments(newFragments)
+      }
+
+      setSelectedFragmentId(null)
+    } else {
+      // If no fragment is selected or the same fragment is tapped again
+      setSelectedFragmentId(fragmentId === selectedFragmentId ? null : fragmentId)
     }
   }
 
   // Generate contextual feedback based on the current state of the puzzle
-  const generateFeedback = (updatedStory: (DraggableWordItem & { isPartiallyCorrect?: boolean })[]) => {
-    const correctCount = updatedStory.filter(fragment => fragment.isCorrect).length
-    const partiallyCorrectCount = updatedStory.filter(fragment => fragment.isPartiallyCorrect).length
-    const totalFragments = updatedStory.length
-    
-    if (correctCount === 1 && partiallyCorrectCount === 0 && totalFragments > 1) {
-      return "Try rearranging the fragments. Only the first fragment is in the right position."
-    } else if (correctCount === 1 && partiallyCorrectCount > 0) {
-      return `You have ${partiallyCorrectCount} fragment(s) that belong in the story but are in the wrong position.`
-    } else if (correctCount > 1) {
-      return `Good progress! ${correctCount} out of ${totalFragments} fragments are in the correct position.`
+  const generateFeedback = (correctCount: number, totalFragments: number) => {
+    if (correctCount === totalFragments) {
+      return "Perfect! You've arranged the story correctly."
     }
-    
-    return "Keep trying! Rearrange the fragments to form a coherent story."
+    return `${correctCount} out of ${totalFragments} fragments in the correct position.`
   }
 
   // Check answer
@@ -333,12 +386,14 @@ export function PuzzleQuestion({
         return { 
           ...fragment, 
           isCorrect: isFragmentCorrect,
-          isPartiallyCorrect: !isFragmentCorrect && correctFragments.includes(fragmentContent)
+          // All non-correct fragments are marked as partially correct (yellow)
+          isPartiallyCorrect: !isFragmentCorrect
         }
       })
       
+      const correctCount = updatedStory.filter(fragment => fragment.isCorrect).length
       setConstructedStory(updatedStory)
-      setFeedbackMessage(generateFeedback(updatedStory))
+      setFeedbackMessage(generateFeedback(correctCount, updatedStory.length))
     }
   }
 
@@ -440,12 +495,14 @@ export function PuzzleQuestion({
             activeId={activeId} 
             onFragmentTap={handleFragmentTap}
             overFragment={overFragment}
+            selectedFragmentId={selectedFragmentId}
           />
           {availableFragments.length > 0 && (
             <FragmentBank 
               fragments={availableFragments} 
               activeId={activeId} 
               onFragmentTap={handleFragmentTap}
+              selectedFragmentId={selectedFragmentId}
             />
           )}
         </div>

@@ -28,7 +28,6 @@ export interface SentenceQuestion {
   prompt: string;
   correctAnswer: string;
   words: string[];  // The words available for constructing the sentence
-  hint?: string;
 }
 
 export interface PuzzleQuestion {
@@ -52,7 +51,6 @@ export interface SentenceConstructionState {
   availableWords: DraggableWordItem[];
   constructedSentence: DraggableWordItem[];
   attemptCount: number;
-  showHint: boolean;
 }
 
 export interface ModuleManifest {
