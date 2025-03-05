@@ -6,7 +6,7 @@ import { Button } from '../components/ui/button'
 import { Progress } from '../components/ui/progress'
 import { SentenceCompletionQuestion } from '../components/SentenceCompletionQuestion'
 import { PuzzleQuestion } from '../components/PuzzleQuestion'
-import { ErrorMessage, QuestionSkeleton } from '../components/shared'
+import { ErrorMessage, LoadingSpinner } from '../components/shared'
 import { useApp } from '../contexts/hooks'
 import { cn } from '../lib/utils'
 
@@ -208,8 +208,8 @@ export const ModulePage = () => {
   return (
     <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
       <div className={cn(
-        "bg-white rounded-2xl w-full max-w-2xl transition-all duration-300",
-        isLoading && "opacity-50"
+        "bg-white rounded-2xl w-full max-w-2xl transition-all duration-700",
+        isLoading ? "opacity-0 scale-95" : "opacity-100 scale-100"
       )}>
         <div className="p-6">
           {error ? (
@@ -218,16 +218,25 @@ export const ModulePage = () => {
               onBack={() => navigate('/')}
             />
           ) : !module ? (
-            <ErrorMessage 
-              message="Failed to load module. Please try again." 
-              onBack={() => navigate('/')}
-            />
+            isLoading ? (
+              <div className="flex justify-center py-8">
+                <LoadingSpinner />
+              </div>
+            ) : (
+              <ErrorMessage 
+                message="Failed to load module. Please try again." 
+                onBack={() => navigate('/')}
+              />
+            )
           ) : (() => {
             const currentQuestion = module.questions[currentQuestionIndex];
             const progress = (completedQuestions.length / module.questions.length) * 100;
 
             return (
-              <>
+              <div className={cn(
+                "animate-fade-in",
+                isLoading ? "opacity-0" : "opacity-100"
+              )}>
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-4">
                     <Button
@@ -250,7 +259,9 @@ export const ModulePage = () => {
 
                 <div className="space-y-4 sm:space-y-6">
                   {isLoading ? (
-                    <QuestionSkeleton />
+                    <div className="flex justify-center py-8">
+                      <LoadingSpinner />
+                    </div>
                   ) : module.type === 'flashcards' ? (
                     <div className="space-y-6">
                       {renderQuestion()}
@@ -316,11 +327,16 @@ export const ModulePage = () => {
                     </Button>
                   )}
                 </div>
-              </>
+              </div>
             )
           })()}
         </div>
       </div>
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <LoadingSpinner />
+        </div>
+      )}
     </div>
   )
 } 

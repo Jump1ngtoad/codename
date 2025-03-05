@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Suspense, lazy } from 'react'
 import { AppProvider } from './contexts/AppContext'
 import { HomePage } from './pages/HomePage'
+import { LoadingSpinner } from './components/shared'
 import './index.css'
 
 // Lazy load ModulePage
@@ -18,13 +19,11 @@ function App() {
           <Route 
             path="/module/:moduleId" 
             element={
-              <Suspense fallback={<div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
-                <div className="bg-white rounded-2xl w-full max-w-2xl">
-                  <div className="p-6 text-center text-muted-foreground">
-                    Loading...
-                  </div>
+              <Suspense fallback={
+                <div className="fixed inset-0 bg-black/75 flex items-center justify-center p-4 backdrop-blur-sm">
+                  <LoadingSpinner />
                 </div>
-              </div>}>
+              }>
                 <ModulePage />
               </Suspense>
             } 

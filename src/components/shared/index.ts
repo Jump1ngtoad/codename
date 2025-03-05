@@ -1,4 +1,6 @@
-export { LoadingOverlay } from './LoadingOverlay'
 export { ErrorMessage } from './ErrorMessage'
 export { ModuleSkeleton, ModuleSkeletonGrid } from './ModuleSkeleton'
-export { QuestionSkeleton } from './QuestionSkeleton' 
+export { QuestionSkeleton } from './QuestionSkeleton'
+export { LoadingOverlay } from './LoadingOverlay'
+export { Spinner } from './Spinner'
+export { LoadingSpinner } from './LoadingSpinner' 

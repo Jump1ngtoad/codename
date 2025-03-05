@@ -77,16 +77,24 @@ export function AppProvider({ children }: { children: ReactNode }) {
       } catch (error) {
         console.error('Error loading modules:', error)
         if (isMounted) {
-          setError('Failed to load modules. Please try again later.')
+          // Only set error if we couldn't load from cache as fallback
+          let loadedFromCache = false
+          
           // Try to load from cache as fallback
           try {
             const cachedData = localStorage.getItem(MODULES_CACHE_KEY)
             if (cachedData) {
               const cache: ModulesCache = JSON.parse(cachedData)
               setModules(cache.data)
+              loadedFromCache = true
             }
           } catch (cacheError) {
             console.error('Failed to load from cache:', cacheError)
+          }
+          
+          // Only set error if we couldn't load from cache
+          if (!loadedFromCache) {
+            setError('Failed to load modules. Please try again later.')
           }
         }
       } finally {

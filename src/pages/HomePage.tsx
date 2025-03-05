@@ -12,7 +12,7 @@ import {
   Brain
 } from 'lucide-react'
 import { useApp } from '../contexts/hooks'
-import { ErrorMessage, ModuleSkeletonGrid } from '../components/shared'
+import { ErrorMessage, LoadingSpinner } from '../components/shared'
 import { cn } from '../lib/utils'
 import { useState, useMemo } from 'react'
 
@@ -240,9 +240,11 @@ export const HomePage = () => {
           </div>
 
           {isLoading ? (
-            <ModuleSkeletonGrid />
+            <div className="flex justify-center py-12">
+              <LoadingSpinner />
+            </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in">
               {filteredModules.map((module) => {
                 const isCompleted = completedModules.includes(module.id)
                 console.log('Rendering module:', {

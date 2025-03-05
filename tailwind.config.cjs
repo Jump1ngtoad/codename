@@ -69,17 +69,28 @@ module.exports = {
           from: { opacity: 0, transform: "translateY(10px)" },
           to: { opacity: 1, transform: "translateY(0)" },
         },
+        "fade-in": {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
         "shake": {
           "0%, 100%": { transform: "translateX(0)" },
           "25%": { transform: "translateX(-4px)" },
           "75%": { transform: "translateX(4px)" },
+        },
+        "flip-square": {
+          "0%": { transform: "perspective(120px) rotateX(0deg) rotateY(0deg)" },
+          "50%": { transform: "perspective(120px) rotateX(-180.1deg) rotateY(0deg)" },
+          "100%": { transform: "perspective(120px) rotateX(-180deg) rotateY(-179.9deg)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-up": "fade-up 0.5s ease-out",
+        "fade-in": "fade-in 0.5s ease-out",
         "shake": "shake 0.5s cubic-bezier(.36,.07,.19,.97) both",
+        "flip-square": "flip-square 1.2s infinite ease-in-out",
       },
     },
   },
