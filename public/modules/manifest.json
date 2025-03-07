@@ -10,35 +10,35 @@
     {
       "id": "animals-1",
       "title": "Animals 1",
-      "description": "Match flashcards to their correct translations.",
+      "description": "Match to the correct translations.",
       "type": "flashcards",
       "difficulty": "easy"
     },
     {
       "id": "food-1",
       "title": "Food 1",
-      "description": "Match flashcards to their correct translations.",
+      "description": "Match to the correct translations.",
       "type": "flashcards",
       "difficulty": "easy"
     },
     {
       "id": "food-2",
       "title": "Food 2",
-      "description": "Match flashcards to their correct translations.",
+      "description": "Match to the correct translations.",
       "type": "flashcards",
       "difficulty": "easy"
     },
     {
       "id": "greetings",
       "title": "Greetings",
-      "description": "Match flashcards to their correct translations.",
+      "description": "Match to the correct translations.",
       "type": "flashcards",
       "difficulty": "easy"
     },
     {
       "id": "numbers-1",
       "title": "Numbers 1-10",
-      "description": "Match flashcards to their correct translations.",
+      "description": "Match to the correct translations.",
       "type": "flashcards",
       "difficulty": "easy"
     },
@@ -52,17 +52,17 @@
     {
       "id": "verbs-1",
       "title": "Verbs 1",
-      "description": "Match flashcards to their correct translations.",
+      "description": "Match to the correct translations.",
       "type": "flashcards",
       "difficulty": "easy"
     },
     {
       "id": "verbs-2",
       "title": "Verbs 2",
-      "description": "Match flashcards to their correct translations.",
+      "description": "Match to the correct translations.",
       "type": "flashcards",
       "difficulty": "easy"
     }
   ],
-  "generatedAt": "2025-02-26T18:12:11.882Z"
+  "generatedAt": "2025-03-07T01:09:37.561Z"
 }
